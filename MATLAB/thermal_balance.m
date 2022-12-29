@@ -1,132 +1,3 @@
-%% Inputs
-clear all
-clf
-
-thrust = 1000*4.44822; % N - Thrust
-pc = 250; % psi - Stagnation / Chamber Pressure
-pamb = 13.49; % psi - ambient pressure at 2400 feet elevation
-Tamb = 293; % K - Ambient Temperature
-OF = 1.5; % Oxidizer/Fuel Ratio
-proof = 0.95; % How much ethanol in fuel
-
-%% CEA Run Rocket
-
- cea = CEA('problem','rocket', ...
-     'equilibrium', ...  % equilibrium flow, infinite chamber, 
-     'o/f',OF, ...          % Define OF ratio
-     'case','CEAM-rocket1', ...
-     'p(psi)',pc,'pi/p',pc/pamb, ... % Define nozzle with pressure ratio
-     'reactants', ... 
-     'fuel','C2H5OH(L)','wt%',proof,'t(k)',Tamb,'H2O(L)','wt%',1-proof,'t(k)',Tamb, ... % 190-Proof Ethanol for Fuel, at ambient
-     'oxid','O2(L)','wt%',100, ... % Liquid Oxygen for Oxidizer, at boiling point
-     'output','short','massf','transport','mks', ...
-     'end');
-
-pc = pc*6894.76; % Converting to Pa
-
-Tc = cea.output.eql.temperature(1); % Stagnation / Chamber Temperature
-gamma = mean(cea.output.eql.gamma); % Ratio of Specific Heats % MAKE X DEPENDENT
-
-c_star_ideal = cea.output.eql.cstar(3); % Characteristic Velocity
-c_star_eff = 0.75; % Char Vel Efficiency, experimental
-c_star = c_star_ideal*c_star_eff;
-
-M_inj = cea.output.eql.mach(1); % Mach at injector
-M_comb = 0.002; % Mach at start of convergence (combustor?)
-M_throat = cea.output.eql.mach(2); % Mach at throat, should be 1 unless something is very wrong
-if M_throat < 0.99 || M_throat > 1.01
-    error("Sonic point is not at throat");
-end
-M_exit = cea.output.eql.mach(3); % Mach at exit, should be supersonic
-
-%% Define Geometry
-
-Ae_At = ((gamma+1)/2)^(-0.5*(gamma+1)/(gamma-1))*(1/M_exit)*(1+(gamma-1)/2*M_exit^2)^((gamma+1)/(2*(gamma-1))); % Expansion / Area Ratio
-%a_throat = c_star*m_dot/pc;
-
-converge_angle = 45*pi/180;
-diverge_angle = 15*pi/180;
-l_chamber = 12*0.0254; % m       
-d_chamber = 3.875*0.0254; % m
-
-d_throat = 0.0502680; % m - make dependent on CEA run
-d_exit = 0.09586; % m - make dependent on CEA run
-r_throat = 0.5*0.0254; % m - radius of curvature around the throat
-thickness = 0.0025; % m
-
-c_tau_ideal = gamma * sqrt( (2/(gamma-1) * (2/(gamma+1))^((gamma+1)/(gamma-1)) * (1-(pamb/pc)^((gamma-1)/gamma) ))) + ((pc-pamb)/pc)*Ae_At; % Ideal Thrust Coefficient
-lambda_cone = 0.5*(1+cos(diverge_angle)); % Divergence correction factor for conical nozzle
-c_tau_eff = 0.96; % Thrust Coefficient Efficiency Factor
-c_tau = c_tau_ideal*lambda_cone*c_tau_eff; % Thrust Coefficient
-
-x1_throat = 0.5*(d_chamber-d_throat)/tan(converge_angle) + l_chamber; % Projected point of the converging straight line contour IF throat had no curvature
-x2_throat = x1_throat + r_throat*(sin(converge_angle)+cot(converge_angle)*(cos(converge_angle)-1)); % Central point of the throat
-x3_throat = x2_throat + r_throat*(sin(diverge_angle)+cot(diverge_angle)*(cos(diverge_angle)-1)); % Projected point of the diverging straight line contour IF throat had no curvature
-
-x_exit = x3_throat + 0.5*(d_exit-d_throat)/tan(diverge_angle); % Position of nozzle exit, aka length of the entire chamber + nozzle
-
-dx = 0.001; % m - position step
-x = 0:dx:x_exit; % Position domain
-
-% Define inner contour
-r1 = ones(1,length(x))*0.5*d_chamber; % Chamber
-    % Convergence
-    r1(ceil(l_chamber/dx):end) = 0.5*(d_chamber-d_throat)*(x1_throat-x(ceil(l_chamber/dx):end))/(x1_throat-l_chamber) + 0.5*d_throat;
-    % Divergence
-    r1(floor(x3_throat/dx):end) = 0.5*(d_exit-d_throat)*(x(floor(x3_throat/dx):end)-x3_throat)/(x_exit-x3_throat) + 0.5*d_throat;
-    % Throat Arc
-        x_arc = -r_throat*sin(converge_angle):dx:r_throat*sin(diverge_angle);
-        throat_arc = 0.5*d_throat - sqrt( r_throat^2 - x_arc.^2 ) + r_throat;
-        [~,index] = min(throat_arc);
-    r1(round(x2_throat/dx)-index+1:round(x2_throat/dx) + length(x_arc)-index) = throat_arc; 
-
-% Define outer contour
-r2 = r1 + thickness;
-
-% Coolant Channels
-n_pipe = 32; % number of channels
-gap_pipe = 0.125*0.0254; % Gap between channels
-w_pipe = 2*pi*r2/n_pipe - gap_pipe; % m - coolant channel width
-h_pipe = 0.25*0.0254/2; % m - coolant channel height
-
-% figure(1);
-% plot(x,r1,x,r2);
-% axis equal;
-% title("Engine Contour (m)");
-
-%% Exhaust Flow Properties
-
-mdot = thrust/(c_star*c_tau);     % kg/s - Propellant Mass Flow Rate
-mdot_fuel = mdot*(1/(1+OF));     % kg/s - Fuel Mass Flow Rate
-mdot_ox = mdot*(OF/(1+OF));  % kg/s - Oxidizer Mass Flow Rate
-
-M = zeros(1,length(x)); % Mach Number
-
-% Chamber
-M(1:round(l_chamber/dx)) = linspace(M_inj, M_comb, round(l_chamber/dx));
-dm = 0.0001;
-
-% Converging
-m = 0:dm:1;
-for i = round(l_chamber/dx):1:round(x2_throat/dx)
-    % Isentropic Area Relation
-    [~,index] = min(abs( (1./m)*(0.5*(gamma+1)).^(-0.5*(gamma+1)./(gamma-1)).*(1+0.5*(gamma-1) .* m.^2).^((gamma+1)./(2*(gamma-1))) - (r1(i)*2./d_throat).^2 ) )   ;
-    M(i) = (-dm + dm * index);
-end
-factor1 = (1-M_comb)/(1-M(round(l_chamber/dx)));
-M(round(l_chamber/dx):round(x2_throat/dx)) = 1 - ((1-M(round(l_chamber/dx):round(x2_throat/dx))) * factor1); % Stretch to fit CEA data
-
-% Diverging
-m = 1:dm:3;
-for i = round(x2_throat/dx):1:length(x)
-    % Isentropic Area Relation
-    [~,index] = min(abs( (1./m)*(0.5*(gamma+1)).^(-0.5*(gamma+1)./(gamma-1)).*(1+0.5*(gamma-1) .* m.^2).^((gamma+1)./(2*(gamma-1))) - (r1(i)*2./d_throat).^2 ) )   ;
-    M(i) = (1 -dm + dm * index) * (M_exit);
-end
-factor2 = M_exit/M(length(x));
-M(round(x2_throat/dx):length(x)) = M(round(x2_throat/dx):length(x)) * factor2; % Stretch to fit CEA data
-
-
 %% Thermal Environment
 Twall = 500; % K - wall temperature, independent variable
 Tf = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
@@ -209,7 +80,7 @@ for i = 1:1:length(x)
         x(i)
         Re_cool(i)
         Pr_cool
-        error("No correlation for coolant Renoyld's and/or Prandtl number");
+        error("No correlation for coolant Reynold's and/or Prandtl number");
     end
 end
 
@@ -242,21 +113,6 @@ for i = 1:1:length(x)
     end
 end
 
-figure(1)
-plot(x,T_wall_cold,x,T_wall_hot,x,T_cool)
-legend("Cold Wall","Hot Wall","Coolant",'Location','southeast');
-xlabel("Distance from Injector (m)");
-ylabel("Temperature (K)");
-
-figure(2)
-plot(x,p_cool*0.000145038);
-xlabel("Distance from Injector (m)");
-ylabel("Pressure (psi)");
-
-figure(3)
-plot(x,v_cool);
-xlabel("Distance from Injector (m)");
-ylabel("Velocity (m/s)");
 
 
 
