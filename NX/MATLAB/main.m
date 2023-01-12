@@ -5,10 +5,8 @@ thrust = 1000*4.44822; % N - Thrust
 pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
 p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
 Tamb = 293; % K - Ambient Temperature
-OF = 1.0; % Oxidizer/Fuel Ratio
+OF = 1.4; % Oxidizer/Fuel Ratio
 proof = 0.95; % How much ethanol in fuel
-
-p_gg = 1000*6894.76; % Pa - chamber pressure inside gas generator
 
 % Geometry
 converge_angle = 45*pi/180; % rad
@@ -31,7 +29,7 @@ k_al6061 = 167; % W/m-K - thermal conductivity of aluminum 6061
 density_fuel =	795.965; % kg/m3 - ethanol at STP
 cp_fuel = 2570; % J/kg-K - specific heat
 kin_visc_fuel = 1.34E-06; % m2/s - kinematic viscosity
-k_fuel = 0.167; % W/m-K - thermal conductivity
+k_fuel = 0.167; % W/m-K - thermal conjductivity
 boiling_fuel = 351.5; % K - boiling point at atmospheric pressure
 
 density_ox = 1141; % kg/m3 - lox at boiling
@@ -43,7 +41,6 @@ exhaust_flow
 thermal_balance
 pump
 gas_generator
-turbine
 
 %% Results
 

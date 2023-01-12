@@ -6,9 +6,9 @@ Tf = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
 Tref = Tf .* (1 + 0.032*M.^2 + 0.58*(Twall./Tf-1));
 
 % UPDATE PROPERTIES TO BE FOR REFERENCE TEMPERATURE
-cp_gas = 1000*cea.output.eql.cp; % J/kg-K - Specific Heat
+cp_gas = cea.output.eql.cp; % Specific Heat, J/kg-K
 cp_gas = interp1([0,x2_throat,x_exit], [cp_gas(1),cp_gas(2),cp_gas(3)], x); % Interpolate
-visc = 0.0001*cea.output.eql.viscosity; % Pa-s - Dynamic Viscosity
+visc = cea.output.eql.viscosity; % Dynamic Viscosity, Pa-s
 visc = interp1([0,x2_throat,x_exit], [visc(1),visc(2),visc(3)], x); % Interpolate
 Pr = struct2array(cea.output.eql.prandtl(:,1)); % Prandtl Number
 Pr = interp1([0,x2_throat,x_exit], [Pr(1),Pr(2),Pr(3)], x); % Interpolate
@@ -32,7 +32,7 @@ k_cool = k_fuel; % W/m-K - thermal conductivity
 
 p_cool = zeros(1,length(x));
 v_cool = zeros(1,length(x)); % m/s - fluid bulk velocity
-    v_cool(1) = mdot_fuel_cc ./ (density_cool*n_pipe*w_pipe(1)*h_pipe); % m/s - fluid velocity
+    v_cool(1) = mdot_fuel ./ (density_cool*n_pipe*w_pipe(1)*h_pipe); % m/s - fluid velocity
 d_hydraulic = 4*w_pipe.*h_pipe./(2*w_pipe+2*h_pipe); % m - hydraulic diameter
 Re_cool = zeros(1,length(x));
     Re_cool(1) = v_cool(1).*d_hydraulic(1)./kin_visc_cool; % Reynold's number
@@ -120,7 +120,7 @@ for i = 1:1:length(x)
     T_wall_cold(i) = q_gas(i) ./ (h_cool(i)*area_cool*n_pipe) + T_cool(i);
     T_wall_hot(i) = q_gas(i)*(r2(i)-r1(i))/(k_al6061*pi*2*r1(i)*dx) + T_wall_cold(i);
     
-    dT = q_gas(i)*n_pipe / (cp_cool*mdot_fuel_cc); % Coolant Temperature change
+    dT = q_gas(i)*n_pipe / (cp_cool*mdot_fuel); % Coolant Temperature change
     if i < length(x)
         T_cool(i+1) = T_cool(i) + dT;
     end
