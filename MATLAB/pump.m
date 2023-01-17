@@ -1,6 +1,6 @@
 %% Requirements
 
-p_out = pc; % Pa - outlet pressure
+p_out = p_cool(1); % Pa - outlet pressure
 p_in = p_amb; % Pa - inlet pressure
 
 vdot_fuel = mdot_fuel_cc/density_fuel; %m3/s - Fuel Volumetric Flow Rate

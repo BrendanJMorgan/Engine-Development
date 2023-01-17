@@ -1,77 +1,13 @@
-%% Thermal Environment
-
-% WALL TEMPERATURE SHOULD NOT BE INDEPENDENT
-Twall = 500; % K - wall temperature, independent variable
-Tf = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
-Tref = Tf .* (1 + 0.032*M.^2 + 0.58*(Twall./Tf-1));
-
-% UPDATE PROPERTIES TO BE FOR REFERENCE TEMPERATURE
-cp_gas = 1000*cea.output.eql.cp; % J/kg-K - Specific Heat
-cp_gas = interp1([0,x2_throat,x_exit], [cp_gas(1),cp_gas(2),cp_gas(3)], x); % Interpolate
-visc = 0.0001*cea.output.eql.viscosity; % Pa-s - Dynamic Viscosity
-visc = interp1([0,x2_throat,x_exit], [visc(1),visc(2),visc(3)], x); % Interpolate
-Pr = struct2array(cea.output.eql.prandtl(:,1)); % Prandtl Number
-Pr = interp1([0,x2_throat,x_exit], [Pr(1),Pr(2),Pr(3)], x); % Interpolate
-
-% Bartz relation  
-sigma = 1 ./ ( (0.5*(Twall/Tc)*(1+(gamma-1)/2 * M.^2)+0.5).^0.68 .* (1+(gamma-1)/2 * M.^2).^0.12 ); % Meaningless (?) coefficient
-h_gas = (0.026./d_throat.^0.2).*(visc.^0.2 .* cp_gas ./ Pr.^0.6 ) .* (pc./c_star).^0.8 .* (d_throat./r_throat)^0.1 .* (0.5*d_throat./r1).^1.8 .* sigma; % W/m2-K - Convective Heat Transfer Coefficient
-
-Tab = Tc.*(1+Pr.^0.33.*(gamma-1)/2.*M.^2)./(1+(gamma-1)/2.*M.^2); % Adiabatic Wall Temperature
-A_gas = 2*pi*r1*dx/n_pipe; % Area of dx per coolant channel
-q_gas = h_gas.*A_gas.*(Tab-Twall); % W - Heat Flux
-
-%% Coolant Properties
+%% Coolant Thermal Properties
 % Ethanol is the coolant
-density_cool =	density_fuel; % kg/m3 - ethanol at STP
 cp_cool = cp_fuel; % J/kg-K - specific heat
-kin_visc_cool = kin_visc_fuel; % m2/s - kinematic viscosity
 k_cool = k_fuel; % W/m-K - thermal conductivity
 
-%% Pressure Drop
+%% Combustion Thermal Environment
 
-p_cool = zeros(1,length(x));
-v_cool = zeros(1,length(x)); % m/s - fluid bulk velocity
-    v_cool(1) = mdot_fuel_cc ./ (density_cool*n_pipe*w_pipe(1)*h_pipe); % m/s - fluid velocity
-d_hydraulic = 4*w_pipe.*h_pipe./(2*w_pipe+2*h_pipe); % m - hydraulic diameter
-Re_cool = zeros(1,length(x));
-    Re_cool(1) = v_cool(1).*d_hydraulic(1)./kin_visc_cool; % Reynold's number
-
-for i = 1:1:length(x)-1
-    
-    A1 = w_pipe(i)*h_pipe;
-    A2 = w_pipe(i+1)*h_pipe;
-
-
-    f_cool = (0.79 .* log(Re_cool) - 1.64).^(-2); % friction factor, smooth pipe approximation REVIEW IF THIS IS ACCURATE
-
-    dp1(i) = 0.5*f_cool(i)*density_cool*v_cool(i)^2*dx./d_hydraulic(i); % Major Losses (channel wall roughness)
-
-    d_ratio = d_hydraulic(i+1)/d_hydraulic(i);
-    if A2 < A1
-        K = 0.5 - 0.167*d_ratio - 0.125*d_ratio^2 - 0.208*d_ratio^3; % Contraction
-    else
-        K = (d_ratio^-2 - 1)^2; % Expansion
-    end
-
-    dp2(i) = 0.5*K*density_cool*v_cool(i)^2; % Minor Losses (diameter changes)
-    dp3(i) = (2 / (n_pipe*(A1+A2)) ) * (1 / (density_cool*A1*n_pipe) - 1 / (density_cool*A2*n_pipe)); % Acceleration Losses
-
-    dp(i) = dp1(i)+dp2(i)+dp3(i);
-
-    p_cool(i+1) = p_cool(i) - dp(i);
-
-    v_cool(i+1) = sqrt(v_cool(i)^2 - 2*dp(i)/density_cool); % THIS LINE BREAKS AT I = 367
-    Re_cool(i+1) = v_cool(i+1)*d_hydraulic(i+1)/kin_visc_cool; % Reynold's 
-
-    if imag(v_cool(i+1)) ~= 0
-        error("Coolant Flow stalls out at %g m from injector (%g m before exit)", x(i), x_exit-x(i));
-    end
-end
-
-p_cool = p_cool + pc - p_cool(end); % Pa - ending pressure EXPAND TO ACCOUNT FOR PLUMBING AND INJECTOR STIFFNESS 
-
-
+% WALL TEMPERATURE SHOULD NOT BE INDEPENDENT
+%Twall = 500; % K - wall temperature, independent variable
+Tf = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
 
 
 %% Coolant Loop Flow
@@ -100,27 +36,68 @@ h_cool = Nu_cool*k_cool./d_hydraulic; % W/m2-K - Convective heat transfer coeffi
 fin_thickness = gap_pipe; % m
 fin_height = h_pipe; % m
 fin_length  = x_exit; % m
-m_coeff = sqrt(2*h_gas/(k_al6061*fin_thickness)); % coefficient for fin efficency equation
-fin_eff = tanh(m_coeff*dx)/m_coeff*dx; % fin efficiency for each length step
-area_cool = (2*fin_height*fin_eff+fin_thickness)*dx; % m2 - adjusted contact area of coolant on channel walls
 
 %% Thermal Balance
 
 T_cool = zeros(1,length(x));
 T_cool(1) = Tamb; % K - coolant inlet temperature
-T_wall_cold = zeros(1,length(x));
-T_wall_hot = zeros(1,length(x));
+T_wall_cold = zeros(1,length(x)); % K - wall temperature on coolant side
+T_wall_hot = zeros(1,length(x)); % K - wall temperature on chamber interior side
+    T_wall_hot(1) = 2000; % K - MAY BE INVALID
+Tab = zeros(1,length(x));
+Tref = zeros(1,length(x));
 
-for i = 1:1:length(x)
+p_gas =1E5*cea.output.eql.pressure; % Pa - pressure of combustion gases
+p_gas = interp1([0,x2_throat,x_exit], [p_gas(1),p_gas(2),p_gas(3)], x); % Interpolate
 
+products = convertCharsToStrings(cea.output.eql.products);
+fractions = convertCharsToStrings(cea.output.eql.fractions);
+fractions = interp1( [0; x2_throat; x_exit], fractions', x )' ; % Interpolate
+
+% Preallocate several arrays
+cp_gas = zeros(1,length(x)); % J/kg - specific heat capacity (at constant pressure) of combustion gases
+visc_gas = zeros(1,length(x)); % Pa-s - dynamic viscosity of combustion gases
+cond_gas = zeros(1,length(x));  % W/m-K - thermal conductivity of combustion gases
+h_gas = zeros(1,length(x));
+q_gas = zeros(1,length(x));
+Pr_gas = zeros(1,length(x));
+
+
+for i = 1:1:length(x) % Find heat and temperatures along engine contour
+    hist(i) = T_wall_hot(i)
+    Tref(i) = Tf(i) .* (1 + 0.032*M(i).^2 + 0.58*(T_wall_hot(i)./Tf(i)-1)); % K - reference temperature for gas properties
+
+    [cp_gas(i), visc_gas(i), cond_gas(i)] = mixture(products, fractions(:,i), Tref(i), p_gas(i));
+
+    Pr_gas(i) = cp_gas(i)*visc_gas(i)/cond_gas(i); % Prandtl Number
+
+    % Bartz relation  
+    sigma = 1 ./ ( (0.5*(T_wall_hot(i)/Tc)*(1+(gamma-1)/2 * M(i).^2)+0.5).^0.68 .* (1+(gamma-1)/2 * M(i).^2).^0.12 ); % Meaningless (?) coefficient
+    h_gas(i) = (0.026./d_throat.^0.2).*(visc_gas(i).^0.2 .* cp_gas(i) ./ Pr_gas(i).^0.6 ) .* (pc./c_star).^0.8 .* (d_throat./r_throat)^0.1 .* (0.5*d_throat./r1(i)).^1.8 .* sigma; % W/m2-K - Convective Heat Transfer Coefficient    
+
+    m_coeff = sqrt(2*h_cool(i)/(k_al6061*fin_thickness)); % coefficient for fin efficency equation
+    fin_eff = tanh(m_coeff*(h_pipe+fin_thickness/2))/(m_coeff*(h_pipe+fin_thickness/2)); % fin efficiency for each length step
+    A_cool = (2*fin_height*fin_eff+w_pipe(i))*dx; % m2 - adjusted contact area of coolant on channel walls
+
+    Tab(i) = Tc.*(1+Pr_gas(i).^0.5.*(gamma-1)/2.*M(i).^2)./(1+(gamma-1)/2.*M(i).^2); % Adiabatic Wall Temperature. 0.5 --> 0.33 IF GAS FLOW IS LAMINAR
+    A_gas = 2*pi*r1(i)*dx/n_pipe(i); % m2 - Area of dx per coolant channel
+    q_gas(i) = h_gas(i)*A_gas*(Tab(i)-T_wall_hot(i)); % W - Heat Flux per coolant channel
+
+    boiling_fuel = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0, 'Ethanol' ); % K - Ethanol Saturation Temperature
+
+    % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
     if T_cool(i) > boiling_fuel
         error("Coolant starts boiling at %g m from injector (%g m before exit)", x(i+1), x_exit-x(i+1));
     end
 
-    T_wall_cold(i) = q_gas(i) ./ (h_cool(i)*area_cool*n_pipe) + T_cool(i);
-    T_wall_hot(i) = q_gas(i)*(r2(i)-r1(i))/(k_al6061*pi*2*r1(i)*dx) + T_wall_cold(i);
+    T_wall_cold(i) = q_gas(i) ./ (h_cool(i)*A_cool) + T_cool(i);
+    T_wall_hot(i) = q_gas(i)*(r2(i)-r1(i))/(k_al6061*A_gas) + T_wall_cold(i);
     
-    dT = q_gas(i)*n_pipe / (cp_cool*mdot_fuel_cc); % Coolant Temperature change
+    if i<length(x)
+        T_wall_hot(i+1) = T_wall_hot(i); % Approximation, gets overwritten at every subsequent loop
+    end
+    
+    dT = q_gas(i)*n_pipe(i) / (cp_cool*mdot_fuel_cc); % Coolant Temperature changeat one channel
     if i < length(x)
         T_cool(i+1) = T_cool(i) + dT;
     end

@@ -14,10 +14,6 @@
 Tc = cea.output.eql.temperature(1); % Stagnation / Chamber Temperature
 gamma = mean(cea.output.eql.gamma); % Ratio of Specific Heats % MAKE X DEPENDENT
 
-c_star_ideal = cea.output.eql.cstar(3); % Characteristic Velocity
-c_star_eff = 0.75; % Char Vel Efficiency, experimental
-c_star = c_star_ideal*c_star_eff;
-
 M_inj = cea.output.eql.mach(1); % Mach at injector
 M_comb = 0.002; % Mach at start of convergence (combustor?) UPDATE TO FINITE AREA COMBUSTOR
 M_throat = cea.output.eql.mach(2); % Mach at throat, should be 1 unless something is very wrong

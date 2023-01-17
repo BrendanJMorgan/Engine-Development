@@ -11,8 +11,7 @@ turbine_p_ratio = p_amb/p_gg; % Pa - turbine pressure ratio
 turbine_eff = specific_power_turbine / ( T_gg * cp_gg * (1-turbine_p_ratio^((gamma_gg-1)/gamma_gg)) ); % Required turbine efficiency
 
 format short g
-T_gg
-turbine_eff
+
 if turbine_eff >= 1
     error("Gas generator insufficient to drive turbopump");
 end
