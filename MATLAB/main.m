@@ -1,11 +1,12 @@
-%% Inputs
+%% Inputs 
+
 clear all
 
-thrust = 2500*4.44822; % N - Thrust
+thrust = 3600*4.44822; % N - Thrust
 pc = 300*6894.76; % Pa - Stagnation / Chamber Pressure
 p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
 Tamb = 293; % K - Ambient Temperature
-OF = 1.5; % Oxidizer/Fuel Ratio
+OF = 1.2; % Oxidizer/Fuel Ratio
 proof = 0.95; % How much ethanol in fuel
 c_star_eff = 0.75; % Characteristic Vel Efficiency, experimental
 c_tau_eff = 0.96; % Thrust Coefficient Efficiency Factor
@@ -70,31 +71,32 @@ turbine
 % hold off
 % xlabel("Distance from Injector (m)");
 % title("Combustion Chamber Contours")
-% 
-% figure(2)
-% clf
-% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,Tf,x,Tab,x,Tref)
-% legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic Wall","Gas Property Reference",'Location','northwest');
-% xlabel("Distance from Injector (m)");
-% ylabel("Temperature (K)");
-% title("Engine Steady-State Temperatures")
-% 
-% figure(3)
-% clf
-% yyaxis left
-% colororder('default')
-% plot(x,p_gas/6894.76, 'color','blue');
-% ylabel("Chamber Pressure (psi)")
-% hold on
-% yyaxis right
-% colororder('default')
-% plot(x,yield_cc./hoop,'color','red');
-% hold on
-% plot(x,FS_design*ones(1,length(x)),'--','color','red')
-% ylabel("Chamber Wall FSy");
-% hold off
-% xlabel("Distance from Injector");
-% title("Combustion Chamber Structural Integrity")
+
+figure(2)
+clf
+plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,Tf,x,Tab,x,Tref)
+yline(0)
+legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference",'Location','northwest');
+xlabel("Distance from Injector (m)");
+ylabel("Temperature (K)");
+title("Engine Steady-State Temperatures")
+
+figure(3)
+clf
+yyaxis left
+colororder('default')
+plot(x,p_gas/6894.76, 'color','blue');
+ylabel("Chamber Pressure (psi)")
+hold on
+yyaxis right
+colororder('default')
+plot(x,yield_cc./hoop,'color','red');
+hold on
+hold off
+xlabel("Distance from Injector");
+plot(x,FS_design*ones(1,length(x)),'--','color','red')
+ylabel("Chamber Wall FSy");
+title("Combustion Chamber Structural Integrity")
 
 
 % isp

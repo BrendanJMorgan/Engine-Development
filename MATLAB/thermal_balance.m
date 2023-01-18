@@ -43,7 +43,7 @@ T_cool = zeros(1,length(x));
 T_cool(1) = Tamb; % K - coolant inlet temperature
 T_wall_cold = zeros(1,length(x)); % K - wall temperature on coolant side
 T_wall_hot = zeros(1,length(x)); % K - wall temperature on chamber interior side
-    T_wall_hot(1) = 2000; % K - MAY BE INVALID
+    T_wall_hot(1) = Tamb; % K - initial guess
 Tab = zeros(1,length(x));
 Tref = zeros(1,length(x));
 
@@ -64,35 +64,57 @@ Pr_gas = zeros(1,length(x));
 
 
 for i = 1:1:length(x) % Find heat and temperatures along engine contour
-    hist(i) = T_wall_hot(i)
-    Tref(i) = Tf(i) .* (1 + 0.032*M(i).^2 + 0.58*(T_wall_hot(i)./Tf(i)-1)); % K - reference temperature for gas properties
 
-    [cp_gas(i), visc_gas(i), cond_gas(i)] = mixture(products, fractions(:,i), Tref(i), p_gas(i));
+    residual = 20;
+    while abs(residual) > 1 % Newton-Raphson Iteration
 
-    Pr_gas(i) = cp_gas(i)*visc_gas(i)/cond_gas(i); % Prandtl Number
+        rise = 0;
+        run = 0;
 
-    % Bartz relation  
-    sigma = 1 ./ ( (0.5*(T_wall_hot(i)/Tc)*(1+(gamma-1)/2 * M(i).^2)+0.5).^0.68 .* (1+(gamma-1)/2 * M(i).^2).^0.12 ); % Meaningless (?) coefficient
-    h_gas(i) = (0.026./d_throat.^0.2).*(visc_gas(i).^0.2 .* cp_gas(i) ./ Pr_gas(i).^0.6 ) .* (pc./c_star).^0.8 .* (d_throat./r_throat)^0.1 .* (0.5*d_throat./r1(i)).^1.8 .* sigma; % W/m2-K - Convective Heat Transfer Coefficient    
+        T_input = T_wall_hot(i); % K
+        for j = -1:2:1 % Find two neighboring points so a local derivative can be taken
+            
+            Tref(i) = Tf(i) .* (1 + 0.032*M(i).^2 + 0.58*(T_input./Tf(i)-1)); % K - reference temperature for gas properties
+            
+            [cp_gas(i), visc_gas(i), cond_gas(i)] = mixture(products, fractions(:,i), Tref(i), p_gas(i)); % find properties of the mix of combustion gases at this location
+        
+            Pr_gas(i) = cp_gas(i)*visc_gas(i)/cond_gas(i); % Prandtl Number
+        
+            % Bartz relation  
+            sigma = 1 ./ ( (0.5*(T_input/Tc)*(1+(gamma-1)/2 * M(i).^2)+0.5).^0.68 .* (1+(gamma-1)/2 * M(i).^2).^0.12 ); % Meaningless (?) coefficient
+            h_gas(i) = (0.026./d_throat.^0.2).*(visc_gas(i).^0.2 .* cp_gas(i) ./ Pr_gas(i).^0.6 ) .* (pc./c_star).^0.8 .* (d_throat./r_throat)^0.1 .* (0.5*d_throat./r1(i)).^1.8 .* sigma; % W/m2-K - Convective Heat Transfer Coefficient    
+        
+            m_coeff = sqrt(2*h_cool(i)/(k_al6061*fin_thickness)); % coefficient for fin efficency equation
+            fin_eff = tanh(m_coeff*(h_pipe+fin_thickness/2))/(m_coeff*(h_pipe+fin_thickness/2)); % fin efficiency for each length step
+            A_cool = (2*fin_height*fin_eff+w_pipe(i))*dx; % m2 - adjusted contact area of coolant on channel walls
+        
+            Tab(i) = Tc.*(1+Pr_gas(i).^0.33.*(gamma-1)/2.*M(i).^2)./(1+(gamma-1)/2.*M(i).^2); % Adiabatic Wall Temperature. 0.33 --> 0.5 IF GAS FLOW IS LAMINAR
+            A_gas = 2*pi*r1(i)*dx/n_pipe(i); % m2 - Area of dx per coolant channel
+            q_gas(i) = h_gas(i)*A_gas*(Tab(i)-T_input); % W - Heat Flux per coolant channel, negative because it flows out of the gas
+        
+            boiling_fuel = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0, 'Ethanol' ); % K - Ethanol Saturation Temperature
+        
+            % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
+            if T_cool(i) > boiling_fuel
+                error("Coolant starts boiling at %g m from injector (%g m before exit)", x(i), x_exit-x(i));
+            end
 
-    m_coeff = sqrt(2*h_cool(i)/(k_al6061*fin_thickness)); % coefficient for fin efficency equation
-    fin_eff = tanh(m_coeff*(h_pipe+fin_thickness/2))/(m_coeff*(h_pipe+fin_thickness/2)); % fin efficiency for each length step
-    A_cool = (2*fin_height*fin_eff+w_pipe(i))*dx; % m2 - adjusted contact area of coolant on channel walls
+            T_wall_cold(i) = q_gas(i) ./ (10*h_cool(i)*A_cool) + T_cool(i); % K = cold wall temperature, q_gas remains negative because it flows out of wall
+            T_output = q_gas(i)*(r2(i)-r1(i))/(k_al6061*A_gas) + T_wall_cold(i) - T_input; % K - temporary hot wall temperature for purposes of iteration, q_gas turned positive because it flows into wall
+            
+            rise = rise + T_output*j;
+            run = run + T_input*j;
 
-    Tab(i) = Tc.*(1+Pr_gas(i).^0.5.*(gamma-1)/2.*M(i).^2)./(1+(gamma-1)/2.*M(i).^2); % Adiabatic Wall Temperature. 0.5 --> 0.33 IF GAS FLOW IS LAMINAR
-    A_gas = 2*pi*r1(i)*dx/n_pipe(i); % m2 - Area of dx per coolant channel
-    q_gas(i) = h_gas(i)*A_gas*(Tab(i)-T_wall_hot(i)); % W - Heat Flux per coolant channel
+            T_input = T_input + 0.1;
 
-    boiling_fuel = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0, 'Ethanol' ); % K - Ethanol Saturation Temperature
+        end
+        
+        slope = rise/run;
+        residual =  - T_output / slope;
+        T_wall_hot(i) = T_input + residual;
 
-    % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
-    if T_cool(i) > boiling_fuel
-        error("Coolant starts boiling at %g m from injector (%g m before exit)", x(i+1), x_exit-x(i+1));
     end
 
-    T_wall_cold(i) = q_gas(i) ./ (h_cool(i)*A_cool) + T_cool(i);
-    T_wall_hot(i) = q_gas(i)*(r2(i)-r1(i))/(k_al6061*A_gas) + T_wall_cold(i);
-    
     if i<length(x)
         T_wall_hot(i+1) = T_wall_hot(i); % Approximation, gets overwritten at every subsequent loop
     end
