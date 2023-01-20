@@ -26,13 +26,17 @@ function [cp, visc, cond, density] = mixture(compounds, fractions, Tref, pref)
                 polar(j) = 1; % CO is a polar molecule
             case "*CO2"
                 name = "CarbonDioxide";
-            case "H2"
+            case "*H2"
                 name = "Hydrogen";
             case "H2O"
                 name = "Water";
                 polar(j) = 1; % H2O is a polar molecule
             case "O2"
                 name = "Oxygen";
+            case "C2H4"
+                name = "Ethylene";
+            case "C2H6"
+                name = "Ethane";
             otherwise
                 continue; % Did not find a CoolProp-valid compound; skip to next
         end
@@ -45,6 +49,8 @@ function [cp, visc, cond, density] = mixture(compounds, fractions, Tref, pref)
         if name == "CarbonMonoxide" % CoolProp lacks viscosity and thermal conductivity data for carbon monoxide
             visclist(j) = 0.027098*Tref^(0.734156)*1E-5; % power law fitted to data from here: https://www.engineeringtoolbox.com/gases-absolute-dynamic-viscosity-d_1888.html
             condlist(j) = 0.227019*Tref^(0.828249)*0.001; % power law fitted to data from here: https://srd.nist.gov/jpcrdreprint/1.555827.pdf
+        elseif name == "Ethylene"
+            visclist(j) = (8E-10)*Tref^0.4845; % Terrible power law, fitted to 725 psi
         else
             visclist(j) = py.CoolProp.CoolProp.PropsSI("V", "T", Tref, "P", pref, name); % Pa-s
             condlist(j) = py.CoolProp.CoolProp.PropsSI("L", "T", Tref, "P", pref, name); % W/m-K
@@ -62,7 +68,7 @@ function [cp, visc, cond, density] = mixture(compounds, fractions, Tref, pref)
     end
 
     if 1 - sum(fractionlist) > 0.05
-        error("Unaccounted for combustion products make up %g%% of exhaust", 100-100*sum(fractionlist));
+        fprintf("Unaccounted for combustion products make up %g%% of exhaust\n", 100-100*sum(fractionlist));
     end  
 
     % Density

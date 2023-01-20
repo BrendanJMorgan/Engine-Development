@@ -39,11 +39,9 @@ fin_length  = x_exit; % m
 
 %% Thermal Balance
 
-T_cool = zeros(1,length(x));
-T_cool(1) = Tamb; % K - coolant inlet temperature
+T_cool = Tamb*ones(1,length(x));
 T_wall_cold = zeros(1,length(x)); % K - wall temperature on coolant side
-T_wall_hot = zeros(1,length(x)); % K - wall temperature on chamber interior side
-    T_wall_hot(1) = Tamb; % K - initial guess
+T_wall_hot = Tamb*ones(1,length(x)); % K - wall temperature on chamber interior side
 Tab = zeros(1,length(x));
 Tref = zeros(1,length(x));
 
@@ -62,10 +60,15 @@ h_gas = zeros(1,length(x));
 q_gas = zeros(1,length(x));
 Pr_gas = zeros(1,length(x));
 
+if flow_direction == 1
+    flow = 1:1:length(x);
+elseif flow_direction == -1
+    flow = length(x):-1:1;
+end
 
-for i = 1:1:length(x) % Find heat and temperatures along engine contour
+for i = flow % Find heat and temperatures along engine contour
 
-    residual = 20;
+    residual = 2;
     while abs(residual) > 1 % Newton-Raphson Iteration
 
         rise = 0;
@@ -84,7 +87,7 @@ for i = 1:1:length(x) % Find heat and temperatures along engine contour
             sigma = 1 ./ ( (0.5*(T_input/Tc)*(1+(gamma-1)/2 * M(i).^2)+0.5).^0.68 .* (1+(gamma-1)/2 * M(i).^2).^0.12 ); % Meaningless (?) coefficient
             h_gas(i) = (0.026./d_throat.^0.2).*(visc_gas(i).^0.2 .* cp_gas(i) ./ Pr_gas(i).^0.6 ) .* (pc./c_star).^0.8 .* (d_throat./r_throat)^0.1 .* (0.5*d_throat./r1(i)).^1.8 .* sigma; % W/m2-K - Convective Heat Transfer Coefficient    
         
-            m_coeff = sqrt(2*h_cool(i)/(k_al6061*fin_thickness)); % coefficient for fin efficency equation
+            m_coeff = sqrt(2*h_cool(i)/(k_wall*fin_thickness)); % coefficient for fin efficency equation
             fin_eff = tanh(m_coeff*(h_pipe+fin_thickness/2))/(m_coeff*(h_pipe+fin_thickness/2)); % fin efficiency for each length step
             A_cool = (2*fin_height*fin_eff+w_pipe(i))*dx; % m2 - adjusted contact area of coolant on channel walls
         
@@ -99,8 +102,8 @@ for i = 1:1:length(x) % Find heat and temperatures along engine contour
                 error("Coolant starts boiling at %g m from injector (%g m before exit)", x(i), x_exit-x(i));
             end
 
-            T_wall_cold(i) = q_gas(i) ./ (10*h_cool(i)*A_cool) + T_cool(i); % K = cold wall temperature, q_gas remains negative because it flows out of wall
-            T_output = q_gas(i)*(r2(i)-r1(i))/(k_al6061*A_gas) + T_wall_cold(i) - T_input; % K - temporary hot wall temperature for purposes of iteration, q_gas turned positive because it flows into wall
+            T_wall_cold(i) = q_gas(i) ./ (10*h_cool(i)*A_cool) + T_cool(i); % K - cold wall temperature, q_gas remains negative because it flows out of wall
+            T_output = q_gas(i)*(r2(i)-r1(i))/(k_wall*A_gas) + T_wall_cold(i) - T_input; % K - temporary hot wall temperature for purposes of iteration, q_gas turned positive because it flows into wall
             
             rise = rise + T_output*j;
             run = run + T_input*j;
@@ -115,13 +118,13 @@ for i = 1:1:length(x) % Find heat and temperatures along engine contour
 
     end
 
-    if i<length(x)
-        T_wall_hot(i+1) = T_wall_hot(i); % Approximation, gets overwritten at every subsequent loop
+    if i ~= flow(end)
+        T_wall_hot(i+flow_direction) = T_wall_hot(i); % Approximation, gets overwritten at every subsequent loop
     end
     
     dT = q_gas(i)*n_pipe(i) / (cp_cool*mdot_fuel_cc); % Coolant Temperature change at one channel
-    if i < length(x)
-        T_cool(i+1) = T_cool(i) + dT;
+    if i ~= flow(end)
+        T_cool(i+flow_direction) = T_cool(i) + dT;
     end
     
 end

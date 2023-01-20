@@ -23,10 +23,12 @@ d_throat = sqrt(4*A_throat/pi); % m - throat diameter
 A_exit = A_throat*Ae_At;
 d_exit = sqrt(4*A_exit/pi);
 
-if (d1_chamber/d_throat)^2 < 2
-    error ("Contraction ratio is %g, below recommended minimum of 2", (d1_chamber/d_throat)^2);
-elseif (d1_chamber/d_throat)^2 > 5
-    error ("Contraction ratio is %g, above recommended maximum of 5", (d1_chamber/d_throat)^2);
+Ac_At = pi*d1_chamber^2 / (4*A_throat);
+
+if Ac_At < 2
+    fprintf ("Contraction ratio is %g, below recommended minimum of 2\n", (d1_chamber/d_throat)^2);
+elseif Ac_At > 5
+    fprintf("Contraction ratio is %g, above recommended maximum of 5\n", (d1_chamber/d_throat)^2);
 end
 
 
