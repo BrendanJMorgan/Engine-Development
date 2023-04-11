@@ -2,8 +2,8 @@
 
 clear all
 
-thrust = 5000*4.44822; % N - Thrust
-pc = 200*6894.76; % Pa - Stagnation / Chamber Pressure
+thrust = 3000*4.44822; % N - Thrust
+pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
 p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
 Tamb = 293; % K - Ambient Temperature
 OF = 1.2; % Oxidizer/Fuel Ratio
@@ -11,23 +11,26 @@ proof = 0.95; % How much ethanol in fuel
 c_star_eff = 0.75; % Characteristic Vel Efficiency, experimental
 c_tau_eff = 0.96; % Thrust Coefficient Efficiency Factor
 
+film_fraction = 0.1; % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
+film_width = 0.5*0.0254;
+
 p_gg = 1000*6894.76; % Pa - chamber pressure inside gas generator
 
 % Geometry
 dx = 0.001; % m - position step
-converge_angle = 30*pi/180; % rad
+converge_angle = 45*pi/180; % rad
 diverge_angle = 15*pi/180; % rad
-l_chamber = 12*0.0254; % m
+l_chamber = 16*0.0254; % m
 r_throat = 1*0.0254; % m - radius of curvature around the throat
 d2_chamber = 8*0.0254; % m
-thickness = 1/8*0.0254; % m
+thickness = 1/4*0.0254; % m
 d1_chamber = d2_chamber - 2*thickness; % m
 
-% Coolant Channels
-n_pipe1 = 32; % number of channels along barrel
-n_pipe2 = 32; % number of channels near throat
-n_pipe3 = 32; % number of channels along lower nozzle section
-gap_pipe = 1/16*0.0254; % Gap between channels (fin thickness)
+% Coolant Channels 
+n_pipe1 = 16; % number of channels along barrel
+n_pipe2 = 16; % number of channels near throat
+n_pipe3 = 16; % number of channels along lower nozzle section
+gap_pipe = 1/8*0.0254; % Gap between channels (fin thickness)
 h_pipe = 0.5*0.0254; % m - coolant channel height
 merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transition to n_pipe2
 flow_direction = -1; % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
@@ -70,16 +73,11 @@ turbine
 
 %% Results
 
-% figure(1)
+% figure(2)
 % clf
-% yyaxis left
 % colororder('default')
 % plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-% hold on
-% yyaxis right
-% colororder('default')
-% plot(x,n_pipe,'color','red');
-% hold off
+% axis equal
 % xlabel("Distance from Injector (m)");
 % title("Combustion Chamber Contours")
 
@@ -92,22 +90,22 @@ xlabel("Distance from Injector (m)");
 ylabel("Temperature (K)");
 title("Engine Steady-State Temperatures")
 
-figure(3)
-clf
-yyaxis left
-colororder('default')
-plot(x,p_gas/6894.76, 'color','blue');
-ylabel("Chamber Pressure (psi)")
-hold on
-yyaxis right
-colororder('default')
-plot(x,yield_cc./hoop,'color','red');
-hold on
-hold off
-xlabel("Distance from Injector");
-plot(x,FS_design*ones(1,length(x)),'--','color','red')
-ylabel("Chamber Wall FSy");
-title("Combustion Chamber Structural Integrity")
+% figure(3)
+% clf
+% yyaxis left
+% colororder('default')
+% plot(x,p_gas/6894.76, 'color','blue');
+% ylabel("Chamber Pressure (psi)")
+% hold on
+% yyaxis right
+% colororder('default')
+% plot(x,yield_cc./hoop,'color','red');
+% hold on
+% hold off
+% xlabel("Distance from Injector");
+% plot(x,FS_design*ones(1,length(x)),'--','color','red')
+% ylabel("Chamber Wall FSy");
+% title("Combustion Chamber Structural Integrity")
 
 % isp
 % mdot_cc

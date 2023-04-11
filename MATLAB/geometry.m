@@ -11,17 +11,21 @@ c_tau = c_tau_ideal*lambda_cone*c_tau_eff; % Thrust Coefficient
 
 v_exhaust_ideal = cea.output.eql.sonvel(3)*cea.output.eql.mach(3); % m/s - ideal exhaust velocity
 v_exhaust = c_star*c_tau; % m/s - actual exhaust velocity
-isp = cea.output.eql.isp(end); % jjs - specific impulse
+isp = cea.output.eql.isp(end); % s - specific impulse
 
 mdot_cc = thrust/v_exhaust;     % kg/s - Propellant Mass Flow Rate
 % ADD FUEL AND LOX NEEDED FOR GAS GENERATOR
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate
 
-A_throat = thrust / (pc*c_tau); % m2 - throat area
+R_gas = 8.3145 / (0.001*cea.output.eql.mw(2)); % J/kg-K - Specific Gas Constant (throat)
+
+A_throat = mdot_cc*sqrt(Tc)/pc * sqrt(R_gas/gamma) * ((gamma+1)/2)^((gamma+1)/(2*(gamma-1))); % m2 - throat area
+A2_throat = thrust / pc; % m2 - throat area
+A3_throat = mdot_cc*c_star/pc; % m2 - throat area
 d_throat = sqrt(4*A_throat/pi); % m - throat diameter
-A_exit = A_throat*Ae_At;
-d_exit = sqrt(4*A_exit/pi);
+A_exit = A_throat*Ae_At; % m2 - exit area
+d_exit = sqrt(4*A_exit/pi); % m - exit diameter
 
 Ac_At = pi*d1_chamber^2 / (4*A_throat);
 
