@@ -73,13 +73,13 @@ turbine
 
 %% Results
 
-% figure(2)
-% clf
-% colororder('default')
-% plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-% axis equal
-% xlabel("Distance from Injector (m)");
-% title("Combustion Chamber Contours")
+figure(2)
+clf
+colororder('default')
+plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
+axis equal
+xlabel("Distance from Injector (m)");
+title("Combustion Chamber Contours")
 
 figure(1)
 clf
