@@ -1,11 +1,14 @@
 %% Inputs 
 
-clear all
-
-thrust = 3000*4.44822; % N - Thrust
-pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
+% Constants
+g = 9.81;
 p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
-Tamb = 293; % K - Ambient Temperature
+T_amb = 293; % K - Ambient Temperature
+
+% Overall Engine Performance Targets
+thrust = 2000*4.44822; % N - Thrust
+pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
+
 OF = 1.2; % Oxidizer/Fuel Ratio
 proof = 0.95; % How much ethanol in fuel
 c_star_eff = 0.75; % Characteristic Vel Efficiency, experimental
@@ -15,6 +18,8 @@ film_fraction = 0.1; % Fraction of the fuel mass flow dedicated to film cooling 
 film_width = 0.5*0.0254;
 
 p_gg = 1000*6894.76; % Pa - chamber pressure inside gas generator
+gg_fraction = 0.05; % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
+OF_gg = 0.3; % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
 
 % Geometry
 dx = 0.001; % m - position step
@@ -35,6 +40,10 @@ h_pipe = 0.5*0.0254; % m - coolant channel height
 merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transition to n_pipe2
 flow_direction = -1; % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
+% Turbomachinery
+shaft_speed = 20000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
+shaft_diameter = 0.5*0.0254; % m
+
 %% Properties
 
 wall = "aluminum";
@@ -44,7 +53,7 @@ switch wall
         k_wall = 253; % W/m-K - thermal conductivity (at 571 C)
     case "steel"
         k_wall = 42.6; % W/m-K - thermal conductivity (at 100 C)
-        case "copper"
+    case "copper"
         k_wall = 398; % W/m-K - thermal conductivity
 end
 
@@ -64,31 +73,32 @@ combustion
 geometry
 exhaust_flow
 coolant_flow
-thermal_balance
-structures
+% thermal_balance
+% structures
 pump
+% turbine
 gas_generator
-turbine
+
 
 
 %% Results
 
-figure(2)
-clf
-colororder('default')
-plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-axis equal
-xlabel("Distance from Injector (m)");
-title("Combustion Chamber Contours")
-
-figure(1)
-clf
-plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,Tf,x,Tab,x,Tref)
-yline(0)
-legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference",'Location','northwest');
-xlabel("Distance from Injector (m)");
-ylabel("Temperature (K)");
-title("Engine Steady-State Temperatures")
+% figure(2)
+% clf
+% colororder('default')
+% plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
+% axis equal
+% xlabel("Distance from Injector (m)");
+% title("Combustion Chamber Contours")
+% 
+% figure(1)
+% clf
+% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,Tf,x,Tab,x,Tref)
+% yline(0)
+% legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference",'Location','northwest');
+% xlabel("Distance from Injector (m)");
+% ylabel("Temperature (K)");
+% title("Engine Steady-State Temperatures")
 
 % figure(3)
 % clf

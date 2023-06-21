@@ -1,13 +1,6 @@
 %%
 
-OF_gg = 0.3; % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
 
-gg_fraction = 0.5; % Fraction of total mass flow sent to the gas generator
-% Context: F1 = 0.030, J2 = 0.014,  
-
-mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction);     % kg/s - Propellant Mass Flow Rate
-mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
-mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
 
  cea_gg = CEA('problem','rocket', ...
      'equilibrium', ...  % equilibrium flow, infinite chamber, 
@@ -15,7 +8,7 @@ mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
      'case','CEAM-rocket1', ...
      'p(psi)',p_gg/6894.76,'pi/p',p_gg/p_amb, ... % Define nozzle with pressure ratio
      'reactants', ... 
-     'fuel','C2H5OH(L)','wt%',proof,'t(k)',Tamb,'H2O(L)','wt%',1-proof,'t(k)',Tamb, ... % 190-Proof Ethanol for Fuel, at ambient
+     'fuel','C2H5OH(L)','wt%',proof,'t(k)',T_amb,'H2O(L)','wt%',1-proof,'t(k)',T_amb, ... % 190-Proof Ethanol for Fuel, at ambient
      'oxid','O2(L)','wt%',100, ... % Liquid Oxygen for Oxidizer, at boiling point
      'output','short','massf','transport','mks', ...
      'end');

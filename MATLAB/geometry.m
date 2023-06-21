@@ -1,4 +1,4 @@
-%% Define Geometry
+%% Nozzle Parameters
 
 Ae_At = cea.output.eql.aeat(end); % Expansion / Area Ratio
 
@@ -13,11 +13,20 @@ v_exhaust_ideal = cea.output.eql.sonvel(3)*cea.output.eql.mach(3); % m/s - ideal
 v_exhaust = c_star*c_tau; % m/s - actual exhaust velocity
 isp = cea.output.eql.isp(end); % s - specific impulse
 
-mdot_cc = thrust/v_exhaust;     % kg/s - Propellant Mass Flow Rate
-% ADD FUEL AND LOX NEEDED FOR GAS GENERATOR
+%% Mass Flow Rates
+mdot_cc = thrust/v_exhaust;     % kg/s - Propellant Mass Flow Rate into combustion chamber
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate
 
+mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction); % kg/s - Propellant Mass Flow Rate into gas generator
+mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
+mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
+
+mdot_total = mdot_cc+mdot_gg; % kg/s - Propellant mass flow rate through pumps
+mdot_fuel_total = mdot_fuel_cc+mdot_fuel_gg; % kg/s
+mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
+
+%% Cross Section Areas
 R_gas = 8.3145 / (0.001*cea.output.eql.mw(2)); % J/kg-K - Specific Gas Constant (throat)
 
 A_throat = mdot_cc*sqrt(Tc)/pc * sqrt(R_gas/gamma) * ((gamma+1)/2)^((gamma+1)/(2*(gamma-1))); % m2 - throat area
