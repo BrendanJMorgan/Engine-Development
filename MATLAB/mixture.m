@@ -9,38 +9,50 @@
 % L - thermal conductivity
 
 function [cp, visc, cond, density] = mixture(compounds, fractions, Tref, pref)
-    
+
     if length(compounds) ~= length(fractions)
         error("compounds do not match with compound fractions")
     end
 
-    % proplist = zeros(1,length(compounds));
-    % fractionlist = zeros(1,length(fractions));
     j = 1;
-
     for i = 1:1:length(compounds)
+
         % Convert CEA product names to CoolProp-valid fluid names
         switch compounds(i)
             case "*CO"
                 name = "CarbonMonoxide";
                 polar(j) = 1; % CO is a polar molecule
+                weights(j) = 28.01;
+                boiling(j) = 81.65;
             case "*CO2"
                 name = "CarbonDioxide";
+                weights(j) = 44.01;
+                boiling(j) = 194.65; % CO2 sublimates at 1 atmosphere; i.e. it has no saturation temperature
             case "*H2"
                 name = "Hydrogen";
+                weights(j) = 1.00794;
+                boiling(j) = 20.28;
             case "H2O"
                 name = "Water";
                 polar(j) = 1; % H2O is a polar molecule
+                weights(j) = 18.01528;
+                boiling(j) = 373.1;
             case "O2"
                 name = "Oxygen";
+                weights(j) = 15.999;
+                boiling(j) = 90.19;
             case "C2H4"
                 name = "Ethylene";
+                weights(j) = 28.05;
+                boiling(j) = 169.5;
             case "C2H6"
                 name = "Ethane";
+                weights(j) = 30.07;
+                boiling(j) = 184.2;
             otherwise
                 continue; % Did not find a CoolProp-valid compound; skip to next
         end
-        
+
         fractionlist(j) = fractions(i);
 
         denslist(j) = py.CoolProp.CoolProp.PropsSI("D", "T", Tref, "P", pref, name); % kg/m3
@@ -56,15 +68,8 @@ function [cp, visc, cond, density] = mixture(compounds, fractions, Tref, pref)
             condlist(j) = py.CoolProp.CoolProp.PropsSI("L", "T", Tref, "P", pref, name); % W/m-K
         end
         
-        weights(j) = py.CoolProp.CoolProp.PropsSI("molemass", "T", Tref, "P", pref, name); % kg/kmol - Molar masses
-
-        if name == "CarbonDioxide"
-            boiling(j) = 194.65; % CO2 sublimates at 1 atmosphere; i.e. it has no saturation temperature
-        else
-            boiling(j) = py.CoolProp.CoolProp.PropsSI( 'T', 'P', 101325, 'Q', 0, name); % K - boiling points at one atmosphere
-        end
-
          j = j+1;
+
     end
 
     if 1 - sum(fractionlist) > 0.05

@@ -20,7 +20,7 @@ end
 
 for i = flow
 
-    dp1 = 0.5*f_cool(i)*density_cool*v_cool(i)^2*dx./d_hydraulic(i); % Major Losses (channel wall roughness)
+    dp1 = 0.5*f_cool(i)*density_cool*v_cool(i)^2*dx./d_hydraulic(i); % Pa - Major Losses (channel wall roughness)
     
     if n_pipe(i+flow_direction) < n_pipe(i) % For when channels merge
         d_hydraulic_mod = 4*0.5*w_pipe(i+flow_direction).*h_pipe./(2*0.5*w_pipe(i+flow_direction)+2*h_pipe); % m - half-channel hydraulic diameter
