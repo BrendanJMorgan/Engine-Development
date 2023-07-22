@@ -33,6 +33,7 @@ A_throat = mdot_cc*sqrt(Tc)/pc * sqrt(R_gas/gamma) * ((gamma+1)/2)^((gamma+1)/(2
 A2_throat = thrust / pc; % m2 - throat area
 A3_throat = mdot_cc*c_star/pc; % m2 - throat area
 d_throat = sqrt(4*A_throat/pi); % m - throat diameter
+r_throat = d_throat/2;
 A_exit = A_throat*Ae_At; % m2 - exit area
 d_exit = sqrt(4*A_exit/pi); % m - exit diameter
 
@@ -44,6 +45,8 @@ elseif Ac_At > 5
     fprintf("Contraction ratio is %g, above recommended maximum of 5\n", (d1_chamber/d_throat)^2);
 end
 
+%% Chamber Length
+l_chamber = l_star*(r_throat/r_chamber)^2 - r_chamber*(r_throat^2+pi*sqrt(r_chamber*r_throat)/(tan(converge_angle)*3*r_chamber^2) - r_chamber/(3*tan(converge_angle)));
 
 %% Contours
 x1_throat = 0.5*(d1_chamber-d_throat)/tan(converge_angle) + l_chamber; % Projected point, onto central axis, of the converging straight line contour IF throat had no curvature
