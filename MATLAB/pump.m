@@ -43,7 +43,6 @@ while true
     end
 end
 
-
 % The exit radius r2 (or diameter D2)
 r_exit = 1 / shaft_speed * sqrt (g*head_fuel / head_coeff_fuel);
 
@@ -51,18 +50,35 @@ r_exit = 1 / shaft_speed * sqrt (g*head_fuel / head_coeff_fuel);
 w_exit = vdot_fuel / (2*pi*shaft_speed*r_exit^2*outlet_flow_coeff*blockage);
 
 % Hub and shroud profiles
-bezier_vert = 0.008;
-bezier_horiz = 0.008;
-shroud_points = [r_eye,impeller_height; r_eye, impeller_height-bezier_vert; r_exit-bezier_horiz,impeller_thickness+w_exit; r_exit, impeller_thickness+w_exit];
-shroud_curve = bezier(shroud_points);
+
+bezier_params_initial = [0.008, 0.008]; % starting values
+options = optimset('Display', 'iter'); % display progress
+cost_function_with_fixed_params = @(bezier_params) cost_function(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_shaft);
+bezier_params_optimal = fminsearch(cost_function_with_fixed_params, bezier_params_initial, options);
+
+bezier_vert_optimal = bezier_params_optimal(1);
+bezier_horiz_optimal = bezier_params_optimal(2);
+
+shroud_points = [r_eye,impeller_height; r_eye, impeller_height-bezier_vert_optimal; r_exit-bezier_horiz_optimal,impeller_thickness+w_exit; r_exit, impeller_thickness+w_exit];
+shroud_curve = bezier(shroud_points); % [m,m] - lower curved edge of revolution of the pump shroudjj
+
+A_eye = pi*(r_eye^2-r_shaft^2); % m2 - area of the annular eye entrance
+A_exit = 2*pi*r_exit*w_exit; % m2 - area of the cylindrical exit
+
+A_pump_flow = linspace(A_eye, A_exit, length(shroud_curve))'; % m2 - cross sectional area perpendicular to flow
+
+normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2;
+normal_angles(normal_angles > 2*pi) = normal_angles(normal_angles > 2*pi) - 2*pi;
+% normal_angles = [0; (mod(atan2(diff(shroud_curve(:,2)), diff(shroud_curve(:,1))) + pi/2, 2*pi)); pi/2]; % rad - angle of vector normal to each point of shroud curve
+% normal_angles = (normal_angles(1:end-1) + normal_angles(2:end))/2;
+
+crosswise_gap =  sec(normal_angles) .* ( shroud_curve(:,1) - sqrt( pi^2 * shroud_curve(:,1).^2 - A_pump_flow.*cos(normal_angles) ) / pi); % m - gap between shroud curve and impeller curve at each point
+
+impeller_curve = [shroud_curve(:,1) - crosswise_gap.*cos(normal_angles), shroud_curve(:,2) - crosswise_gap.*sin(normal_angles)]; % [m,m] - upper curved edge of revolution of the pump impeller
 
 r_min = 0.5*r_eye; % m - minimum allowable radius of curvature
 
-figure(1)
-line(shroud_curve(:,1), shroud_curve(:,2))
-hold on
-plot(shroud_points(:,1),shroud_points(:,2),'o','color','r')
-axis equal
+
 
 % Check that shroud curve does not kink too much; ie that it's radius of curvature is not below r_min
 s = [0; cumsum(sqrt(diff(shroud_curve(:,1)).^2 + diff(shroud_curve(:,2)).^2))];
@@ -71,8 +87,9 @@ if any(curvature > 1/r_min)
     [max_curvature, idx] = max(curvature);
     min_radius = 1/max_curvature;
     fprintf("Pump shroud curvature reaches %.2f mm radius. Need above ~%.2f mm (half of eye radius) to avoid cavitation.", min_radius*1000, r_min*1000)
-    plot(shroud_curve(idx, 1), shroud_curve(idx, 2), 'go');
+    %plot(shroud_curve(idx, 1), shroud_curve(idx, 2), 'go');
 end
+
 
 figure(1)
 line(shroud_curve(:,1), shroud_curve(:,2))
@@ -80,18 +97,67 @@ hold on
 plot(shroud_points(:,1),shroud_points(:,2),'o','color','r')
 axis equal
 
-A_eye = pi*(r_eye^2-r_shaft^2);
-A_exit = 2*pi*r_exit*w_exit;
-
-A_pump_flow = linspace(A_eye, A_exit, length(shroud_curve))';
-
-normal_angles = [0; (mod(atan2(diff(shroud_curve(:,2)), diff(shroud_curve(:,1))) + pi/2, 2*pi)); pi/2];
-normal_angles = (normal_angles(1:end-1) + normal_angles(2:end))/2;
-
-crosswise_gap = ( 2*pi*shroud_curve(:,1) - sqrt( 4*pi^2*shroud_curve(:,1).^2 - 2*A_pump_flow.*cos(normal_angles) ) ) ./ cos(normal_angles);
-
-impeller_curve = [shroud_curve(:,1) - crosswise_gap.*cos(normal_angles), shroud_curve(:,2) - crosswise_gap.*sin(normal_angles)];
 plot(impeller_curve(:,1), impeller_curve(:,2))
+
+%%
+
+function [slope_shroud, slope_impeller] = compute_curves(bezier_vert, bezier_horiz, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_shaft)
+    shroud_points = [r_eye,impeller_height; r_eye, impeller_height-bezier_vert; r_exit-bezier_horiz,impeller_thickness+w_exit; r_exit, impeller_thickness+w_exit];
+    shroud_curve = bezier(shroud_points);
+
+    A_eye = pi*(r_eye^2-r_shaft^2);
+    A_exit = 2*pi*r_exit*w_exit;
+    
+    A_pump_flow = linspace(A_eye, A_exit, length(shroud_curve))';
+
+    normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2;
+    normal_angles(normal_angles > 2*pi) = normal_angles(normal_angles > 2*pi) - 2*pi;
+%     normal_angles = [0; (mod(atan2(diff(shroud_curve(:,2)), diff(shroud_curve(:,1))) + pi/2, 2*pi)); pi/2];
+%     normal_angles = (normal_angles(1:end-1) + normal_angles(2:end))/2;
+  
+    crosswise_gap =  sec(normal_angles) .* ( shroud_curve(:,1) - sqrt( pi^2 * shroud_curve(:,1).^2 - A_pump_flow.*cos(normal_angles) ) / pi ); % m - gap between shroud curve and impeller curve at each point
+    
+    impeller_curve = [shroud_curve(:,1) - crosswise_gap.*cos(normal_angles), shroud_curve(:,2) - crosswise_gap.*sin(normal_angles)];
+
+    % Calculate slope at end of the curves
+    s_shroud = [0; cumsum(sqrt(diff(shroud_curve(:,1)).^2 + diff(shroud_curve(:,2)).^2))];
+    s_impeller = [0; cumsum(sqrt(diff(impeller_curve(:,1)).^2 + diff(impeller_curve(:,2)).^2))];
+
+    % Calculate slope at end of the curves
+    ds_shroud = s_shroud(end) - s_shroud(end-1);
+    ds_impeller = s_impeller(end) - s_impeller(end-1);
+    slope_shroud = (shroud_curve(end, 2) - shroud_curve(end - 1, 2)) / ds_shroud;
+    slope_impeller = (impeller_curve(end, 2) - impeller_curve(end - 1, 2)) / ds_impeller;
+end
+
+function cost = cost_function(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_shaft)
+    bezier_vert = bezier_params(1);
+    bezier_horiz = bezier_params(2);
+    [slope_shroud, slope_impeller] = compute_curves(bezier_vert, bezier_horiz, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_shaft);
+
+    % The cost is the sum of the absolute slopes (we want them to be 0 for a horizontal line)
+    cost = abs(slope_shroud) + abs(slope_impeller);
+end
+
+function curve = bezier(points) % Credit to Lakshmi Narasimhan of NIT Allahabad, India
+
+    for i=0:1:3
+        sigma(i+1)=factorial(3)/(factorial(i)*factorial(3-i));
+    end
+    
+    projection=[];
+    for u=0:0.0001:1
+        for d=1:4
+            UB(d)=sigma(d)*((1-u)^(4-d))*(u^(d-1));
+        end
+        projection=cat(1,projection,UB);
+    end
+    curve = projection*points;
+
+end
+
+
+%%
 
 % figure(1); clf
 % plot(shroud_x, shroud_y);
@@ -135,20 +201,3 @@ plot(impeller_curve(:,1), impeller_curve(:,2))
 % 
 % power_fuel = mdot_fuel_cc*9.80665*head_fuel/pump_eff; % W
 % power_ox = mdot_ox_cc*9.80665*head_ox/pump_eff; % W
-
-function curve = bezier(points) % Credit to Lakshmi Narasimhan of NIT Allahabad, India
-
-    for i=0:1:3
-        sigma(i+1)=factorial(3)/(factorial(i)*factorial(3-i));
-    end
-    
-    projection=[];
-    for u=0:0.01:1
-        for d=1:4
-            UB(d)=sigma(d)*((1-u)^(4-d))*(u^(d-1));
-        end
-        projection=cat(1,projection,UB);
-    end
-    curve = projection*points;
-
-end
