@@ -1,5 +1,5 @@
 %% Combustion Thermal Environment
-Tf = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
+T_free = Tc ./ (1 + (gamma-1)/2 * M.^2); % Free-Stream Temperature
 
 %% Wall Conduction
 
@@ -12,9 +12,9 @@ fin_length  = x_exit; % m
 mdot_film = film_fraction*mdot_cc;
 mdot_gas = (1-film_fraction)*mdot_cc;
 
-cp_film_liq = py.CoolProp.CoolProp.PropsSI('C', 'P', pc, 'Q', 0, 'Ethanol'); % J/kg-s % QUESTIONABLE REFERENCE TEMPERATURE
-visc_film_liq = py.CoolProp.CoolProp.PropsSI('V', 'P', pc, 'Q', 0, 'Ethanol'); % Pa-s % QUESTIONABLE REFERENCE TEMPERATURE
-dens_film_liq = py.CoolProp.CoolProp.PropsSI('D', 'P', pc, 'Q', 0, 'Ethanol'); % kg/m3 %  QUESTIONABLE REFERENCE TEMPERATURE
+cp_film_liq = py.CoolProp.CoolProp.PropsSI('C', 'P', pc, 'Q', 0, 'Ethanol'); % J/kg-s
+visc_film_liq = py.CoolProp.CoolProp.PropsSI('V', 'P', pc, 'Q', 0, 'Ethanol'); % Pa-s
+dens_film_liq = py.CoolProp.CoolProp.PropsSI('D', 'P', pc, 'Q', 0, 'Ethanol'); % kg/m3
 Pr_film_liq = py.CoolProp.CoolProp.PropsSI('Prandtl', 'P', pc, 'Q', 0, 'Ethanol');
 T_boil_film = py.CoolProp.CoolProp.PropsSI( 'T', 'P', pc, 'Q', 0, 'Ethanol' ); % K - Boiling point of film coolant at chamber pressure
 T_film_initial = T_amb; % K - THIS SHOULD BE THE COOLANT OUTLET TEMPERATURE
@@ -117,7 +117,7 @@ for i = flow % Find heat and temperatures along engine contour
 
         for j = -1:2:1 % Find two neighboring points so a local derivative can be taken
 
-            Tref(i) = Tf(i) .* (1 + 0.032*M(i).^2 + 0.58*(T_input./Tf(i)-1)); % K - reference temperature for gas properties
+            Tref(i) = T_free(i) .* (1 + 0.032*M(i).^2 + 0.58*(T_input./T_free(i)-1)); % K - reference temperature for gas properties
             
             if start
                 [cp_gas(i), visc_gas(i), cond_gas(i)] = mixture(products, fractions(:,i), Tref(i), p_gas(i)); % find properties of the mix of combustion gases at this location
@@ -135,28 +135,29 @@ for i = flow % Find heat and temperatures along engine contour
             A_cool = (2*fin_height*fin_eff+w_pipe(i))*dx; % m2 - adjusted contact area of coolant on channel walls 
 
             % TAB ONLY APPLIES TO CHAMBER, NOT NOZZLE
-            Tab(i) = Tc.*(1+Pr_gas(i).^0.33.*(gamma-1)/2.*M(i).^2)./(1+(gamma-1)/2.*M(i).^2); % K - Adiabatic Wall Temperature. 0.33 --> 0.5 IF GAS FLOW IS LAMINAR
+            Tab(i) = Tc.*(1+Pr_gas(i).^0.33.*(gamma-1)/2.*M(i).^2)./(1+(gamma-1)/2.*M(i).^2); % K - Adiabatic Wall Temperature. 0.33 ==> 0.5 IF GAS FLOW IS LAMINAR
             boiling_fuel = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0, 'Ethanol' ); % K - Ethanol Saturation Temperature
             A_gas = 2*pi*r1(i)*dx/n_pipe(i); % m2 - Area of dx per coolant channel
 
             %% FILM COOLING
             % temporary placeholder variables
             v_boundary = 1; % m/s - Axial stream velocity of combustion gases at edge of boundary layer
-            v_center = 100; % m/s - Average axial stream velocity of combustion gases
-            v_avg = 1; % m/s - Axial stream velocity of combustion gases at the center line of the thrust chamber
+            v_center = 10; % m/s - Axial stream velocity of combustion gases at the center line of the thrust chamber
+            v_avg = 5; % m/s - Average axial stream velocity of combustion gases
 
-            film_friction = 0.015; % Applicable friction coefficient for the two phase flow between combustion gases and liquid film coolant 
-            film_eff = 0.5; % Film-cooling efficiency - ranges from 0.3 to 0. per Huzel and Huang
+            film_friction = 0.1; % Applicable friction coefficient for the two phase flow between combustion gases and liquid film coolant 
+            film_eff = 0.5; % Film-cooling efficiency - ranges from 0.3 to 0.7 per Huzel and Huang
+
+            film_length = film_eff*mdot_film*(cp_film_liq*(T_boil_film-T_film_initial) + heat_vaporization_film) ./ ( 2*pi*r1(1)*h_gas*(T_stagnation-T_boil_film)); % Liquid film coolant boundary layer length (Stechman et al equation 2)
             
-            singularity = Tc - heat_vaporization_film/cp_film_liq;
+            T_bulk = 500;
+            singularity = T_bulk - heat_vaporization_film/cp_film_liq;
             delta = 1e-10; % small value to avoid singularity, adjust as needed
             
             if Tab(i) - (singularity+delta) > 0 % checks which side of the singularity the zero is on
-                Tab(i);
-                T_film(i) = fzero(@(T) film_function(T, film_eff, mdot_film, mdot_gas, r1(i), A_gas, n_pipe(i), v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas(i), Tab(i), cp_film_liq, Tc, heat_vaporization_film), [singularity + delta,10000]);
-                T_film(i);
+                T_film(i) = fzero(@(T_film) film_function(T_film, film_eff, mdot_film, mdot_gas, r1(i), A_gas, n_pipe(i), v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas(i), Tab(i), cp_film_liq, T_bulk, heat_vaporization_film, film_length), [singularity + delta,10000]);
             else
-                T_film(i) = fzero(@(T) film_function(T, film_eff, mdot_film, mdot_gas, r1(i), A_gas, n_pipe(i), v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas(i), Tab(i), cp_film_liq, Tc, heat_vaporization_film), [0,singularity - delta]);
+                T_film(i) = fzero(@(T_film) film_function(T_film, film_eff, mdot_film, mdot_gas, r1(i), A_gas, n_pipe(i), v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas(i), Tab(i), cp_film_liq, T_bulk, heat_vaporization_film, film_length), [0,singularity - delta]);
             end
 
             q_gas(i) = h_film_gas(i)*A_gas*(T_film(i)-T_input); % W - Heat Flux per coolant channel, negative because it flows out of the gas
@@ -197,11 +198,12 @@ for i = flow % Find heat and temperatures along engine contour
 end
 
 % Film cooling function
-function y = film_function(T, film_eff, mdot_film, mdot_gas, r1, A_gas, n_pipe, v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas, Taw, cp_film_liq, Tc, heat_vaporization_film)
+function y = film_function(T_film, film_eff, mdot_film, mdot_gas, r1, A_gas, n_pipe, v_boundary, film_friction, v_avg, v_center, cp_film_gas, cp_gas, Taw, cp_film_liq, T_bulk, heat_vaporization_film, film_length)
     a = (2*v_boundary/(film_friction*v_avg)); % idk what this constant is
     b = v_center/v_boundary-1; % or this one
-    H = cp_film_gas * (Taw - T) ./ (cp_film_liq*(T - Tc) + heat_vaporization_film); % film coolant enthalpy ratio
-    y = film_eff * ( mdot_film/mdot_gas ) * ( pi*r1^2/(A_gas*n_pipe) ) * a * ( 1+ b^(cp_film_gas/cp_gas) )  -  H; % Huzel and Huang page 99
+    H = cp_film_gas * (Taw - T_film) ./ (cp_film_liq*(T_film - T_bulk) + heat_vaporization_film); % film coolant enthalpy
+    y = film_eff * ( mdot_film/mdot_gas ) * ( pi*r1^2/(2*pi*r1*film_length) ) * a * ( 1+b^(cp_film_gas/cp_gas) )  -  H; % Huzel and Huang page 99
+
 end
 
 

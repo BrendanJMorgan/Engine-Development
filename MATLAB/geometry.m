@@ -11,7 +11,7 @@ c_tau = c_tau_ideal*lambda_cone*c_tau_eff; % Thrust Coefficient
 
 v_exhaust_ideal = cea.output.eql.sonvel(3)*cea.output.eql.mach(3); % m/s - ideal exhaust velocity
 v_exhaust = c_star*c_tau; % m/s - actual exhaust velocity
-isp = cea.output.eql.isp(end); % s - specific impulse
+isp_ideal = cea.output.eql.isp(end); % s - specific impulse
 
 %% Mass Flow Rates
 mdot_cc = thrust/v_exhaust;     % kg/s - Propellant Mass Flow Rate into combustion chamber
