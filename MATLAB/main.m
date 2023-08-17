@@ -1,5 +1,4 @@
 clear all
-clf
 
 %% Inputs 
 
@@ -76,10 +75,10 @@ density_ox = 1141; % kg/m3 - lox at boiling
 %% Runs and Plots
 
 combustion
-geometry
-exhaust_flow
-coolant_flow
-thermal_balance
+% geometry
+% exhaust_flow
+% coolant_flow
+% thermal_balance
 % structures
 % pump
 % turbine
@@ -103,14 +102,14 @@ mdot_total
 % xlabel("Distance from Injector (m)");
 % title("Combustion Chamber Contours")
 
-figure(1)
-clf
-plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_free,x,Tab,x,Tref,x,T_film)
-yline(0)
-legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference","Fuel Film",'Location','northeast');
-xlabel("Distance from Injector (m)");
-ylabel("Temperature (K)");
-title("Engine Steady-State Temperatures")
+% figure(1)
+% clf
+% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_free,x,Tab,x,Tref,x,T_film)
+% yline(0)
+% legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference","Fuel Film",'Location','northeast');
+% xlabel("Distance from Injector (m)");
+% ylabel("Temperature (K)");
+% title("Engine Steady-State Temperatures")
 
 % figure(3)
 % clf
