@@ -14,6 +14,7 @@
 Tc = cea.output.eql.temperature(1); % Stagnation / Chamber Temperature
 gamma = mean(cea.output.eql.gamma); % Ratio of Specific Heats % MAKE X DEPENDENT
 
+
 M_inj = cea.output.eql.mach(1); % Mach at injector
 M_comb = 0.002; % Mach at start of convergence (combustor?) UPDATE TO FINITE AREA COMBUSTOR
 M_throat = cea.output.eql.mach(2); % Mach at throat, should be 1 unless something is very wrong

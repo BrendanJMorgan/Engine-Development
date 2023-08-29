@@ -1,4 +1,15 @@
 clear all
+tic
+
+%% TO DO
+
+% Need to adjust all coolprop calls with ethanol to include the water content
+% Upgrade infinite area combustor to finite area combustor
+% Reevaluate why CEA machs are not even close to isentropic relations
+% Decide if c tau should be changed to a bell nozzle
+% Adjust actual isp to account for propellant bleed through gg
+% Compare CEA transport properties to those found from micture() function
+
 
 %% Inputs 
 
@@ -75,10 +86,10 @@ density_ox = 1141; % kg/m3 - lox at boiling
 %% Runs and Plots
 
 combustion
-% geometry
-% exhaust_flow
-% coolant_flow
-% thermal_balance
+geometry
+exhaust_flow
+coolant_flow
+thermal_balance
 % structures
 % pump
 % turbine
@@ -140,3 +151,5 @@ mdot_total
 % plot(x,v_cool);
 % xlabel("Distance from Injector (m)");
 % ylabel("Velocity (m/s)");
+
+toc

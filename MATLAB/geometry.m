@@ -14,11 +14,11 @@ v_exhaust = c_star*c_tau; % m/s - actual exhaust velocity
 isp_ideal = cea.output.eql.isp(end); % s - specific impulse
 
 %% Mass Flow Rates
-mdot_cc = thrust/v_exhaust;     % kg/s - Propellant Mass Flow Rate into combustion chamber
+mdot_cc = thrust/v_exhaust;     % kg/s - Propellant mass flow rate into combustion chamber
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate
 
-mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction); % kg/s - Propellant Mass Flow Rate into gas generator
+mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction); % kg/s - Propellant mass flow rate into gas generator
 mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
 
@@ -75,7 +75,7 @@ r1 = ones(1,length(x))*0.5*d1_chamber; % Chamber
 r2 = r1 + thickness;
 
 pipe_bound1 = find(r1 <= merge_radius, 1, 'first'); % First index where inner contour is at a given radius
-pipe_bound2 = find(r1 <= merge_radius, 1, 'last'); % Last index where innner contour is at a givenn radius
+pipe_bound2 = find(r1 <= merge_radius, 1, 'last'); % Last index where innner contour is at a given radius
 
 n_pipe = zeros(1,length(x));
 n_pipe( 1 : pipe_bound1 ) = n_pipe1;

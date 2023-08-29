@@ -1,5 +1,6 @@
-%% Exhaust Flow Properties
+%% Mach
 
+% THE STRETCHING IS SUS
 M = zeros(1,length(x)); % Mach Number
 
 % Chamber
@@ -25,3 +26,14 @@ for i = round(x2_throat/dx):1:length(x)
 end
 factor2 = M_exit/M(length(x));
 M(round(x2_throat/dx):length(x)) = M(round(x2_throat/dx):length(x)) * factor2; % Stretch to fit CEA data
+
+%% Enthalpy
+H1 = cea.output.eql.enthalpy(1);
+H2 = cea.output.eql.enthalpy(2);
+H3 = cea.output.eql.enthalpy(3);
+
+n1 = floor((length(x) - 1) / 2) + 1;  % Number of elements in the first segment
+n2 = length(x) - n1 + 1;              % Number of elements in the second segment
+segment1 = linspace(H1, H2, n1);
+segment2 = linspace(H2, H3, n2);
+H_exhaust = [segment1, segment2(2:end)];
