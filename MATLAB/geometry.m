@@ -29,7 +29,7 @@ mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
 %% Cross Section Areas
 R_gas = 8.3145 / (0.001*cea.output.eql.mw(2)); % J/kg-K - Specific Gas Constant (throat)
 
-A_throat = mdot_cc*sqrt(Tc)/pc * sqrt(R_gas/gamma) * ((gamma+1)/2)^((gamma+1)/(2*(gamma-1))); % m2 - throat area
+A_throat = mdot_cc*c_star/pc; % m2 - throat area
 A2_throat = thrust / pc; % m2 - throat area
 A3_throat = mdot_cc*c_star/pc; % m2 - throat area
 d_throat = sqrt(4*A_throat/pi); % m - throat diameter
