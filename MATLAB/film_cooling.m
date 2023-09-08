@@ -1,17 +1,39 @@
-function length = film_cooled_length(dens_exhaust, v_exhaust, mdot_film, d_avg, T_film)
-    T_film = 500;
-    surface_tension_film = py.CoolProp.CoolProp.PropsSI('I', 'T', T_film, 'Q', 0, 'Ethanol'); % N/m
-    mol_weight_film = py.CoolProp.CoolProp.PropsSI('M', 'T', T_film, 'Q', 0, 'Ethanol'); % N/m
-    mol_weight_gas
+%% Combustion Thermal Environment
+T_free = Tc ./ (1 + (gamma_gas-1)/2 .* M_gas.^2); % Free-Stream Temperature
+
+%% Wall Conduction
+
+fin_thickness = gap_pipe; % m
+fin_height = h_pipe; % m
+fin_length = x_exit; % m
+
+%% Film Flow
+
+mdot_film = film_fraction*mdot_cc;
+mdot_gas = (1-film_fraction)*mdot_cc;
+
+T_cool = T_amb*ones(1,length(x));
+
+film_cooled = zeros(1,length(x)); % boolean - true values signify there is liquid film cooling at that location
+film_injection_x = [0, l_chamber]; % m - film cooling orifices around perimeter of injector and along bottom edge of chamber wall
+
+for j = 1:1:length(film_injection_x)
+    i = floor(film_injection_x(j)/dx)+1;
     
-    P_film_vapor = Pc / (1 + film_mol_weight)
-    T_interface = 
+    T_film = T_cool(i);
+    Pr_film_liq = py.CoolProp.CoolProp.PropsSI('Prandtl', 'P', pc, 'Q', 0, 'Ethanol');
+    visc_film_liq = py.CoolProp.CoolProp.PropsSI('V', 'P', pc, 'Q', 0, 'Ethanol'); % Pa-s
+    d_avg = 2*r1(i); % m - CORRECT TO A BETTER AVERAGE
     
-    %lewis_number_gas = gas_cond / (gas_density*cp_gas*diffusivity_gas);
-    
-    entrainment_augmentation = 1.3; % empirical factor for coolant injection. For injection parallel to core flow, 1.0 to 1.6; for swirl injection, maybe as low as 0.4
-    film_surface_tension;
-    entrainment_parameter = 2.10908 * entrainment_augmentation * (rho_gas/g)^0.5 * v_exhaust * (T_free/T_interface)^0.25 / surface_tension; % lbf^-1/2
-    surface_vaporization = pi*d_chamber
-    film_liquid_length = log( 1 + entrainment*mdot_film/surface_vaporization)/entrainment;
+    film_length(j) = film_cooled_length(0.5*mdot_film, T_film, Pr_film_liq, visc_film_liq, d_avg, l_chamber, dens_gas(i), v_gas(i), T_free(i), H_gas(i), p_gas(i), cp_gas(i), mol_gas(i));
 end
+
+
+
+
+
+
+
+
+
+

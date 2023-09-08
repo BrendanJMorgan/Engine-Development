@@ -1,7 +1,8 @@
 %% CEA Run Rocket
 
  cea = CEA('problem','rocket', ...
-     'equilibrium', ...  % equilibrium flow, infinite chamber, 
+     'equilibrium', ...  % equilibrium flow
+     'fac','acat',pi*r1_chamber^2 / A_throat, ... % finite area combustor, contraction ratio
      'o/f',OF, ...          % Define OF ratio
      'case','CEAM-rocket1', ...
      'p(psi)',pc/6894.76,'pi/p',pc/p_amb, ... % Define nozzle with pressure ratio
@@ -11,14 +12,5 @@
      'output','short','massf','transport','mks', ...
      'end');
 
-Tc = cea.output.eql.temperature(1); % Stagnation / Chamber Temperature
-gamma = mean(cea.output.eql.gamma); % Ratio of Specific Heats % MAKE X DEPENDENT
-
-
-M_inj = cea.output.eql.mach(1); % Mach at injector
-M_comb = 0.002; % Mach at start of convergence (combustor?) UPDATE TO FINITE AREA COMBUSTOR
-M_throat = cea.output.eql.mach(2); % Mach at throat, should be 1 unless something is very wrong
-if M_throat < 0.99 || M_throat > 1.01
-    error("Sonic point is not at throat");
-end
-M_exit = cea.output.eql.mach(3); % Mach at exit, should be supersonic
+ gamma_gas = mean([cea.output.eql.gamma(3), cea.output.eql.gamma(4)]); % Ratio of Specific Heats, estimate
+ Tc = cea.output.eql.temperature(1); % K
