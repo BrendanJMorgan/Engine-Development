@@ -34,6 +34,12 @@ isp_real = (v_exhaust/g)*(mdot_cc/mdot_total); % s
 
 %% Cross Section Areas
 
+<<<<<<< HEAD
+=======
+A_throat = mdot_cc*c_star/pc; % m2 - throat area
+A2_throat = thrust / pc; % m2 - throat area
+A3_throat = mdot_cc*c_star/pc; % m2 - throat area
+>>>>>>> 68c65527e79b3952236e54dd8437dd8e084ea67f
 d_throat = sqrt(4*A_throat/pi); % m - throat diameter
 r_throat = d_throat/2; % m - throat radius
 A_exit = A_throat*Ae_At; % m2 - exit area
