@@ -1,0 +1,9 @@
+function dp = liquid_flow(d_pipe, l_pipe, q_liquid, dens_liquid)
+
+  fd = % Darcy Friction Factor
+  specific_gravity = dens_liquid / 1000; % Relative to density of water at its densest
+  dp_major = 8 * q_liquid^2 * fd * specific_gravity * l_pipe / (d_pipe^5 * pi^2) % Pa - major pressure loss from pipe wall friction
+
+
+
+end
