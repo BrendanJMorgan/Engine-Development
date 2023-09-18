@@ -151,7 +151,7 @@ function cost = cost_function(bezier_params, r_eye, r_exit, w_exit, impeller_thi
     cost = abs(slope_shroud) + abs(slope_impeller) + 100*abs(1/max(shroud_curvature)-r_min);
 end
 
-function curve = bezier(points) % Credit to Lakshmi Narasimhan of NIT Allahabad, India
+function curve = bezier(points)
     for i=0:1:3
         sigma(i+1)=factorial(3)/(factorial(i)*factorial(3-i));
     end  

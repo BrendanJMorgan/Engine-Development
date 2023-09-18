@@ -6,40 +6,6 @@ n1 = floor(x_combustor/dx);
 n2 = floor(x2_throat/dx) - n1;  
 n3 = length(x) - n2 - n1;
 
-%% Mach
-
-M1 = cea.output.eql.mach(1); % Mach at injector
-M2 = cea.output.eql.mach(2); % Mach at start of convergence (combustor?) UPDATE TO FINITE AREA COMBUSTOR
-M3 = cea.output.eql.mach(3); % Mach at throat, should be 1 unless something is very wrong
-M4 = cea.output.eql.mach(4); % Mach at exit, should be supersonic
-
-% THE STRETCHING IS SUS
-M_gas = zeros(1,length(x)); % Mach Number
-
-% Chamber
-M_gas(1:round(l_chamber/dx)) = linspace(M1, M2, round(l_chamber/dx));
-dm = 0.0001;
-
-% Converging
-m = 0:dm:1;
-for i = round(l_chamber/dx):1:round(x2_throat/dx)
-    % Isentropic Area Relation
-    [~,index] = min(abs( (1./m)*(0.5*(gamma_gas+1)).^(-0.5*(gamma_gas+1)./(gamma_gas-1)).*(1+0.5*(gamma_gas-1) .* m.^2).^((gamma_gas+1)./(2*(gamma_gas-1))) - (r1(i)*2./d_throat).^2 ) )   ;
-    M_gas(i) = (-dm + dm * index);
-end
-factor1 = (1-M2)/(1-M_gas(round(l_chamber/dx)));
-M_gas(round(l_chamber/dx):round(x2_throat/dx)) = 1 - ((1-M_gas(round(l_chamber/dx):round(x2_throat/dx))) * factor1); % Stretch to fit CEA data
-
-% Diverging
-m = 1:dm:3;
-for i = round(x2_throat/dx):1:length(x)
-    % Isentropic Area Relation
-    [~,index] = min(abs( (1./m)*(0.5*(gamma_gas+1)).^(-0.5*(gamma_gas+1)./(gamma_gas-1)).*(1+0.5*(gamma_gas-1) .* m.^2).^((gamma_gas+1)./(2*(gamma_gas-1))) - (r1(i)*2./d_throat).^2 ) )   ;
-    M_gas(i) = (1 -dm + dm * index) * (M4);
-end
-factor2 = M4/M_gas(length(x));
-M_gas(round(x2_throat/dx):length(x)) = M_gas(round(x2_throat/dx):length(x)) * factor2; % Stretch to fit CEA data
-
 %% Enthalpy
 H1 = cea.output.eql.enthalpy(1);
 H2 = cea.output.eql.enthalpy(2);
@@ -100,8 +66,42 @@ segment2 = linspace(mol2, mol3, n2);
 segment3 = linspace(mol3, mol4, n3);
 mol_gas = [segment1, segment2, segment3]; % g/mol
 
-%% Velocity
+%% Mach
 cs_gas = sqrt(gamma_gas.*p_gas./dens_gas); % m/s - speed of sound
+M1 = cea.output.eql.mach(1) + v_injection/cs_gas(1); % Mach at injector
+M2 = cea.output.eql.mach(2); % Mach at start of convergence (combustor?) UPDATE TO FINITE AREA COMBUSTOR
+M3 = cea.output.eql.mach(3); % Mach at throat, should be 1 unless something is very wrong
+M4 = cea.output.eql.mach(4); % Mach at exit, should be supersonic
+
+% THE STRETCHING IS SUS
+M_gas = zeros(1,length(x)); % Mach Number
+
+% Chamber
+M_gas(1:round(l_chamber/dx)) = linspace(M1, M2, round(l_chamber/dx));
+dm = 0.0001;
+
+% Converging
+m = 0:dm:1;
+for i = round(l_chamber/dx):1:round(x2_throat/dx)
+    % Isentropic Area Relation
+    [~,index] = min(abs( (1./m)*(0.5*(gamma_avg+1)).^(-0.5*(gamma_avg+1)./(gamma_avg-1)).*(1+0.5*(gamma_avg-1) .* m.^2).^((gamma_avg+1)./(2*(gamma_avg-1))) - (r1(i)*2./d_throat).^2 ) )   ;
+    M_gas(i) = (-dm + dm * index);
+end
+factor1 = (1-M2)/(1-M_gas(round(l_chamber/dx)));
+M_gas(round(l_chamber/dx):round(x2_throat/dx)) = 1 - ((1-M_gas(round(l_chamber/dx):round(x2_throat/dx))) * factor1); % Stretch to fit CEA data
+
+% Diverging
+m = 1:dm:3;
+for i = round(x2_throat/dx):1:length(x)
+    % Isentropic Area Relation
+    [~,index] = min(abs( (1./m)*(0.5*(gamma_avg+1)).^(-0.5*(gamma_avg+1)./(gamma_avg-1)).*(1+0.5*(gamma_avg-1) .* m.^2).^((gamma_avg+1)./(2*(gamma_avg-1))) - (r1(i)*2./d_throat).^2 ) )   ;
+    M_gas(i) = (1 -dm + dm * index) * (M4);
+end
+factor2 = M4/M_gas(length(x));
+M_gas(round(x2_throat/dx):length(x)) = M_gas(round(x2_throat/dx):length(x)) * factor2; % Stretch to fit CEA data
+
+%% Velocity
+
 v_gas = M_gas.*cs_gas; % m/s
 
 

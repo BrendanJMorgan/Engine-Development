@@ -12,5 +12,5 @@
      'output','short','massf','transport','mks', ...
      'end');
 
- gamma_gas = mean([cea.output.eql.gamma(3), cea.output.eql.gamma(4)]); % Ratio of Specific Heats, estimate
+ gamma_avg = mean([cea.output.eql.gamma(3), cea.output.eql.gamma(4)]); % Ratio of Specific Heats, estimate
  Tc = cea.output.eql.temperature(1); % K
