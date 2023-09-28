@@ -1,0 +1,15 @@
+/COM,ANSYS RELEASE 2023 R1           BUILD 23.1      UP20221128       03:06:23
+
+ *** WARNING ***                         CP =       0.234   TIME= 03:06:24
+ Material property ALPX of material 1 is evaluated at a temperature of   
+ 22, which is below the supplied temperature range.  Temperature range   
+ checking terminates.                                                    
+
+ *** WARNING ***                         CP =       0.297   TIME= 03:06:24
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       1.266   TIME= 03:06:27
+ Material property DENS of material 8 of element 8165 is evaluated at a  
+ temperature of 22, which is below the supplied temperature range.       
+ Temperature range checking terminates.                                  

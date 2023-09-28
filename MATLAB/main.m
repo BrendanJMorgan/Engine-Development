@@ -16,7 +16,7 @@ p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
 T_amb = 293; % K - Ambient Temperature
 
 % Overall Engine Performance Targets
-thrust_target = 1000*4.44822; % N - Thrust
+thrust_target = 1500*4.44822; % N - Thrust
 pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
 
 OF = 1.4; % Oxidizer/Fuel Ratio
@@ -26,8 +26,6 @@ c_tau_eff = 0.96; % Thrust Coefficient Efficiency Factor
 gamma_guess = 1.22;
 c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma_guess+1))^((gamma_guess+1)/(gamma_guess-1)) * (1-(p_amb/pc)^((gamma_guess-1)/gamma_guess) ) ) ); 
 A_throat = thrust_target / (pc*c_tau_guess*c_star_eff); % m2 - Throat Area
-
-film_fraction = 0.01; % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
 
 p_gg = 1000*6894.76; % Pa - chamber pressure inside gas generator
 gg_fraction = 0.05; % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
@@ -40,32 +38,33 @@ diverge_angle = 15*pi/180; % rad
 l_star = 1; % m
 rc_throat = 1*0.0254; % m - radius of curvature around the throat
 d2_chamber = 4.5*0.0254; % m
-thickness = 1/8*0.0254; % m
+thickness = 1/4*0.0254; % m % SLANT VS VERTICAL THICKNESS
 d1_chamber = d2_chamber - 2*thickness; % m
 r1_chamber = d1_chamber/2;
 
-% Coolant Channels 
+% Coolant Channels
 n_pipe1 = 16; % number of channels along barrel
 n_pipe2 = 16; % number of channels near throat
 n_pipe3 = 16; % number of channels along lower nozzle section
 gap_pipe = 1/4*0.0254; % Gap between channels (fin thickness)
 h_pipe = 1/16*0.0254; % m - coolant channel height
-merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transition to n_pipe2
+merge_radius = 0.45*d1_chamber; % m - when contour is below this rad 9ius, transition to n_pipe2
 flow_direction = -1; % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
 % Film Cooling
-v_injection = 100; % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
+film_fraction = 0.03; % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
+v_injection = 10; % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
 injection_efficiency = 1.0;
 
 % Turbomachinery
 shaft_speed = 20000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
-r_shaft = (0.25+0.05)*0.0254; % m
+r_shaft = 0.5*0.0254; % m
 impeller_thickness = 1/8*0.0254; % m - thickness of impeller at the exit point, not including blades
 impeller_height = 0.8*0.0254; % m - from base of impeller to eye plane
 
 %% Properties
 
-wall = "copper";
+wall = "aluminum";
 
 switch wall
     case "aluminum" % 6061
@@ -88,8 +87,6 @@ k_fuel = 0.167; % W/m-K - thermal conductivity
 
 density_ox = 1141; % kg/m3 - lox at boiling
 
-
-
 %% Runs and Plots
 
 combustion
@@ -97,20 +94,17 @@ geometry
 exhaust_flow
 coolant_flow
 
-T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
-thermal_balance2
-% thermal_balance
-
+% T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
+% thermal_balance2
+% thermal_balance2
 % structures
-% pump
+pump
 % turbine
 % gas_generator
 
-
-
 %% Results
 
-thrust_lbf = thrust/4.44822;;
+thrust_lbf = thrust/4.44822;
 thrust_lbf
 isp_ideal
 isp_real
@@ -119,22 +113,22 @@ mdot_total
 % writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
 % writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
 
-figure(2)
-clf
-colororder('default')
-plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-axis equal
-xlabel("Distance from Injector (m)");
-title("Combustion Chamber Contours")
+% figure(2)
+% clf
+% colororder('default')
+% plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
+% axis equal
+% xlabel("Distance from Injector (m)");
+% title("Combustion Chamber Contours")
 
-figure(1)
-clf
-plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_free,x,Tab,x,T_ref)
-yline(0)
-legend("Cold Wall","Hot Wall","Coolant","Free-Stream Gas","Adiabatic (no cooling)","Gas Property Reference",'Location','northeast');
-xlabel("Distance from Injector (m)");
-ylabel("Temperature (K)");
-title("Engine Steady-State Temperatures")
+% figure(1)
+% clf
+% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_film,x,T_free,x,T_ab,x,T_recovery,x,T_ref)
+% yline(0)
+% legend("Cold Wall","Hot Wall","Regen Coolant","Film Coolant","Free-Stream Gas","Adiabatic", "Recovery", "Gas Property Reference",'Location','northeast');
+% xlabel("Distance from Injector (m)");
+% ylabel("Temperature (K)");
+% title("Engine Steady-State Temperatures")
 
 % figure(3)
 % clf

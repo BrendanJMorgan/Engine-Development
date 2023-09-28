@@ -1,0 +1,59 @@
+# encoding: utf-8
+# 2023 R1
+SetScriptVersion(Version="23.1.153")
+template1 = GetTemplate(TemplateName="Geometry")
+system1 = template1.CreateSystem()
+template2 = GetTemplate(TemplateName="EngData")
+system2 = template2.CreateSystem(
+    Position="Above",
+    RelativeTo=system1)
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/[TP] Turbopump.STEP")
+template3 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system3 = template3.CreateSystem(
+    Position="Right",
+    RelativeTo=system1)
+template4 = GetTemplate(
+    TemplateName="Steady-State Thermal",
+    Solver="ANSYS")
+engineeringDataComponent1 = system3.GetComponent(Name="Engineering Data")
+geometryComponent1 = system3.GetComponent(Name="Geometry")
+modelComponent1 = system3.GetComponent(Name="Model")
+system4 = template4.CreateSystem(
+    ComponentsToShare=[engineeringDataComponent1, geometryComponent1, modelComponent1],
+    Position="Right",
+    RelativeTo=system3)
+engineeringDataComponent2 = system2.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.ReplaceWithShare(
+    TargetSystem=system3,
+    ComponentToShare=engineeringDataComponent2,
+    SourceSystem=system2)
+geometryComponent2 = system1.GetComponent(Name="Geometry")
+geometryComponent1.ReplaceWithShare(
+    TargetSystem=system3,
+    ComponentToShare=geometryComponent2,
+    SourceSystem=system1)
+modelComponent1.Refresh()
+model1 = system3.GetContainer(ComponentName="Model")
+model1.Edit()
+model1.Edit()
+Save(Overwrite=True)
+template5 = GetTemplate(
+    TemplateName="Modal",
+    Solver="ANSYS")
+solutionComponent1 = system3.GetComponent(Name="Solution")
+componentTemplate1 = GetComponentTemplate(Name="SimulationSetupCellTemplate_StructuralModalANSYS")
+system5 = template5.CreateSystem(
+    ComponentsToShare=[engineeringDataComponent1, geometryComponent1, modelComponent1],
+    DataTransferFrom=[Set(FromComponent=solutionComponent1, TransferName=None, ToComponentTemplate=componentTemplate1)],
+    Position="Below",
+    RelativeTo=system4)
+template6 = GetTemplate(TemplateName="TurboFluidFlow")
+system6 = template6.CreateSystem(
+    Position="Below",
+    RelativeTo=system1)
+system6.Delete()
+model1.Exit()
+Save(Overwrite=True)

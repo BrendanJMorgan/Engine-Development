@@ -1,0 +1,16 @@
+/COM,ANSYS RELEASE 2023 R1           BUILD 23.1      UP20221128       03:28:10
+
+ *** WARNING ***                         CP =       0.531   TIME= 03:28:12
+ Material property ALPX of material 1 is evaluated at a temperature of   
+ 0, which is below the supplied temperature range.  Temperature range    
+ checking terminates.                                                    
+
+ *** WARNING ***                         CP =       0.531   TIME= 03:28:12
+ The temperature-dependent secant coefficient of thermal expansion for   
+ material 8 includes a temperature point of reference temperature (with  
+ a tolerance of 1 degree).  This data is ignored for the MPAMOD command  
+ operation to avoid a numerical singularity.                             
+
+ *** WARNING ***                         CP =       0.688   TIME= 03:28:12
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
