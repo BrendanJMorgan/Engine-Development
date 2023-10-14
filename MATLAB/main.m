@@ -6,7 +6,7 @@ tic
 % Need to adjust all coolprop calls with ethanol to include the water content
 % Reevaluate why CEA machs are not even close to isentropic relations
 % Decide if c tau should be changed to a bell nozzle
-% Compare CEA transport properties to those found from micture() function
+% Compare CEA transport properties to those found from mixture() function
 
 %% Inputs 
 
@@ -99,8 +99,9 @@ coolant_flow
 % thermal_balance2
 % structures
 pump
-% turbine
 % gas_generator
+% turbine
+
 
 %% Results
 

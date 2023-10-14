@@ -34,17 +34,5 @@ blockage = 0.85; % 1 is completely open, pump handbook says 0.85 is typical?
 
 impeller
 blades
-%volute
 
-%% Requirments for Turbine
-fuel_pump_efficiency = 0.5; % VERY ARBITRARY PLACEHOLDER
-fuel_pump_power = vdot_fuel * head_fuel * density_fuel * g / fuel_pump_efficiency;
-ox_pump_power = fuel_pump_power; % PLACEHOLDER
-
-shaft_power = fuel_pump_power + ox_pump_power;
-
-
-
-
-
-
+shaft_power = vdot_fuel * head_fuel * desnity_fuel * g / fuel_pump_efficiency;

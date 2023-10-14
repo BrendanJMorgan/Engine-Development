@@ -50,13 +50,26 @@ hold on;
 delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
 for i = 0:(blade_number-1)
     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve * rotation_matrix';
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
+    
+    
+    rotated_curve = blade_curve * rotation_matrix'; % Rotate the blade_curve
+    
+    % Plot the rotated blade_curve
+    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2);
+    
+    % Prevent connection between different blades
+    plot(NaN, NaN); % Insert a NaN
 end
+
+% Release the hold on the figure
 hold off;
-title('Impeller Blades');
-axis equal;
+
+% Label axes and title for better clarity
+xlabel('X-axis');
+ylabel('Y-axis');
+title('Rotated Blades');
+
+% Add grid
 grid on;
 
 
