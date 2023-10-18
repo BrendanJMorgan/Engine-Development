@@ -34,7 +34,36 @@ blockage = 0.85; % 1 is completely open, pump handbook says 0.85 is typical?
 
 impeller
 blades
-%volute
+volute
+
+%% Plotting
+
+% figure(1)
+% line(shroud_curve(:,1), shroud_curve(:,2))
+% hold on
+% plot(shroud_points(:,1),shroud_points(:,2),'o','color','r')
+% axis equal
+% 
+% plot(impeller_curve(:,1), impeller_curve(:,2))
+% 
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
+
+%% Plotting Blades
+% figure;
+% hold on;
+% 
+% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve * rotation_matrix';
+%     plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% hold off;
+% title('Impeller Blades');
+% axis equal;
+% grid on;
 
 %% Requirments for Turbine
 fuel_pump_efficiency = 0.5; % VERY ARBITRARY PLACEHOLDER

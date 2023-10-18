@@ -56,18 +56,7 @@ if min_radius < 0.99*r_min
     fprintf("Pump shroud curvature reaches %.2f mm radius. Need above ~%.2f mm (half of eye radius) to avoid cavitation.", min_radius*1000, r_min*1000)
 end
 
-%% Plotting
 
-% figure(1)
-% line(shroud_curve(:,1), shroud_curve(:,2))
-% hold on
-% plot(shroud_points(:,1),shroud_points(:,2),'o','color','r')
-% axis equal
-% 
-% plot(impeller_curve(:,1), impeller_curve(:,2))
-% 
-% line([0 0], ylim);  %x-axis
-% line(xlim, [0 0]);  %y-axis
 
 %% Functions 
 function f = equation_to_solve(r_eye, vdot_fuel, shaft_speed, eye_flow_coeff, r_shaft)
