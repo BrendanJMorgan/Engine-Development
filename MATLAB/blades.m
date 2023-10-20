@@ -18,7 +18,9 @@ v_blade_exit = shaft_speed*r_exit; % m/s
 v_slip = slip_factor*v_blade_exit; % m/s - slip velocity
 v_merid_exit = vdot_fuel/(2*pi*r_exit*w_exit); % m/s                                                                                
 
-v_flow_exit_tangential = 10; % m/s - GUESS TARGET, NEEDS TO BE DERIVED FROM SOMETHING                                                                                                                                                                                                                                                                                                                                                                                                                                       
+hydraulic_efficiency = 1 - 0.071 / vdot_fuel^0.25; % Jekat's Empirical Formula
+
+v_flow_exit_tangential = g*head_fuel / (hydraulic_efficiency*v_blade_exit); % m/s - this is Euler's pump equation rearranged                                                                                                                                                                                                                                                                                                                                                                                                                                     
 blade_angle_outlet = atan(v_merid_exit / (v_blade_exit-v_flow_exit_tangential - v_slip)); % rad
 
 %% Individual Blade Curve 
@@ -31,35 +33,10 @@ control2 = blade_params_optimal(2);
 sweep = blade_params_optimal(3);
 [blade_curve, blade_control_points, ~, ~] = compute_blade_curve(control1, control2, sweep, r_inlet, r_exit, blade_angle_inlet, blade_angle_outlet);
 
-% figure(2)
-% clf
-% line(blade_curve(:,1), blade_curve(:,2))
-% hold on
-% plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
-% axis equal
-
 %% Number of Blades
 blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2))); % m - arc length of one individual blade
 solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed_fuel); % solidity is the optimal ratio of blade chord to blade spacing. Pump handbook page 2.36
 blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length)); % number of blade, rounded to the nearest even number
-
-%% Plotting Blades
-figure;
-hold on;
-
-delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve * rotation_matrix';
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-hold off;
-title('Impeller Blades');
-axis equal;
-grid on;
-
-
 
 %% Helper Functions
 % Function to compute slopes and minimum curvature for blade curve in a pump

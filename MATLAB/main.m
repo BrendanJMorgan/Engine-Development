@@ -1,4 +1,5 @@
 clear all
+clf
 tic
 
 %% TO DO
@@ -111,8 +112,10 @@ isp_ideal
 isp_real
 mdot_total
 
-% writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
-% writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
+writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
+writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
+
+writematrix([blade_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'blade_curve_inches.txt', 'Delimiter', ',')
 
 % figure(2)
 % clf
