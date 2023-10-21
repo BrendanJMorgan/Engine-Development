@@ -41,14 +41,14 @@ A_pump_eye = pi * (r_eye^2 - r_shaft^2);
 A_pump_exit = 2 * pi * r_exit * w_exit;
 
 % Generate area array from eye to exit along the shroud curve
-A_pump_flow = linspace(A_pump_eye, A_exit, length(shroud_curve))';
+A_pump_flow = linspace(A_pump_eye, A_pump_exit, length(shroud_curve))';
 
 % Compute the angles of the normals at each point on the shroud curve
 normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2;
-normal_angles(normal_angles > 2 * pi) = normal_angles(normal_angles > 2 * pi) - 2 * pi;
+normal_angles(normal_angles > 2 * pi) = normal_angles(normal_angles > 2 * pi) - 2 * pi; % rad - relative to the vector [-1; 0] - i.e. it starts at 0 and ends at pi/2
 
 % Compute the crosswise gap between shroud and impeller curves at each point
-crosswise_gap = sec(normal_angles) .* (shroud_curve(:,1) - sqrt(pi^2 * shroud_curve(:,1).^2 - pi * A_pump_flow .* cos(normal_angles)) / pi);
+crosswise_gap = sec(normal_angles) .* (shroud_curve(:,1) - sqrt(pi^2 * shroud_curve(:,1).^2 - pi * A_pump_flow .* cos(normal_angles)) / pi); % m - distance between shroud and impeller, normal to the shroud surface
 
 % Generate impeller curve based on the shroud curve and the crosswise gap
 impeller_curve = [shroud_curve(:,1) - crosswise_gap .* cos(normal_angles), shroud_curve(:,2) - crosswise_gap .* sin(normal_angles)];

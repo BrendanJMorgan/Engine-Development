@@ -1,5 +1,5 @@
 %% Requirements
-p_out_fuel = p_cool(1); % Pa - outlet pressure
+p_out_fuel = p_cool(1) + 50*6894.76; % Pa - outlet pressure plus 50 psi of margin for plumbing losses and various inefficiencies
 p_in_fuel = p_amb; % Pa - inlet pressure
 p_out_ox = pc; % Pa - outlet pressure
 p_in_ox = p_amb; % Pa - inlet pressure
