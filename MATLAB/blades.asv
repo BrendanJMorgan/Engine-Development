@@ -18,7 +18,11 @@ v_blade_exit = shaft_speed*r_exit; % m/s
 v_slip = slip_factor*v_blade_exit; % m/s - slip velocity
 v_merid_exit = vdot_fuel/(2*pi*r_exit*w_exit); % m/s                                                                                
 
-v_flow_exit_tangential = 10; % m/s - GUESS TARGET, NEEDS TO BE DERIVED FROM SOMETHING                                                                                                                                                                                                                                                                                                                                                                                                                                       
+hydraulic_efficiency = 1 - 0.071 / vdot_fuel^0.25; % Jekat's Empirical Formula
+
+
+
+v_flow_exit_tangential = g*head_fuel / (hydraulic_efficiency*v_blade_exit); % m/s - this i s                                                                                                                                                                                                                                                                                                                                                                                                                                     
 blade_angle_outlet = atan(v_merid_exit / (v_blade_exit-v_flow_exit_tangential - v_slip)); % rad
 
 %% Individual Blade Curve 
@@ -50,26 +54,13 @@ hold on;
 delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
 for i = 0:(blade_number-1)
     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    
-    
-    rotated_curve = blade_curve * rotation_matrix'; % Rotate the blade_curve
-    
-    % Plot the rotated blade_curve
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2);
-    
-    % Prevent connection between different blades
-    plot(NaN, NaN); % Insert a NaN
+    rotated_curve = blade_curve * rotation_matrix';
+    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+    plot(NaN, NaN); % Prevent connection between different blades
 end
-
-% Release the hold on the figure
 hold off;
-
-% Label axes and title for better clarity
-xlabel('X-axis');
-ylabel('Y-axis');
-title('Rotated Blades');
-
-% Add grid
+title('Impeller Blades');
+axis equal;
 grid on;
 
 

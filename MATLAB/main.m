@@ -1,4 +1,5 @@
 clear all
+clf
 tic
 
 %% TO DO
@@ -58,7 +59,7 @@ injection_efficiency = 1.0;
 
 % Turbomachinery
 shaft_speed = 20000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
-r_shaft = 0.5*0.0254; % m
+r_shaft = 9/32*0.0254; % m - you need a little bit of clearance around a 1/2 inch shaft
 impeller_thickness = 1/8*0.0254; % m - thickness of impeller at the exit point, not including blades
 impeller_height = 0.8*0.0254; % m - from base of impeller to eye plane
 
@@ -111,8 +112,10 @@ isp_ideal
 isp_real
 mdot_total
 
-% writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
-% writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
+writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
+writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
+
+writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), blade_curve(:,2)/0.0254], 'blade_curve_inches.txt', 'Delimiter', ',')
 
 % figure(2)
 % clf

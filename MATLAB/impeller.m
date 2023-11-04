@@ -32,20 +32,26 @@ bezier_params_optimal = fminsearch(cost_function, bezier_params_initial);
 bezier_vert_optimal = bezier_params_optimal(1);
 bezier_horiz_optimal = bezier_params_optimal(2);
 
-shroud_points = [r_eye,impeller_height; r_eye, impeller_height-bezier_vert_optimal; r_exit-bezier_horiz_optimal,impeller_thickness+w_exit; r_exit, impeller_thickness+w_exit]; % [m,m] - bezier control points of the shroud
-shroud_curve = bezier(shroud_points); % [m,m] - lower curved edge of revolution of the pump shroud
+% Generate the shroud curve using bezier control points
+control_points = [r_eye, impeller_height; r_eye, impeller_height - bezier_vert_optimal; r_exit - bezier_horiz_optimal, impeller_thickness + w_exit; r_exit, impeller_thickness + w_exit];
+shroud_curve = bezier(control_points);
 
-A_eye = pi*(r_eye^2-r_shaft^2); % m2 - area of the annular eye entrance
-A_exit = 2*pi*r_exit*w_exit; % m2 - area of the cylindrical exit THIS VARIABLE IS OVERLOADED
+% Compute the flow areas at eye and exit
+A_pump_eye = pi * (r_eye^2 - r_shaft^2);
+A_pump_exit = 2 * pi * r_exit * w_exit;
 
-A_pump_flow = linspace(A_eye, A_exit, length(shroud_curve))'; % m2 - cross sectional area perpendicular to flow
+% Generate area array from eye to exit along the shroud curve
+A_pump_flow = linspace(A_pump_eye, A_pump_exit, length(shroud_curve))';
 
-normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2; % rad
-normal_angles(normal_angles > 2*pi) = normal_angles(normal_angles > 2*pi) - 2*pi;
+% Compute the angles of the normals at each point on the shroud curve
+normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2;
+normal_angles(normal_angles > 2 * pi) = normal_angles(normal_angles > 2 * pi) - 2 * pi; % rad - relative to the vector [-1; 0] - i.e. it starts at 0 and ends at pi/2
 
-crosswise_gap =  sec(normal_angles) .* ( shroud_curve(:,1) - sqrt( pi^2 * shroud_curve(:,1).^2 - pi*A_pump_flow.*cos(normal_angles) ) / pi); % m - gap between shroud curve and impeller curve at each point
+% Compute the crosswise gap between shroud and impeller curves at each point
+crosswise_gap = sec(normal_angles) .* (shroud_curve(:,1) - sqrt(pi^2 * shroud_curve(:,1).^2 - pi * A_pump_flow .* cos(normal_angles)) / pi); % m - distance between shroud and impeller, normal to the shroud surface
 
-impeller_curve = [shroud_curve(:,1) - crosswise_gap.*cos(normal_angles), shroud_curve(:,2) - crosswise_gap.*sin(normal_angles)]; % [m,m] - upper curved edge of revolution of the pump impeller
+% Generate impeller curve based on the shroud curve and the crosswise gap
+impeller_curve = [shroud_curve(:,1) - crosswise_gap .* cos(normal_angles), shroud_curve(:,2) - crosswise_gap .* sin(normal_angles)];
 
 % Check that shroud curve does not kink too much; ie that it's radius of curvature is not below r_min
 s = [0; cumsum(sqrt(diff(shroud_curve(:,1)).^2 + diff(shroud_curve(:,2)).^2))];
@@ -55,8 +61,6 @@ min_radius = 1/max_curvature;
 if min_radius < 0.99*r_min    
     fprintf("Pump shroud curvature reaches %.2f mm radius. Need above ~%.2f mm (half of eye radius) to avoid cavitation.", min_radius*1000, r_min*1000)
 end
-
-
 
 %% Functions 
 function f = equation_to_solve(r_eye, vdot_fuel, shaft_speed, eye_flow_coeff, r_shaft)
@@ -71,11 +75,11 @@ function [slope_shroud, slope_impeller, min_shroud_curvature] = compute_curves(b
     shroud_curve = bezier(control_points);
 
     % Compute the flow areas at eye and exit
-    A_eye = pi * (r_eye^2 - r_shaft^2);
-    A_exit = 2 * pi * r_exit * w_exit;
+    A_pump_eye = pi * (r_eye^2 - r_shaft^2);
+    A_pump_exit = 2 * pi * r_exit * w_exit;
 
     % Generate area array from eye to exit along the shroud curve
-    A_pump_flow = linspace(A_eye, A_exit, length(shroud_curve))';
+    A_pump_flow = linspace(A_pump_eye, A_pump_exit, length(shroud_curve))';
 
     % Compute the angles of the normals at each point on the shroud curve
     normal_angles = atan2(gradient(shroud_curve(:,2)), gradient(shroud_curve(:,1))) + pi/2;

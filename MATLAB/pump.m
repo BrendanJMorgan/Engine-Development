@@ -1,5 +1,5 @@
 %% Requirements
-p_out_fuel = p_cool(1); % Pa - outlet pressure
+p_out_fuel = p_cool(1) + 50*6894.76; % Pa - outlet pressure plus 50 psi of margin for plumbing losses and various inefficiencies
 p_in_fuel = p_amb; % Pa - inlet pressure
 p_out_ox = pc; % Pa - outlet pressure
 p_in_ox = p_amb; % Pa - inlet pressure
@@ -65,7 +65,38 @@ volute
 % axis equal;
 % grid on;
 
-%% Requirments for Turbine
+%% Plotting
+
+% Impeller
+figure(1)
+line(shroud_curve(:,1), shroud_curve(:,2))
+hold on
+plot(control_points(:,1),control_points(:,2),'o','color','r')
+axis equal
+
+plot(impeller_curve(:,1), impeller_curve(:,2))
+
+line([0 0], ylim);  %x-axis
+line(xlim, [0 0]);  %y-axis
+
+% Blades
+figure(2);
+hold on;
+
+delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1)
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve * rotation_matrix';
+    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+hold off;
+title('Impeller Blades');
+axis equal;
+grid on;
+
+
+%% Requirements for Turbine
 fuel_pump_efficiency = 0.5; % VERY ARBITRARY PLACEHOLDER
 fuel_pump_power = vdot_fuel * head_fuel * density_fuel * g / fuel_pump_efficiency;
 ox_pump_power = fuel_pump_power; % PLACEHOLDER

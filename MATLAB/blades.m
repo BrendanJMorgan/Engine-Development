@@ -18,7 +18,9 @@ v_blade_exit = shaft_speed*r_exit; % m/s
 v_slip = slip_factor*v_blade_exit; % m/s - slip velocity
 v_merid_exit = vdot_fuel/(2*pi*r_exit*w_exit); % m/s                                                                                
 
-v_flow_exit_tangential = 10; % m/s - GUESS TARGET, NEEDS TO BE DERIVED FROM SOMETHING                                                                                                                                                                                                                                                                                                                                                                                                                                       
+hydraulic_efficiency = 1 - 0.071 / vdot_fuel^0.25; % Jekat's Empirical Formula
+
+v_flow_exit_tangential = g*head_fuel / (hydraulic_efficiency*v_blade_exit); % m/s - this is Euler's pump equation rearranged                                                                                                                                                                                                                                                                                                                                                                                                                                     
 blade_angle_outlet = atan(v_merid_exit / (v_blade_exit-v_flow_exit_tangential - v_slip)); % rad
 
 %% Individual Blade Curve 
@@ -35,6 +37,7 @@ sweep = blade_params_optimal(3);
 blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2))); % m - arc length of one individual blade
 solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed_fuel); % solidity is the optimal ratio of blade chord to blade spacing. Pump handbook page 2.36
 blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length)); % number of blade, rounded to the nearest even number
+
 %% Helper Functions
 % Function to compute slopes and minimum curvature for blade curve in a pump
 function [blade_curve, control_points, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2)
