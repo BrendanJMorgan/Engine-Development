@@ -1,8 +1,6 @@
 %%
 
-
-
- cea_gg = CEA('problem','rocket', ...
+cea_gg = CEA('problem','rocket', ...
      'equilibrium', ...  % equilibrium flow, infinite chamber, 
      'o/f',OF_gg, ...          % Define OF ratio
      'case','CEAM-rocket1', ...
