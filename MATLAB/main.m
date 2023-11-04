@@ -1,10 +1,6 @@
 clear all
-<<<<<<< Updated upstream
 clf
-=======
 close all
->>>>>>> Stashed changes
-tic
 
 %% TO DO
 
@@ -62,13 +58,10 @@ v_injection = 10; % m/s - combustion gas must have some initial velocity for inj
 injection_efficiency = 1.0;
 
 % Turbomachinery
-<<<<<<< Updated upstream
 shaft_speed = 20000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
 r_shaft = 9/32*0.0254; % m - you need a little bit of clearance around a 1/2 inch shaft
-=======
 shaft_speed = 10000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
 r_shaft = 0.5*0.0254; % m
->>>>>>> Stashed changes
 impeller_thickness = 1/8*0.0254; % m - thickness of impeller at the exit point, not including blades
 impeller_height = 0.8*0.0254; % m - from base of impeller to eye plane
 turbine_stage_number = 2 % number of stages in the turbine (one stage = rotor + stator)
