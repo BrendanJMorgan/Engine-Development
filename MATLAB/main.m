@@ -49,7 +49,7 @@ n_pipe2 = 16; % number of channels near throat
 n_pipe3 = 16; % number of channels along lower nozzle section
 gap_pipe = 1/4*0.0254; % Gap between channels (fin thickness)
 h_pipe = 1/16*0.0254; % m - coolant channel height
-merge_radius = 0.45*d1_chamber; % m - when contour is below this rad 9ius, transition to n_pipe2
+merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transition to n_pipe2
 flow_direction = -1; % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
 % Film Cooling
@@ -58,12 +58,10 @@ v_injection = 10; % m/s - combustion gas must have some initial velocity for inj
 injection_efficiency = 1.0;
 
 % Turbomachinery
-shaft_speed = 20000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
-r_shaft = 9/32*0.0254; % m - you need a little bit of clearance around a 1/2 inch shaft
 shaft_speed = 10000*0.1047198; % rad/s - angular velocity of the shaft; thus also the angular velocity of the turbine and both pump impellers+inducers (there is no gearing)
-r_shaft = 0.5*0.0254; % m
+r_shaft = 9/32*0.0254; % m - you need a little bit of clearance around a 1/2 inch shaft
 impeller_thickness = 1/8*0.0254; % m - thickness of impeller at the exit point, not including blades
-impeller_height = 0.8*0.0254; % m - from base of impeller to eye plane
+impeller_height = 0.5*0.0254; % m - from base of impeller to eye plane
 turbine_stage_number = 2 % number of stages in the turbine (one stage = rotor + stator)
 
 %% Properties
@@ -99,8 +97,8 @@ exhaust_flow
 coolant_flow
 
 % T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
-% thermal_balance2
-% thermal_balance2
+% thermal_balance
+% thermal_balance
 % structures
 pump
 % gas_generator

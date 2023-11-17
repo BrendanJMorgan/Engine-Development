@@ -19,6 +19,7 @@ specific_speed_fuel = shaft_speed*sqrt(vdot_fuel) / (g*head_fuel)^0.75;
 suction_specific_speed_fuel = shaft_speed * sqrt(vdot_fuel) / (NPSH_fuel*g)^0.75;
 suction_specific_speed_imperial_fuel = suction_specific_speed_fuel*2733.016;
 
+
 if specific_speed_fuel < 0.1 || specific_speed_fuel > 0.6
     fprintf("Pump Specific Speed is %g. Recommended is 0.1 to 0.6 for centrifugal geometries.", specific_speed_fuel)
 end
@@ -51,7 +52,6 @@ plot(impeller_curve(:,1), impeller_curve(:,2))
 % Blades
 figure(2);
 hold on;
-
 delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
 for i = 0:(blade_number-1)
     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
