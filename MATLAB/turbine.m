@@ -7,19 +7,19 @@
 
 %% Estimations
 turbine_efficiency = 0.8; % Guess
-power_turbine = shaft_power / turbine_efficiency % W
+power_turbine = shaft_power / turbine_efficiency; % W
 
 power_rotor = power_turbine / turbine_stage_number; % W
-specific_power_rotor = power_rotor / mdot_gg % J/kg
+specific_power_rotor = power_rotor / mdot_gg; % J/kg
 flow_coeff_rotor = 0.7; % Guess
-velocity_rotor = sqrt(specific_power_rotor / (1-flow_coeff_rotor^2)) % m/s
-diameter_rotor = 2*velocity_rotor/shaft_speed % m
+velocity_rotor = sqrt(specific_power_rotor / (1-flow_coeff_rotor^2)); % m/s
+diameter_rotor = 2*velocity_rotor/shaft_speed; % m
 vdot_gg = mdot_gg / dens_gas(end); % m3/s - using gas density from CC not GG, just for estimation purposes
-blade_height_rotor = vdot_gg / (pi*diameter_rotor*velocity_rotor*flow_coeff_rotor) % m
+blade_height_rotor = vdot_gg / (pi*diameter_rotor*velocity_rotor*flow_coeff_rotor); % m
 
 
-diameter_rotor / 0.0254
-blade_height_rotor / 0.0254
+diameter_rotor / 0.0254;
+blade_height_rotor / 0.0254;
 %% 1) Selection of rotational speed and annulus dimensions
 % Rotational speed requirements are driven by the pumps
 
