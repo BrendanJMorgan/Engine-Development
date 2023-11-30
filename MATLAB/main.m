@@ -12,35 +12,35 @@ clf
 
 % Constants
 g = 9.81;
-p_amb = 13.49*6894.76; % psi - ambient pressure at 2400 feet elevation
-T_amb = 293; % K - Ambient Temperature
+p_amb = 13.49*6894.76;      % psi - ambient pressure at 2400 feet elevation
+T_amb = 293;                % K - Ambient Temperature
 
 % Overall Engine Performance Targets
-thrust_target = 3000*4.44822; % N - Thrust
-pc = 250*6894.76; % Pa - Stagnation / Chamber Pressure
+thrust_target = 3000*4.44822;   % N - Thrust
+p_cc = 250*6894.76;             % Pa - Stagnation / Chamber Pressure
 
 % Combustion Chamber (CC)
-OF = 1.4; % Oxidizer/Fuel Ratio
-proof = 0.95; % How much ethanol in fuel
-c_star_eff = 0.75; % Characteristic Vel Efficiency, experimental
-c_tau_eff = 0.96; % Thrust Coefficient Efficiency Factor
+OF = 1.4;                   % Oxidizer/Fuel Ratio (by mass)
+proof = 0.95;               % How much ethanol in fuel, remaining part is water (by mass)
+c_star_eff = 0.75;          % Characteristic Vel Efficiency, experimental
+c_tau_eff = 0.96;           % Thrust Coefficient Efficiency Factor
 gamma_guess = 1.22;
 c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma_guess+1))^((gamma_guess+1)/(gamma_guess-1)) * (1-(p_amb/pc)^((gamma_guess-1)/gamma_guess) ) ) ); 
 A_throat = thrust_target / (pc*c_tau_guess*c_star_eff); % m2 - Throat Area
 
 % Gas Generator (GG)
-p_gg = 500*6894.76; % Pa - chamber pressure inside gas generator
-gg_fraction = 0.05; % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
-OF_gg = 0.3; % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
+p_gg = 500*6894.76;         % Pa - chamber pressure inside gas generator
+gg_fraction = 0.05;         % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
+OF_gg = 0.3;                % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
 
 % Chamber/Nozzle Geometry
-dx = 0.001; % m - position step 
-converge_angle = 45*pi/180; % rad
-diverge_angle = 15*pi/180; % rad
-l_star = 1; % m
-rc_throat = 1*0.0254; % m - radius of curvature around the throat
-d2_chamber = 4.5*0.0254; % m
-thickness = 1/4*0.0254; % m % SLANT VS VERTICAL THICKNESS
+dx = 0.001;                 % m - position step 
+converge_angle = 45*pi/180; % rad - half-cone convergene angle of combustion chamber end
+diverge_angle = 15*pi/180;  % rad - half-cone divergence angle of nozzle
+l_star = 1;                 % m - combustion length
+rc_throat = 1*0.0254;       % m - radius of curvature around the throat
+d2_chamber = 4.5*0.0254;    % m
+thickness = 1/4*0.0254;     % m % SLANT VS VERTICAL THICKNESS
 d1_chamber = d2_chamber - 2*thickness; % m
 r1_chamber = d1_chamber/2;
 
@@ -48,22 +48,23 @@ r1_chamber = d1_chamber/2;
 n_pipe1 = 16; % number of channels along barrel
 n_pipe2 = 16; % number of channels near throat
 n_pipe3 = 16; % number of channels along lower nozzle section
-gap_pipe = 1/4*0.0254; % Gap between channels (fin thickness)
-h_pipe = 1/16*0.0254; % m - coolant channel height
+gap_pipe = 1/4*0.0254;          % Gap between channels (fin thickness)
+h_pipe = 1/16*0.0254;           % m - coolant channel height
 merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transition to n_pipe2
-flow_direction = -1; % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
+flow_direction = -1;            % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
 % Film Cooling
-film_fraction = 0.03; % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
-v_injection = 10; % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
+film_fraction = 0.03;   % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
+v_injection = 10;       % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
 injection_efficiency = 1.0;
 
 % Turbomachinery
-shaft_speed = 30000*0.1047198;	% rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
-r_shaft = 9/32*0.0254;					% m - a little bit of clearance around a 1/2 inch shaft
+shaft_speed = 30000*0.1047198;	    % rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
+r_shaft = 9/32*0.0254;				% m - a little bit of clearance around a 1/2 inch shaft
+r_shaft_ss = 1/4*0.0254;            % m - portion of shaft that is stainless steel
 impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades
-impeller_height = 0.5*0.0254;			% m - from base of impeller to eye plane
-turbine_stage_number = 2;				% number of stages in the turbine (one stage = one rotor + one stator)
+impeller_height = 0.5*0.0254;		% m - from base of impeller to eye plane
+turbine_stage_number = 2;			% number of stages in the turbine (one stage = one rotor + one stator)
 
 %% Properties
 

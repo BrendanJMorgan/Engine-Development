@@ -32,41 +32,72 @@ head_coeff_fuel = 0.4 / specific_speed_fuel^0.25; % psi in pump handbook. Valid 
 blockage = 0.85; % 1 is completely open, pump handbook says 0.85 is typical?
 
 
+
 %% Subfunctions
 
 impeller
 blades
 volute
 
+%% Centrifugal Integrity - this is a cursory sanity check, a full FEM should be made to verify
+bronze_density = 7580; % kg/m3 - for Aluminum Bronze Alloy 63000 from Azom spec sheet
+ss_density = 7970; % kg/m3 - for stainless steel 316 average from Azom spec sheet
+
+% Shell Integrals of Revolution
+impeller_mass =  bronze_density * 2*pi*cumtrapz( impeller_curve(:,1), impeller_curve(:,1).*impeller_curve(:,2) );
+shroud_heights = impeller_height * ones(length(shroud_curve(:,1)), 1) - shroud_curve(:,2);
+shroud_mass = bronze_density * 2*pi*cumtrapz(shroud_curve(:,1), shroud_curve(:,1).*shroud_heights);
+shaft_mass = ss_density * 2*pi*cumtrapz(linspace(0,r_shaft,100), impeller_height)
+
+r = linspace(0, r_exit, 1000)'; % unified radial coordinate system 
+
+interp_impeller_mass = interp1(impeller_curve(:,1), impeller_mass, r, 'linear', 'extrap');
+interp_shroud_mass = interp1(shroud_curve(:,1), shroud_mass, r, 'linear', 'extrap');
+
+% Replace NaN and negative values with zeros in both arrays
+interp_impeller_mass(~(interp_impeller_mass>0)) = 0;
+interp_shroud_mass(~(interp_shroud_mass>0)) = 0;
+
+pump_mass = interp_impeller_mass+interp_shroud_mass;
+
+
+
+
 %% Plotting
 
-% Impeller
-figure(1)
-line(shroud_curve(:,1), shroud_curve(:,2))
-hold on
-plot(control_points(:,1),control_points(:,2),'o','color','r')
-axis equal
-plot(impeller_curve(:,1), impeller_curve(:,2))
-line([0 0], ylim);  %x-axis
-line(xlim, [0 0]);  %y-axis
+% % Impeller
+% figure(1)
+% line(shroud_curve(:,1), shroud_curve(:,2))
+% hold on
+% plot(control_points(:,1),control_points(:,2),'o','color','r')
+% axis equal
+% plot(impeller_curve(:,1), impeller_curve(:,2))
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
+% 
+% % Blades
+% figure(2);
+% hold on;
+% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve * rotation_matrix';
+%     plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
+% hold off;
+% title('Impeller Blades');
+% axis equal;
+% grid on;
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
 
-% Blades
-figure(2);
-hold on;
-delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve * rotation_matrix';
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
-hold off;
-title('Impeller Blades');
-axis equal;
-grid on;
-line([0 0], ylim);  %x-axis
-line(xlim, [0 0]);  %y-axis
+% Structural 
+figure(3)
+plot(r, pump_mass)
+xlabel("Radial Distance (m)")
+ylabel("Cumulative Mass (kg)")
 
 
 %% Requirements for Turbine

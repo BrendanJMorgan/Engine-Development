@@ -13,14 +13,14 @@ v_inlet = vdot_fuel/(2*pi*r_inlet*inlet_gap); % m/s - fluid velocity at the inle
 blade_angle_inlet = atan2(u_inlet,v_inlet); % rad - inlet angle of blades relative to tangential azimuth  (beta_1,f in pump handbook)
 
 %% Outlet Blade Angles
-slip_factor = 0.15; % Buseman form "typically between 0.1 and 0.2 ... for frictionless flow through impellers with logarithmic-spiral blades ... and a 2D, radial-flow geometry with parallel hub and shroud"
-v_blade_exit = shaft_speed*r_exit; % m/s - blade tangential velocity (U_2 in pump handbook)
-v_slip = slip_factor*v_blade_exit; % m/s - slip velocity (V_s in pump handbook)
-v_merid_exit = vdot_fuel/(2*pi*r_exit*w_exit); % m/s - meriodonal velocity (V_m,2 in pump handbook)                                                       
+slip_factor = 0.15; % Buseman form "typically between 0.1 and 0.2 ... for frictionless flow ... with log-spiral blades ... and a 2D, radial-flow geometry with parallel hub and shroud"
+v_blade_exit = shaft_speed*r_exit;              % m/s - blade tangential velocity (U_2 in pump handbook)
+v_slip = slip_factor*v_blade_exit;              % m/s - slip velocity (V_s in pump handbook)
+v_merid_exit = vdot_fuel/(2*pi*r_exit*w_exit);  % m/s - meriodonal velocity (V_m,2 in pump handbook)                                                       
 
 hydraulic_efficiency = 1 - 0.071 / vdot_fuel^0.25; % Jekat's Empirical Formula
 
-v_flow_exit_tangential = g*head_fuel / (hydraulic_efficiency*v_blade_exit); % m/s - this is Euler's pump equation rearranged                                                                                                                                                                                                                                                                                                                                                                                                                                     
+v_flow_exit_tangential = g*head_fuel / (hydraulic_efficiency*v_blade_exit);             % m/s - this is Euler's pump equation rearranged                                                                                                                                                                                                                                                                                                                                                                                                                                     
 blade_angle_outlet = atan(v_merid_exit / (v_blade_exit-v_flow_exit_tangential-v_slip)); % rad - angle between blade tip azimuth and local tangential azimuth (beta_2 in pump handbook)
 if blade_angle_outlet <= 0
 	blade_angle_outlet*180/pi
@@ -35,24 +35,22 @@ blade_params_optimal = fminsearch(cost_function, params_initial);
 control1 = blade_params_optimal(1); % m - length between inlet point and inlet control point
 control2 = blade_params_optimal(2); % m - length between outlet point and outlet control point
 sweep = blade_params_optimal(3);
-[blade_curve, blade_control_points, ~, ~, inlet_azimuth, outlet_azimuth] = compute_blade_curve(control1, control2, sweep, r_inlet, r_exit, blade_angle_inlet, blade_angle_outlet);
-inlet_azimuth*180/pi
-outlet_azimuth*180/pi
+[blade_curve, blade_control_points, ~, ~] = compute_blade_curve(control1, control2, sweep, r_inlet, r_exit, blade_angle_inlet, blade_angle_outlet);
 
 %% Number of Blades
-blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2))); % m - arc length of one individual blade
-solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed_fuel); % solidity is the optimal ratio of blade chord to blade spacing. Pump handbook page 2.36
-blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length)); % number of blade, rounded to the nearest even number
+blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2)));                 % m - arc length of one individual blade
+solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed_fuel);        % solidity is the optimal ratio of blade chord to blade spacing. Pump handbook page 2.36
+blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length));    % number of blade, rounded to the nearest even number
 
 %% Helper Functions
 % Function to compute slopes and minimum curvature for blade curve in a pump
-function [blade_curve, control_points, control_error1, control_error2, inlet_azimuth, outlet_azimuth] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2)
-	inlet_point = [radius1,0];																								% [m,m] - blade inner edge starting location
-	outlet_point = radius2*[cos(sweep), sin(sweep)];														% [m,m] - blade outer edge ending location
-	inlet_azimuth = atan2(inlet_point(2), inlet_point(1)) + pi/2 - polar1;							% rad - blade inner edge absolute direction
-	outlet_azimuth = atan2(outlet_point(2), outlet_point(1)) +pi/2 - polar2;						% rad - blade outer edge absolute direction
+function [blade_curve, control_points, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2)
+	inlet_point = [radius1,0];																% [m,m] - blade inner edge starting location
+	outlet_point = radius2*[cos(sweep), sin(sweep)];									    % [m,m] - blade outer edge ending location
+	inlet_azimuth = atan2(inlet_point(2), inlet_point(1)) + pi/2 - polar1;					% rad - blade inner edge absolute direction
+	outlet_azimuth = atan2(outlet_point(2), outlet_point(1)) +pi/2 - polar2;				% rad - blade outer edge absolute direction
 	inlet_control = control1*[cos(inlet_azimuth),sin(inlet_azimuth)] + inlet_point;			% [m,m] - control point for the inlet edge
-	outlet_control = -control2*[cos(outlet_azimuth),sin(outlet_azimuth)] + outlet_point;	% [m,m] - control point for the outlet edge
+	outlet_control = -control2*[cos(outlet_azimuth),sin(outlet_azimuth)] + outlet_point;    % [m,m] - control point for the outlet edge
 
 	% Generate the shroud curve using four bezier control points
     control_points = [inlet_point;inlet_control;outlet_control;outlet_point];
@@ -66,7 +64,7 @@ function cost = cost_function_blade(params, radius1, radius2, polar1, polar2)
     control1 = params(1); % m - length between inlet point and inlet control point
 	control2 = params(2); % m - length between outlet point and outlet control point
     sweep = params(3); % rad
-    [blade_curve, control_points, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2);
+    [blade_curve, ~, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2);
 
 	blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2))); % m - arc length of one individual blade
     s = [0; cumsum(sqrt(diff(blade_curve(:, 1)).^2 + diff(blade_curve(:, 2)).^2))];
