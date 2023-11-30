@@ -6,7 +6,7 @@ c_star_ideal = cea.output.eql.cstar(4); % m/s - Characteristic Velocity
 c_star = c_star_ideal*c_star_eff; % m/s
 
 p_exit = 1E5*cea.output.eql.pressure(4); % Pa - exit pressure
-c_tau_ideal = sqrt( (2*gamma_avg^2/(gamma_avg-1) * (2/(gamma_avg+1))^((gamma_avg+1)/(gamma_avg-1)) * (1-(p_exit/pc)^((gamma_avg-1)/gamma_avg) ) ) ) + Ae_At*(p_exit-p_amb)/pc; % Ideal Thrust Coefficient
+c_tau_ideal = sqrt( (2*gamma_avg^2/(gamma_avg-1) * (2/(gamma_avg+1))^((gamma_avg+1)/(gamma_avg-1)) * (1-(p_exit/p_cc)^((gamma_avg-1)/gamma_avg) ) ) ) + Ae_At*(p_exit-p_amb)/p_cc; % Ideal Thrust Coefficient
 lambda_cone = 0.5*(1+cos(diverge_angle)); % Divergence correction factor for conical nozzle
 c_tau = c_tau_ideal*lambda_cone*c_tau_eff; % Thrust Coefficient
 
@@ -17,7 +17,7 @@ isp_ideal = cea.output.eql.isp(end); % s - specific impulse
 %% Mass Flow Rates
 
 R_gas = 8.3145 / (0.001*cea.output.eql.mw(2)); % J/kg-K - Specific Gas Constant (throat)
-mdot_cc = A_throat / (sqrt(Tc)/pc * sqrt(R_gas/gamma_avg) * ((gamma_avg+1)/2)^((gamma_avg+1)/(2*(gamma_avg-1)))); % m2 - throat area
+mdot_cc = A_throat / (sqrt(Tc)/p_cc * sqrt(R_gas/gamma_avg) * ((gamma_avg+1)/2)^((gamma_avg+1)/(2*(gamma_avg-1)))); % m2 - throat area
 thrust = mdot_cc*v_exhaust;     % kg/s - Propellant mass flow rate into combustion chamber
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate
@@ -34,9 +34,9 @@ isp_real = (v_exhaust/g)*(mdot_cc/mdot_total); % s
 
 %% Cross Section Areas
 
-A_throat = mdot_cc*c_star/pc; % m2 - throat area
-A2_throat = thrust / pc; % m2 - throat area
-A3_throat = mdot_cc*c_star/pc; % m2 - throat area
+A_throat = mdot_cc*c_star/p_cc; % m2 - throat area
+A2_throat = thrust / p_cc; % m2 - throat area
+A3_throat = mdot_cc*c_star/p_cc; % m2 - throat area
 d_throat = sqrt(4*A_throat/pi); % m - throat diameter
 r_throat = d_throat/2; % m - throat radius
 A_exit = A_throat*Ae_At; % m2 - exit area

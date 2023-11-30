@@ -39,7 +39,6 @@ blades
 volute
 
 %% Centrifugal Integrity - this is a cursory sanity check, a full FEM should be made to verify
-% andddddd it's completely fucking wrong. use flywheel stress.
 
 r = (0:dr:r_exit)'; % m - unified radial coordinate system
 impeller_curve = [ [(0:dr:r_shaft)', impeller_height*ones(ceil(r_shaft/dr),1)] ; impeller_curve];
@@ -49,16 +48,31 @@ ss_density = 7970; % kg/m3 - for stainless steel 316 average from Azom spec shee
 
 impeller_interpolated = interp1(impeller_curve(:,1), impeller_curve(:,2), r);
 shroud_interpolated = interp1(shroud_curve(:,1), shroud_curve(:,2), r);
-shroud_interpolated(~(shroud_interpolated>=0)) = 0;
+shroud_interpolated(~(interp_shaft_mass>=0)) = 0;
 
 % Shell Integrals of Revolution
-dV_impeller = 2*pi*r*dr.*impeller_interpolated;
-dm_impeller = [ss_density*dV_impeller(1:floor(r_shaft_ss/dr)); bronze_density*dV_impeller(ceil(r_shaft_ss/dr):end)];
-dV_shroud = 2*pi*r*dr.*shroud_interpolated;
-dm_shroud = bronze_density*dV_shroud;
+dV_impeller = 2*pi*r*dr*impeller_interpolated(:,2);
+dV_shroud = 2*pi*r*dr*shroud_interpolated(:,2);
+% shaft_mass = 2*pi*cumsum([ss_density*impeller_height*(0:dr:r_shaft_ss)'*dr; bronze_density*impeller_height*(r_shaft_ss:dr:r_shaft)'*dr], "reverse");
+% impeller_mass =  -bronze_density * 2*pi* flip(cumtrapz( flip(impeller_curve(:,1)), flip(impeller_curve(:,1).*impeller_curve(:,2))));
+% shroud_heights = impeller_height * ones(length(shroud_curve(:,1)), 1) - shroud_curve(:,2);
+% shroud_mass = -bronze_density * 2*pi*flip(cumtrapz(flip(shroud_curve(:,1)), flip(shroud_curve(:,1).*shroud_heights)));
 
-force_centrifugal = cumsum(shaft_speed^2 .*(dm_impeller+dm_shroud).* r, 'reverse');
-stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shroud_interpolated));
+interp_shaft_mass = interp1(0:dr:r_shaft, shaft_mass, r);
+interp_impeller_mass = interp1(impeller_curve(:,1), impeller_mass, r);
+interp_shroud_mass = interp1(shroud_curve(:,1), shroud_mass, r);
+
+% Replace NaN and negative values with zeros
+interp_shaft_mass(~(interp_shaft_mass>=0)) = 0;
+interp_impeller_mass(~(interp_impeller_mass>=0)) = max(interp_impeller_mass);
+interp_shroud_mass(~(interp_shroud_mass>=0)) = max(interp_shroud_mass);
+
+pump_mass = interp_shaft_mass+interp_impeller_mass+interp_shroud_mass; % kg - cumulative mass distribution of shaft+impeller+shroud (accumulated right to left)
+
+% force_centrifugal = pump_mass * shaft_speed^2 * r
+
+
+
 
 %% Plotting
 
@@ -92,9 +106,9 @@ stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shro
 
 % Structural 
 figure(3)
-plot(r, stress_centrifugal/1E6)
+plot(r, pump_mass)
 xlabel("Radial Distance (m)")
-ylabel("Centrifugal Tensile Stress (MPa)")
+ylabel("Cumulative Mass (kg)")
 
 
 %% Requirements for Turbine

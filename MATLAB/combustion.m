@@ -5,7 +5,7 @@
      'fac','acat',pi*r1_chamber^2 / A_throat, ... % finite area combustor, contraction ratio
      'o/f',OF, ...          % Define OF ratio
      'case','CEAM-rocket1', ...
-     'p(psi)',pc/6894.76,'pi/p',pc/p_amb, ... % Define nozzle with pressure ratio
+     'p(psi)',p_cc/6894.76,'pi/p',p_cc/p_amb, ... % Define nozzle with pressure ratio
      'reactants', ...    
      'fuel','C2H5OH(L)','wt%',proof,'t(k)',T_amb,'H2O(L)','wt%',1-proof,'t(k)',T_amb, ... % 190-Proof Ethanol for Fuel, at ambient
      'oxid','O2(L)','wt%',100, ... % Liquid Oxygen for Oxidizer, at boiling point

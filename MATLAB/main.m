@@ -25,8 +25,8 @@ proof = 0.95;               % How much ethanol in fuel, remaining part is water 
 c_star_eff = 0.75;          % Characteristic Vel Efficiency, experimental
 c_tau_eff = 0.96;           % Thrust Coefficient Efficiency Factor
 gamma_guess = 1.22;
-c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma_guess+1))^((gamma_guess+1)/(gamma_guess-1)) * (1-(p_amb/pc)^((gamma_guess-1)/gamma_guess) ) ) ); 
-A_throat = thrust_target / (pc*c_tau_guess*c_star_eff); % m2 - Throat Area
+c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma_guess+1))^((gamma_guess+1)/(gamma_guess-1)) * (1-(p_amb/p_cc)^((gamma_guess-1)/gamma_guess) ) ) ); 
+A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 
 % Gas Generator (GG)
 p_gg = 500*6894.76;         % Pa - chamber pressure inside gas generator
