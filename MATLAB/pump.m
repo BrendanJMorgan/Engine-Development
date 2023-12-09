@@ -23,7 +23,7 @@ suction_specific_speed_imperial_fuel = suction_specific_speed_fuel*2733.016;
 
 
 if specific_speed_fuel < 0.1 || specific_speed_fuel > 0.6
-    fprintf("Pump Specific Speed is %g. Recommended is 0.1 to 0.6 for centrifugal geometries.", specific_speed_fuel)
+    fprintf("Pump Specific Speed is %g. Recommended is 0.1 to 0.6 for centrifugal geometries.\n", specific_speed_fuel)
 end
 
 %% Sizing the Pump
@@ -40,25 +40,25 @@ volute
 
 %% Centrifugal Integrity - this is a cursory sanity check, a full FEM should be made to verify
 % andddddd it's completely fucking wrong. use flywheel stress.
-
-r = (0:dr:r_exit)'; % m - unified radial coordinate system
-impeller_curve = [ [(0:dr:r_shaft)', impeller_height*ones(ceil(r_shaft/dr),1)] ; impeller_curve];
-
-bronze_density = 7580; % kg/m3 - for Aluminum Bronze Alloy 63000 from Azom spec sheet
-ss_density = 7970; % kg/m3 - for stainless steel 316 average from Azom spec sheet
-
-impeller_interpolated = interp1(impeller_curve(:,1), impeller_curve(:,2), r);
-shroud_interpolated = interp1(shroud_curve(:,1), shroud_curve(:,2), r);
-shroud_interpolated(~(shroud_interpolated>=0)) = 0;
-
-% Shell Integrals of Revolution
-dV_impeller = 2*pi*r*dr.*impeller_interpolated;
-dm_impeller = [ss_density*dV_impeller(1:floor(r_shaft_ss/dr)); bronze_density*dV_impeller(ceil(r_shaft_ss/dr):end)];
-dV_shroud = 2*pi*r*dr.*shroud_interpolated;
-dm_shroud = bronze_density*dV_shroud;
-
-force_centrifugal = cumsum(shaft_speed^2 .*(dm_impeller+dm_shroud).* r, 'reverse');
-stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shroud_interpolated));
+% 
+% r = (0:dr:r_exit)'; % m - unified radial coordinate system
+% impeller_curve = [ [(0:dr:r_shaft)', impeller_height*ones(ceil(r_shaft/dr),1)] ; impeller_curve];
+% 
+% bronze_density = 7580; % kg/m3 - for Aluminum Bronze Alloy 63000 from Azom spec sheet
+% ss_density = 7970; % kg/m3 - for stainless steel 316 average from Azom spec sheet
+% 
+% impeller_interpolated = interp1(impeller_curve(:,1), impeller_curve(:,2), r);
+% shroud_interpolated = interp1(shroud_curve(:,1), shroud_curve(:,2), r);
+% shroud_interpolated(~(shroud_interpolated>=0)) = 0;
+% 
+% % Shell Integrals of Revolution
+% dV_impeller = 2*pi*r*dr.*impeller_interpolated;
+% dm_impeller = [ss_density*dV_impeller(1:floor(r_shaft_ss/dr)); bronze_density*dV_impeller(ceil(r_shaft_ss/dr):end)];
+% dV_shroud = 2*pi*r*dr.*shroud_interpolated;
+% dm_shroud = bronze_density*dV_shroud;
+% 
+% force_centrifugal = cumsum(shaft_speed^2 .*(dm_impeller+dm_shroud).* r, 'reverse');
+% stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shroud_interpolated));
 
 %% Plotting
 
@@ -72,29 +72,30 @@ stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shro
 % line([0 0], ylim);  %x-axis
 % line(xlim, [0 0]);  %y-axis
 % 
-% % Blades
-% figure(2);
-% hold on;
-% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-% for i = 0:(blade_number-1)
-%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-%     rotated_curve = blade_curve * rotation_matrix';
-%     plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-%     plot(NaN, NaN); % Prevent connection between different blades
-% end
-% plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
-% hold off;
-% title('Impeller Blades');
-% axis equal;
-% grid on;
-% line([0 0], ylim);  %x-axis
-% line(xlim, [0 0]);  %y-axis
+% Blades
+figure(2);
+hold on;
+delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1)
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve * rotation_matrix';
+    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
+plot(r_volute.*cos(theta_volute), r_volute.*sin(theta_volute));
+hold off;
+title('Impeller Blades and Volute');
+axis equal;
+grid on;
+line([0 0], ylim);  %x-axis
+line(xlim, [0 0]);  %y-axis
 
 % Structural 
-figure(3)
-plot(r, stress_centrifugal/1E6)
-xlabel("Radial Distance (m)")
-ylabel("Centrifugal Tensile Stress (MPa)")
+% figure(3)
+% plot(r, stress_centrifugal/1E6)
+% xlabel("Radial Distance (m)")
+% ylabel("Centrifugal Tensile Stress (MPa)")
 
 
 %% Requirements for Turbine

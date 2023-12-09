@@ -116,10 +116,10 @@ turbine
 % mdot_total
 impeller_diameter_inches = 2*r_exit/0.0254
 
-writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
-writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
-
-writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), blade_curve(:,2)/0.0254], 'blade_curve_inches.txt', 'Delimiter', ',')
+% writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
+% writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
+% 
+% writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), blade_curve(:,2)/0.0254], 'blade_curve_inches.txt', 'Delimiter', ',')
 
 % figure(2)
 % clf
