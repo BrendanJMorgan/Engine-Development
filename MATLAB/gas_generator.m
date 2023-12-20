@@ -11,23 +11,10 @@ cea_gg = CEA('problem','rocket', ...
      'output','short','massf','transport','mks', ...
      'end');
 
-T_gg = cea_gg.output.eql.temperature(1); % K - Stagnation / Chamber Temperature in gas generator
-cp_gg = 1000*mean(cea_gg.output.eql.cp); % J/kg-K - Specific Heat % MAKE X DEPENDENT
-gamma_gg = mean(cea_gg.output.eql.gamma); % Ratio of Specific Heats % MAKE X DEPENDENT
+Tt_gg = cea_gg.output.eql.temperature(1); % K - Stagnation / Chamber Temperature in gas generator
+cp_gg = 1000*mean(cea_gg.output.eql.cp); % J/kg-K - average Specific Heat MODIFY TURBINE TO NOT BE CALORICALLY PERFECT?
+gamma_gg = mean(cea_gg.output.eql.gamma); % Ratio of Specific Heats
+R_gg = 8.3145 / (0.001*cea.output.eql.mw(3)); % J/kg-K - Specific Gas Constant, fully combusted GG PRODUCTS SHOULD FULLY COMBUST BEFORE NOZZLE PLATE
 
-% c_star_ideal_gg = cea.output.eql.cstar(3); % Characteristic Velocity
-% c_star_eff_gg = 0.75; % Char Vel Efficiency, experimental
-% c_star_gg = c_star_ideal_gg*c_star_eff_gg;
-% 
-% M_inj_gg  = cea_gg.output.eql.mach(1); % Mach at injector
-% M_comb_gg = 0.002; % Mach at start of convergence (combustor?)
-% M_throat_gg = cea_gg.output.eql.mach(2); % Mach at throat, should be 1 unless something is very wrong
-% if M_throat_gg < 0.99 || M_throat_gg > 1.01
-%     error("Sonic point is not at throat");
-% end
-% M_exit_gg = cea_gg.output.eql.mach(3); % Mach at exit, should be supersonic
-% 
-% c_exit_gg = cea_gg.output.eql.sonvel(3); % m/s - Sonic velocity at exit
-% v_exit_gg = M_exit_gg*c_exit_gg; % m/s - Gas generator exhaust velocity
-% 
-% thrust_gg = mdot_gg*v_exit_gg; % N - Gas generator thrust
+c_star_ideal_gg = cea.output.eql.cstar(3); % m/s - ideal characteristic velocity
+c_star_gg = c_star_ideal_gg*c_star_eff_gg; % m/s - actual characteristic velocity

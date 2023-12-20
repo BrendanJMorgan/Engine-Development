@@ -13,4 +13,4 @@
      'end');
 
  gamma_avg = mean([cea.output.eql.gamma(3), cea.output.eql.gamma(4)]); % Ratio of Specific Heats, estimate
- Tc = cea.output.eql.temperature(1); % K
+ Tt_cc = cea.output.eql.temperature(1); % K

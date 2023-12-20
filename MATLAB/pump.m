@@ -16,8 +16,8 @@ vdot_ox = mdot_ox_cc/density_ox; % m3/s - Oxidizer Mass Flow Rate
 dr = 0.0001;
 
 vapor_pressure_fuel = py.CoolProp.CoolProp.PropsSI("P", "T", T_amb, "Q", 0, "Ethanol");
-NPSH_fuel = p_amb/(density_fuel*g) - vapor_pressure_fuel/(density_fuel*g); % Available Net positive suction head. Measure hoe close fluid is to flashing/cavitating. Should be updated with plumbing water column and steady state inlet velocity
-specific_speed_fuel = shaft_speed*sqrt(vdot_fuel) / (g*head_fuel)^0.75; % Specific speed, used to categorize impeller types
+NPSH_fuel = p_amb/(density_fuel*g) - vapor_pressure_fuel/(density_fuel*g); % Net positive suction head. Should be updated with plumbing water column and steady state inlet velocity
+specific_speed_fuel = shaft_speed*sqrt(vdot_fuel) / (g*head_fuel)^0.75;
 suction_specific_speed_fuel = shaft_speed * sqrt(vdot_fuel) / (NPSH_fuel*g)^0.75;
 suction_specific_speed_imperial_fuel = suction_specific_speed_fuel*2733.016;
 
@@ -62,41 +62,34 @@ volute
 
 %% Plotting
 
-% Impeller
-figure(1)
-clf
-line(shroud_curve(:,1), shroud_curve(:,2))
-hold on
-plot(control_points(:,1),control_points(:,2),'o','color','r')
-axis equal
-plot(impeller_curve(:,1), impeller_curve(:,2))
-line([0 0], ylim);  %x-axis
-line(xlim, [0 0]);  %y-axis
-hold off
-
+% % Impeller
+% figure(1)
+% line(shroud_curve(:,1), shroud_curve(:,2))
+% hold on
+% plot(control_points(:,1),control_points(:,2),'o','color','r')
+% axis equal
+% plot(impeller_curve(:,1), impeller_curve(:,2))
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
+% 
 % Blades
-figure(2);
-clf
-hold on;
-
-delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve * rotation_matrix';
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
-plot(r_volute_midline.*cos(theta_volute), r_volute_midline.*sin(theta_volute), '--'); % Volute Flow Midline
-plot(r_volute_wall.*cos(theta_volute), r_volute_wall.*sin(theta_volute)); % Volute Wall
-line([r_volute_wall(1), r_volute_wall(1)+t_tongue], [0, 0]); % Cutwater
-fplot(@(t) r_shaft*sin(t), @(t) r_shaft*cos(t)); % Shaft
-fplot(@(t) r_eye_inner*sin(t), @(t) r_eye_inner*cos(t)); % Eye Inlet
-
-hold off;
-title('Impeller Blades and Volute');
-axis equal;
-grid on;
+% figure(2);
+% hold on;
+% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve * rotation_matrix';
+%     plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
+% plot(r_volute.*cos(theta_volute), r_volute.*sin(theta_volute));
+% hold off;
+% title('Impeller Blades and Volute');
+% axis equal;
+% grid on;
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
 
 % Structural 
 % figure(3)

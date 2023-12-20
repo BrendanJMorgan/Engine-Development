@@ -17,7 +17,7 @@ T_amb = 293;                % K - Ambient Temperature
 
 % Overall Engine Performance Targets
 thrust_target = 3000*4.44822;   % N - Thrust
-p_cc = 300*6894.76;             % Pa - Stagnation / Chamber Pressure
+p_cc = 250*6894.76;             % Pa - Stagnation / Chamber Pressure
 
 % Combustion Chamber (CC)
 OF = 1.4;                   % Oxidizer/Fuel Ratio (by mass)
@@ -32,6 +32,7 @@ A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 p_gg = 500*6894.76;         % Pa - chamber pressure inside gas generator
 gg_fraction = 0.05;         % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
 OF_gg = 0.3;                % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
+c_star_eff_gg = 0.75; % characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
 
 % Chamber/Nozzle Geometry
 dx = 0.001;                 % m - position step 
@@ -59,12 +60,12 @@ v_injection = 10;       % m/s - combustion gas must have some initial velocity f
 injection_efficiency = 1.0;
 
 % Turbomachinery
-shaft_speed = 15000*0.1047198;	% rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
-r_eye_inner = 5/16*0.0254;			% m - a little bit of clearance around a 1/2 inch shaft
-r_shaft = 1/4*0.0254;						% m - portion of shaft that is stainless steel
-impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades CAN THIS BE MADE DEPENDENT ON SOMETHING?
-impeller_height = 1.5*0.0254;			% m - from base of impeller to eye plane CAN THIS BE MADE DEPENDENT ON SOMETHING?
-turbine_stage_number = 1;				% number of stages in the turbine (one stage = one rotor + one stator)
+shaft_speed = 30000*0.1047198;	    % rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
+r_shaft = 9/32*0.0254;				% m - a little bit of clearance around a 1/2 inch shaft
+r_shaft_ss = 1/4*0.0254;            % m - portion of shaft that is stainless steel
+impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades
+impeller_height = 0.5*0.0254;		% m - from base of impeller to eye plane
+turbine_stage_number = 2;			% number of stages in the turbine (one stage = one rotor + one stator)
 
 %% Properties
 
@@ -93,9 +94,9 @@ density_ox = 1141; % kg/m3 - lox at boiling
 
 %% Runs and Plots
 
-combustion
-geometry
-exhaust_flow
+combustion_chamber
+cc_geometry
+cc_gas_flow
 coolant_flow
 
 % T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
@@ -103,7 +104,7 @@ coolant_flow
 % thermal_balance
 % structures
 pump
-% gas_generator
+gas_generator
 turbine
 
 
@@ -114,9 +115,7 @@ turbine
 % isp_ideal
 % isp_real
 % mdot_total
-d_impeller_inches = 2*r_exit/0.0254
-d_rotor_inches = d_rotor / 0.0254
-h_rotor_inches = h_rotor / 0.0254
+% impeller_diameter_inches = 2*r_exit/0.0254
 
 % writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
 % writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
