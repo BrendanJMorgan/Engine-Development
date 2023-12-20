@@ -17,7 +17,7 @@ T_amb = 293;                % K - Ambient Temperature
 
 % Overall Engine Performance Targets
 thrust_target = 3000*4.44822;   % N - Thrust
-p_cc = 250*6894.76;             % Pa - Stagnation / Chamber Pressure
+p_cc = 300*6894.76;             % Pa - Stagnation / Chamber Pressure
 
 % Combustion Chamber (CC)
 OF = 1.4;                   % Oxidizer/Fuel Ratio (by mass)
@@ -59,12 +59,12 @@ v_injection = 10;       % m/s - combustion gas must have some initial velocity f
 injection_efficiency = 1.0;
 
 % Turbomachinery
-shaft_speed = 30000*0.1047198;	    % rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
-r_shaft = 9/32*0.0254;				% m - a little bit of clearance around a 1/2 inch shaft
-r_shaft_ss = 1/4*0.0254;            % m - portion of shaft that is stainless steel
-impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades
-impeller_height = 0.5*0.0254;		% m - from base of impeller to eye plane
-turbine_stage_number = 2;			% number of stages in the turbine (one stage = one rotor + one stator)
+shaft_speed = 15000*0.1047198;	% rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
+r_eye_inner = 5/16*0.0254;			% m - a little bit of clearance around a 1/2 inch shaft
+r_shaft = 1/4*0.0254;						% m - portion of shaft that is stainless steel
+impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades CAN THIS BE MADE DEPENDENT ON SOMETHING?
+impeller_height = 1.5*0.0254;			% m - from base of impeller to eye plane CAN THIS BE MADE DEPENDENT ON SOMETHING?
+turbine_stage_number = 1;				% number of stages in the turbine (one stage = one rotor + one stator)
 
 %% Properties
 
@@ -114,7 +114,9 @@ turbine
 % isp_ideal
 % isp_real
 % mdot_total
-impeller_diameter_inches = 2*r_exit/0.0254
+d_impeller_inches = 2*r_exit/0.0254
+d_rotor_inches = d_rotor / 0.0254
+h_rotor_inches = h_rotor / 0.0254
 
 % writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
 % writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')

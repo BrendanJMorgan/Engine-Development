@@ -39,7 +39,7 @@ sweep = blade_params_optimal(3);
 [blade_curve, blade_control_points, ~, ~] = compute_blade_curve(control1, control2, sweep, r_inlet, r_exit, blade_angle_inlet, blade_angle_outlet, clock);
 
 %% Number of Blades
-blade_z = interp1(rms_curve(:,1), rms_curve(:,2), blade_curve(:,1)); % m - vertical position compnent of blade curve
+blade_z = interp1(rms_curve(:,1), rms_curve(:,2), blade_curve(:,1)); % m - vertical position component of blade curve
 blade_arc_length = sum( vecnorm( diff([blade_curve(:,1), blade_curve(:,2), blade_z])' ) ); % m - arc length of one individual blade, measure at rms line
 solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed_fuel);					% solidity is the optimal ratio of blade chord to blade spacing. Pump handbook page 2.36 (sigma)
 blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length));	% number of blades, rounded to the nearest even number (n)
