@@ -17,7 +17,7 @@ isp_ideal = cea.output.eql.isp(end); % s - specific impulse
 %% Mass Flow Rates
 
 R_gas = 8.3145 / (0.001*cea.output.eql.mw(2)); % J/kg-K - Specific Gas Constant (throat)
-mdot_cc = A_throat / (sqrt(Tc)/p_cc * sqrt(R_gas/gamma_avg) * ((gamma_avg+1)/2)^((gamma_avg+1)/(2*(gamma_avg-1)))); % m2 - throat area
+mdot_cc = A_throat / (sqrt(Tt_cc)/p_cc * sqrt(R_gas/gamma_avg) * ((gamma_avg+1)/2)^((gamma_avg+1)/(2*(gamma_avg-1)))); % m2 - throat area
 thrust = mdot_cc*v_exhaust;     % kg/s - Propellant mass flow rate into combustion chamber
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate

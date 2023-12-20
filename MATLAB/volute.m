@@ -10,6 +10,6 @@ A_volute = ( vdot_fuel.*theta_volute./(7.6*pi*r_exit*v_exit_tang) .* ( 1 + sqrt(
 A_volute(isnan(A_volute)) = 0;
 r_volute = r_tongue + 0.5*sqrt(A_volute); % m
 
-v_throat = vdot_fuel./A_throat
-figure(1)
-polarplot(theta_volute, r_volute)
+v_throat = vdot_fuel./A_throat;
+% figure(1)
+% polarplot(theta_volute, r_volute)

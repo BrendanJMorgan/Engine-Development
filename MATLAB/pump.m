@@ -73,23 +73,23 @@ volute
 % line(xlim, [0 0]);  %y-axis
 % 
 % Blades
-figure(2);
-hold on;
-delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve * rotation_matrix';
-    plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
-plot(r_volute.*cos(theta_volute), r_volute.*sin(theta_volute));
-hold off;
-title('Impeller Blades and Volute');
-axis equal;
-grid on;
-line([0 0], ylim);  %x-axis
-line(xlim, [0 0]);  %y-axis
+% figure(2);
+% hold on;
+% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve * rotation_matrix';
+%     plot(rotated_curve(:, 1), rotated_curve(:, 2), 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% plot(blade_control_points(:,1),blade_control_points(:,2),'o','color','r')
+% plot(r_volute.*cos(theta_volute), r_volute.*sin(theta_volute));
+% hold off;
+% title('Impeller Blades and Volute');
+% axis equal;
+% grid on;
+% line([0 0], ylim);  %x-axis
+% line(xlim, [0 0]);  %y-axis
 
 % Structural 
 % figure(3)

@@ -32,6 +32,7 @@ A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 p_gg = 500*6894.76;         % Pa - chamber pressure inside gas generator
 gg_fraction = 0.05;         % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
 OF_gg = 0.3;                % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
+c_star_eff_gg = 0.75; % characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
 
 % Chamber/Nozzle Geometry
 dx = 0.001;                 % m - position step 
@@ -93,9 +94,9 @@ density_ox = 1141; % kg/m3 - lox at boiling
 
 %% Runs and Plots
 
-combustion
-geometry
-exhaust_flow
+combustion_chamber
+cc_geometry
+cc_gas_flow
 coolant_flow
 
 % T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
@@ -103,7 +104,7 @@ coolant_flow
 % thermal_balance
 % structures
 pump
-% gas_generator
+gas_generator
 turbine
 
 
@@ -114,7 +115,7 @@ turbine
 % isp_ideal
 % isp_real
 % mdot_total
-impeller_diameter_inches = 2*r_exit/0.0254
+% impeller_diameter_inches = 2*r_exit/0.0254
 
 % writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'impeller_curve_inches.txt', 'Delimiter', ',')  
 % writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'shroud_curve_inches.txt', 'Delimiter', ',')
