@@ -16,7 +16,7 @@ p_amb = 13.49*6894.76;      % psi - ambient pressure at 2400 feet elevation
 T_amb = 293;                % K - Ambient Temperature
 
 % Overall Engine Performance Targets
-thrust_target = 3000*4.44822;   % N - Thrust
+thrust_target = 1000*4.44822;   % N - Thrust
 p_cc = 250*6894.76;             % Pa - Stagnation / Chamber Pressure
 
 % Combustion Chamber (CC)
@@ -61,8 +61,8 @@ injection_efficiency = 1.0;
 
 % Turbomachinery
 shaft_speed = 30000*0.1047198;	    % rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
-r_shaft = 9/32*0.0254;				% m - a little bit of clearance around a 1/2 inch shaft
-r_shaft_ss = 1/4*0.0254;            % m - portion of shaft that is stainless steel
+r_eye_inner = 9/32*0.0254;				% m - a little bit of clearance around a 1/2 inch shaft
+r_shaft = 1/4*0.0254;            % m - portion of shaft that is stainless steel
 impeller_thickness = 1/8*0.0254;	% m - thickness of impeller at the exit point, not including blades
 impeller_height = 0.5*0.0254;		% m - from base of impeller to eye plane
 turbine_stage_number = 2;			% number of stages in the turbine (one stage = one rotor + one stator)
@@ -103,6 +103,7 @@ coolant_flow
 % thermal_balance
 % thermal_balance
 % structures
+
 pump
 gas_generator
 turbine

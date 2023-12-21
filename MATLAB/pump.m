@@ -38,28 +38,6 @@ impeller
 blades
 volute
 
-%% Centrifugal Integrity - this is a cursory sanity check, a full FEM should be made to verify
-% andddddd it's completely fucking wrong. use flywheel stress.
-% 
-% r = (0:dr:r_exit)'; % m - unified radial coordinate system
-% impeller_curve = [ [(0:dr:r_shaft)', impeller_height*ones(ceil(r_shaft/dr),1)] ; impeller_curve];
-% 
-% bronze_density = 7580; % kg/m3 - for Aluminum Bronze Alloy 63000 from Azom spec sheet
-% ss_density = 7970; % kg/m3 - for stainless steel 316 average from Azom spec sheet
-% 
-% impeller_interpolated = interp1(impeller_curve(:,1), impeller_curve(:,2), r);
-% shroud_interpolated = interp1(shroud_curve(:,1), shroud_curve(:,2), r);
-% shroud_interpolated(~(shroud_interpolated>=0)) = 0;
-% 
-% % Shell Integrals of Revolution
-% dV_impeller = 2*pi*r*dr.*impeller_interpolated;
-% dm_impeller = [ss_density*dV_impeller(1:floor(r_shaft_ss/dr)); bronze_density*dV_impeller(ceil(r_shaft_ss/dr):end)];
-% dV_shroud = 2*pi*r*dr.*shroud_interpolated;
-% dm_shroud = bronze_density*dV_shroud;
-% 
-% force_centrifugal = cumsum(shaft_speed^2 .*(dm_impeller+dm_shroud).* r, 'reverse');
-% stress_centrifugal = force_centrifugal ./ (2*pi*r.*(impeller_interpolated + shroud_interpolated));
-
 %% Plotting
 
 % % Impeller
