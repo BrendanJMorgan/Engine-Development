@@ -15,6 +15,14 @@ constraint_function = @(params) triangle_constraints(params, shaft_power, shaft_
 [opt_params, fval] = fmincon(objective_function, initial_guess, [], [], [], [], lb, ub, constraint_function, options);
 opt_params
 
+mdot_gg = opt_params(1);
+degree_reaction = opt_params(2);
+flow_coeff = opt_params(3);
+[r_rotor, stage_loading_coeff] = turbine_calculations(mdot_gg, degree_reaction, flow_coeff, shaft_power, shaft_speed, c_star_gg, p_amb, p_gg, gamma_gg, R_gg, Tt_gg);
+2*r_rotor/0.0254
+stage_loading_coeff
+
+
 function [r_rotor, stage_loading_coeff] = turbine_calculations(mdot_gg, degree_reaction, flow_coeff, shaft_power, shaft_speed, c_star_gg, p_amb, p_gg, gamma_gg, R_gg, Tt_gg)
 	% Nozzle Plate (np)
 	nozzle_number = 16;
@@ -32,9 +40,6 @@ function [r_rotor, stage_loading_coeff] = turbine_calculations(mdot_gg, degree_r
 	v_flow_np = M_np*sqrt(gamma_gg*R_gg*T_exit_np)*[sin(alpha_np), cos(alpha_np)]; % [m/s, m/s] - tangential and axial velocity components
 	
 	% Rotor
-	
-	% degree_reaction = 0; % 0 for impulse turbines; 0.5 is common for reaction turbines
-	% flow_coeff = 0.8; % phi in Mattingly & Ohain
 	midline_speed_rotor = v_flow_np(2)/flow_coeff; % m/s - U in Matt & Ohain
 		
 	stage_loading_coeff = shaft_power/(mdot_gg*midline_speed_rotor^2); % psi in Mattingly & Ohain
