@@ -1,13 +1,15 @@
 %% Establishing the Pump Configuration
 dr = 0.0001;
 
+% NPSH = 
 % specific_speed = shaft_speed*sqrt(vdot) / (g*head)^0.75;
 % suction_specific_speed = shaft_speed * sqrt(vdot) / (NPSH*g)^0.75;
 % suction_specific_speed_imperial = suction_specific_speed*2733.016;
 
+
+
 %% Sizing the Pump
-
-
+NPSH_available = p_amb/(density*g) - vapor_pressure/(density*g); % Net positive suction head. Assuming zero plumbing water column and inlet velocity
 specific_speed = shaft_speed*sqrt(vdot)/(head*g)^0.75;
 outlet_flow_coeff = 0.175*sqrt(specific_speed); % phi_i in pump handbook
 head_coeff = 0.4 / specific_speed^0.25; % psi in pump handbook. Valid for specific speeds < 1 (which you should be anyways; centrifugal pumps should be between 0.1 and 0.6)
@@ -25,6 +27,7 @@ while (abs(new_blockage-blockage) > 0.01)
     blockage = new_blockage;
     blades
 end
+% inducer
 volute
 
 %% Requirements for Turbine

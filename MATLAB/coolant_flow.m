@@ -1,7 +1,7 @@
 %% Coolant Bulk Properties
 % Ethanol is the coolant
-density_cool =	density_fuel; % kg/m3 - ethanol at STP % ADJUST WITH COOLPROP
-kin_visc_cool = kin_visc_fuel; % m2/s - kinematic viscosity % ADJUST WITH COOLPROP
+density_cool = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
+kin_visc_cool = PropsSI('V','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']'])/density_cool; % m2/s - kinematic viscosity
 mdot_cool = mdot_fuel_cc; % kg/s
 
 %% Pressure Drop

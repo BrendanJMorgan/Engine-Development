@@ -17,9 +17,9 @@ mdot_film = [0.5, 0.5]*film_fraction*mdot_cc;
 mdot_gas = (1-film_fraction)*mdot_cc;
 
 T_injection = T_amb; % K - PLACEHOLDER UNTIL REPLACED WITH REGEN TEMPERATURE AT THAT LOCATION
-heat_vap_film = py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',1,'Ethanol') - py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',0,'Ethanol'); % J/kg - heat of vaporization of film coolant
-cp_film = py.CoolProp.CoolProp.PropsSI('C','P',pc,'Q',0,'Ethanol');
-T_sat_film = py.CoolProp.CoolProp.PropsSI('T','P',pc,'Q',0,'Ethanol'); % THIS SHOULD BE DEPENDENT ON PRESSURE IN THROAT/NOZZLE
+heat_vap_film = py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',1,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']) - py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg - heat of vaporization of film coolant
+cp_film = py.CoolProp.CoolProp.PropsSI('C','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
+T_sat_film = py.CoolProp.CoolProp.PropsSI('T','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % THIS SHOULD BE DEPENDENT ON PRESSURE IN THROAT/NOZZLE
 T_film = T_amb*ones(1,length(x));
 film_injection_x = [0, l_chamber]; % m - film cooling orifices around perimeter of injector and along bottom edge of chamber wall
 
@@ -78,8 +78,8 @@ for i = 1:1:length(film_injection_x)
 
 	% Gaseous Film Coolant Distribution
 	for j = liquid_end+1:1:length(x)
-		cp_film = py.CoolProp.CoolProp.PropsSI('C','P',p_gas(j),'T',T_film(j-1),'Ethanol'); % J/kg-K
-		k_film = py.CoolProp.CoolProp.PropsSI('L','P',p_gas(j),'T',T_film(j-1),'Ethanol'); % J/kg-K
+		cp_film = py.CoolProp.CoolProp.PropsSI('C','P',p_gas(j),'T',T_film(j-1),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
+		k_film = py.CoolProp.CoolProp.PropsSI('L','P',p_gas(j),'T',T_film(j-1),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
 		dT = dx * 1.628 * (2*pi*r1(j)*h_gas(j)/cp_film) * ((v_gas(j)/v_injection) * (1/(2*pi*r1(j))) * (cp_film/k_film))^0.125 * (mdot_film(i))^-0.875 * (T_recovery(j)-T_film(j-1)); % K
 		T_film(j) = T_film(j-1) + dT;
 	end
@@ -96,9 +96,9 @@ end
 T_input = T_amb;
 for i = flow % Find heat and temperatures along engine contour
 	%% Regenerative Coolant Properties
-    cp_cool = py.CoolProp.CoolProp.PropsSI("C", "T", T_cool(i), "P", p_cool(i), "Ethanol"); % J/kg-K
-    visc_cool = py.CoolProp.CoolProp.PropsSI("V", "T", T_cool(i), "P", p_cool(i), "Ethanol"); % Pa-s
-    k_cool = py.CoolProp.CoolProp.PropsSI("L", "T", T_cool(i), "P", p_cool(i), "Ethanol"); % W/m-K
+    cp_cool = py.CoolProp.CoolProp.PropsSI("C", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
+    visc_cool = py.CoolProp.CoolProp.PropsSI("V", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % Pa-s
+    k_cool = py.CoolProp.CoolProp.PropsSI("L", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % W/m-K
     Pr_cool = cp_cool*visc_cool/k_cool; % Prandtl Number
 
     if (Re_cool(i)<3000) % Really should be < 2300, but using laminar flow in transition region for conservatism
@@ -140,7 +140,7 @@ for i = flow % Find heat and temperatures along engine contour
 	end
 
     % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
-	boiling_cool = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0, 'Ethanol'); % K - Ethanol Saturation Temperature
+	boiling_cool = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % K - Ethanol Saturation Temperature
     if T_cool(i) > boiling_cool
         error("Coolant starts boiling at %g m from injector (%g m from exit plane)", x(i), x_exit-x(i));
 	end

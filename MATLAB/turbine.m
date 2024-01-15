@@ -40,12 +40,14 @@ function [r_rotor, stage_loading_coeff] = turbine_calculations(mdot_gg, degree_r
 	v_flow_np = M_np*sqrt(gamma_gg*R_gg*T_exit_np)*[sin(alpha_np), cos(alpha_np)]; % [m/s, m/s] - tangential and axial velocity components
 	
 	% Rotor
-	midline_speed_rotor = v_flow_np(2)/flow_coeff; % m/s - U in Matt & Ohain
+    isentropic_velocity_ratio = 0.35; %  A single-row impulse stage delivers best performance at velocity ratios between 0.30 and 0.40 (NASA 1974)
+    r_rotor = isentropic_velocity_ratio*norm(v_flow_np)/shaft_speed; % m
+	% midline_speed_rotor = v_flow_np(2)/flow_coeff; % m/s - U in Matt & Ohain
 		
 	stage_loading_coeff = shaft_power/(mdot_gg*midline_speed_rotor^2); % psi in Mattingly & Ohain
 	v_flow_rotor = [shaft_power/(mdot_gg*midline_speed_rotor)+v_flow_np(1), v_flow_np(2)]; % [m/s, m/s] - assuming axial velocity remains constant
 	r_rotor = midline_speed_rotor/shaft_speed; % m
-	alpha_rotor = atan( norm(v_flow_np)/norm(v_flow_rotor)*(stage_loading_coeff/flow_coeff - tan(alpha_np)) );% rad
+	alpha_rotor = atan( norm(v_flow_np)/norm(v_flow_rotor)*(stage_loading_coeff/flow_coeff - tan(alpha_np)) ); % rad
 	
 	beta_np = atan(tan(alpha_np) - 1/flow_coeff); % rad
 	beta_rotor = atan(tan(beta_np) - 2*degree_reaction/flow_coeff); % rad

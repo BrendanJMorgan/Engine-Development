@@ -44,7 +44,7 @@ solidity = interp1([0, 0.4, 3], [1.8, 1.8, 1], specific_speed);					            
 blade_number = 2*round(0.5*(solidity * 2*pi*r_exit / blade_arc_length));	                % number of blades, rounded to the nearest even number (n)
 
 %% Compute Blockage (pump handbook page 2.63)
-blade_thickness = 0.04*r_exit; % m
+blade_thickness = 1/8*0.0254;%0.04*r_exit; % m
 boundary_layer_thickness = 0.002*blade_arc_length; % m
 meridional_length =   sum( vecnorm( diff([blade_curve(:,1), blade_z])' ) ); % m - arc length of blade projected onto the meridional plane
 new_blockage = 1 - (2*boundary_layer_thickness+blade_thickness)/(0.0254*2*pi * meridional_length/blade_arc_length); 
@@ -53,10 +53,10 @@ new_blockage = 1 - (2*boundary_layer_thickness+blade_thickness)/(0.0254*2*pi * m
 % Function to compute slopes and minimum curvature for blade curve in a pump
 function [blade_curve, control_points, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2, clock)
 	% clock = 1; % 1 for counterclockwise and -1 for clockwise
-	inlet_point = [radius1,0];																% [m,m] - blade inner edge starting location
-	outlet_point = radius2*[cos(sweep), sin(sweep)];										% [m,m] - blade outer edge ending location
-	inlet_azimuth = atan2(inlet_point(2), inlet_point(1)) - clock*(pi/2 - polar1);			% rad - blade inner edge absolute direction
-	outlet_azimuth = atan2(outlet_point(2), outlet_point(1)) - clock*(pi/2 - polar2);		% rad - blade outer edge absolute direction
+	inlet_point = [radius1,0];																								% [m,m] - blade inner edge starting location
+	outlet_point = radius2*[cos(sweep), sin(sweep)];														% [m,m] - blade outer edge ending location
+	inlet_azimuth = atan2(inlet_point(2), inlet_point(1)) - clock*(pi/2 - polar1);				% rad - blade inner edge absolute direction
+	outlet_azimuth = atan2(outlet_point(2), outlet_point(1)) - clock*(pi/2 - polar2);			% rad - blade outer edge absolute direction
 	inlet_control = control1*[cos(inlet_azimuth),sin(inlet_azimuth)] + inlet_point;			% [m,m] - control point for the inlet edge
 	outlet_control = -control2*[cos(outlet_azimuth),sin(outlet_azimuth)] + outlet_point;	% [m,m] - control point for the outlet edge
 
@@ -69,9 +69,9 @@ function [blade_curve, control_points, control_error1, control_error2] = compute
 end
 
 function cost = cost_function_blade(params, radius1, radius2, polar1, polar2, clock)
-    control1 = params(1);   % m - length between inlet point and inlet control point
-	control2 = params(2);   % m - length between outlet point and outlet control point
-    sweep = params(3);      % rad
+    control1 = params(1); % m - length between inlet point and inlet control point
+	control2 = params(2); % m - length between outlet point and outlet control point
+    sweep = params(3); % rad
     [blade_curve, ~, control_error1, control_error2] = compute_blade_curve(control1, control2, sweep, radius1, radius2, polar1, polar2, clock);
 
 	blade_arc_length = sum(sqrt(sum(diff(blade_curve).^2, 2))); % m - arc length of one individual blade

@@ -11,29 +11,30 @@ r_guess = (lower_bound + upper_bound) / 2;
 
 % Using fzero with bounded search
 options = optimset('TolX',1e-12,'TolFun',1e-12);
-[r_eye, fval, exitflag, output] = fzero(@(r_eye) eye_solver(r_eye, vdot_fuel, shaft_speed, eye_flow_coeff, r_eye_inner), [lower_bound, upper_bound], options);
+[r_eye, fval, exitflag, output] = fzero(@(r_eye) eye_solver(r_eye, vdot, shaft_speed, eye_flow_coeff, r_eye_inner), [lower_bound, upper_bound], options);
 
 if exitflag == 0
     error('Pump eye radius solver failed');
 end
 
 %% The exit radius r2 (or diameter D2)
-r_exit = 1 / shaft_speed * sqrt (g*head_fuel / head_coeff_fuel);
+r_exit = 1 / shaft_speed * sqrt (g*head / head_coeff);
 
 %% The exit width b2
-w_exit = vdot_fuel / (2*pi*shaft_speed*r_exit^2*outlet_flow_coeff*blockage);
+w_exit = vdot / (2*pi*shaft_speed*r_exit^2*outlet_flow_coeff*blockage);
 
 %% Hub and shroud profiles
 
 r_min = 0.5*r_eye; % m - minimum allowable radius of curvature
-bezier_params_initial = [0.008, 0.008]; % starting values
-cost_function = @(bezier_params) cost_function_impeller(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_eye_inner, r_min);
+bezier_params_initial = [0.01, 0.01, 0.01]; % starting values
+cost_function = @(bezier_params) cost_function_impeller(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, r_eye_inner, r_min);
 bezier_params_optimal = fminsearch(cost_function, bezier_params_initial);
 
 bezier_vert_optimal = bezier_params_optimal(1);
 bezier_horiz_optimal = bezier_params_optimal(2);
+impeller_height_optimal = bezier_params_optimal(3);
 
-[~, ~, min_shroud_curvature, shroud_curve, impeller_curve, control_points] = compute_curves(bezier_vert_optimal, bezier_horiz_optimal, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_eye_inner);
+[~, ~, min_shroud_curvature, shroud_curve, impeller_curve, control_points] = compute_curves(bezier_vert_optimal, bezier_horiz_optimal, r_eye, r_exit, w_exit, impeller_thickness, impeller_height_optimal, r_eye_inner);
 
 min_radius = 1/max(min_shroud_curvature);
 if min_radius < 0.99*r_min    
@@ -41,8 +42,8 @@ if min_radius < 0.99*r_min
 end
 
 %% Functions 
-function f = eye_solver(r_eye, vdot_fuel, shaft_speed, eye_flow_coeff, r_eye_inner)
-    f = r_eye - (vdot_fuel / (pi*shaft_speed*eye_flow_coeff*(1-r_eye_inner^2/r_eye^2)) ) ^ (1/3);
+function f = eye_solver(r_eye, vdot, shaft_speed, eye_flow_coeff, r_eye_inner)
+    f = r_eye - (vdot / (pi*shaft_speed*eye_flow_coeff*(1-r_eye_inner^2/r_eye^2)) ) ^ (1/3);
 end
 
 % Function to compute slopes and minimum curvature for shroud and impeller curves in a pump
@@ -78,11 +79,12 @@ function [slope_shroud, slope_impeller, min_shroud_curvature, shroud_curve, impe
     min_shroud_curvature = abs(gradient(shroud_curve(:, 1), s) .* gradient(gradient(shroud_curve(:, 2), s), s) - gradient(shroud_curve(:, 2), s) .* gradient(gradient(shroud_curve(:, 1), s), s)) ./ (gradient(shroud_curve(:, 1), s).^2 + gradient(shroud_curve(:, 2), s).^2).^(3/2);
 end
 
-function cost = cost_function_impeller(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_eye_inner, r_min)
+function cost = cost_function_impeller(bezier_params, r_eye, r_exit, w_exit, impeller_thickness, r_eye_inner, r_min)
     bezier_vert = bezier_params(1);
     bezier_horiz = bezier_params(2);
+    impeller_height = bezier_params(3);
     [slope_shroud, slope_impeller, min_shroud_curvature] = compute_curves(bezier_vert, bezier_horiz, r_eye, r_exit, w_exit, impeller_thickness, impeller_height, r_eye_inner);
-
+    
     % The cost is the sum of the absolute slopes (want them to be 0 for a horizontal line) and the curvature
-    cost = 100*abs(slope_shroud) + abs(slope_impeller) + 100*abs(1/max(min_shroud_curvature)-r_min);
+    cost = abs(slope_shroud) + abs(slope_impeller) + 100*abs(1/max(min_shroud_curvature)-r_min);
 end

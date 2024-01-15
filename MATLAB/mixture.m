@@ -2,7 +2,7 @@
 %
 % mixture(compounds, fractions, Tref, pref, property_type)
 %
-% Tref - reference temeprature; pref - reference pressure
+% Tref - reference temperature; pref - reference pressure
 % property_type:
 % C - specific heat
 % V - viscosity

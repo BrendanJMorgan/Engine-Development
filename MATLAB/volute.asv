@@ -12,6 +12,6 @@ theta_volute = clock*theta_volute; % flip clockwise/counterclockwise
 
 h_volute = sqrt(0.25*t_tongue^2+A_volute(end)) - 0.5*t_tongue; % m - height of volute gap - set so the outlet is a square
 r_volute = r_tongue + A_volute/h_volute; % m - radius of volute wall
-r_volute_outlet = sqrt(A_volute(end)/pi);
+r_volute_outlet = A_volute/h_volute*
 
 v_throat = vdot./A_throat; % m/s - fluid exit velocity into plumbing

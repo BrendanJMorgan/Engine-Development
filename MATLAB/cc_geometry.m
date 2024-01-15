@@ -22,13 +22,13 @@ thrust = mdot_cc*v_exhaust;     % kg/s - Propellant mass flow rate into combusti
 mdot_fuel_cc = mdot_cc*(1/(1+OF)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_cc = mdot_cc*(OF/(1+OF)); % kg/s - Oxidizer Mass Flow Rate
 
-% mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction); % kg/s - Propellant mass flow rate into gas generator
-% mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
-% mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
+mdot_gg = mdot_cc*gg_fraction/(1-gg_fraction); % kg/s - Propellant mass flow rate into gas generator
+mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
+mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
 
 mdot_total = mdot_cc;%mdot_gg; % kg/s - Propellant mass flow rate through pumps
-% mdot_fuel_total = mdot_fuel_cc+mdot_fuel_gg; % kg/s
-% mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
+mdot_fuel_total = mdot_fuel_cc+mdot_fuel_gg; % kg/s
+mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
 
 isp_real = (v_exhaust/g)*(mdot_cc/mdot_total); % s
 
