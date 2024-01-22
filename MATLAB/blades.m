@@ -9,18 +9,18 @@ rms_curve = 0.5 * (shroud_curve + impeller_curve); % [m,m] - halfway between shr
 %% Inlet Blade Angles
 inlet_gap = norm( shroud_curve(find(rms_curve > r_inlet)) -  impeller_curve(find(rms_curve > r_inlet)) );
 u_inlet = shaft_speed*r_inlet;				% m/s - rotational speed at the inlet (U_1 in pump handbook)
-v_inlet = vdot/(2*pi*r_inlet*inlet_gap);    % m/s - fluid velocity at the inlet, assumed to be entirely radial. Can be found with CFD instead for more accuracy (V_1 in pump handbook)
+v_inlet = vdot_pump/(2*pi*r_inlet*inlet_gap);    % m/s - fluid velocity at the inlet, assumed to be entirely radial. Can be found with CFD instead for more accuracy (V_1 in pump handbook)
 blade_angle_inlet = atan2(u_inlet,v_inlet); % rad - inlet angle of blades relative to tangential azimuth  (beta_1,f in pump handbook)
 
 %% Outlet Blade Angles
 slip_factor = 0.15; % Buseman form "typically between 0.1 and 0.2 ... for frictionless flow ... with log-spiral blades ... and a 2D, radial-flow geometry with parallel hub and shroud"
 v_blade_exit = shaft_speed*r_exit;			% m/s - blade tangential velocity (U_2 in pump handbook)
 v_slip = slip_factor*v_blade_exit;			% m/s - slip velocity (V_s in pump handbook)
-v_merid_exit = vdot/(2*pi*r_exit*w_exit);	% m/s - meriodonal velocity (V_m,2 in pump handbook)                                                       
+v_merid_exit = vdot_pump/(2*pi*r_exit*w_exit);	% m/s - meriodonal velocity (V_m,2 in pump handbook)                                                       
 
-hydraulic_efficiency = 1 - 0.071 / vdot^0.25; % Jekat's Empirical Formula - wraps up all the various efficiencies into one formula, valid for all specific speeds
+hydraulic_efficiency = 1 - 0.071 / vdot_pump^0.25; % Jekat's Empirical Formula - wraps up all the various efficiencies into one formula, valid for all specific speeds
 
-v_exit_tang = g*head / (hydraulic_efficiency*v_blade_exit);			            % m/s - this is Euler's pump equation rearranged (V_theta,2 in pump handbook)                                                                                                                                                                                                                                                                                                                                                                                                                              
+v_exit_tang = g*head_pump / (hydraulic_efficiency*v_blade_exit);			            % m/s - this is Euler's pump equation rearranged (V_theta,2 in pump handbook)                                                                                                                                                                                                                                                                                                                                                                                                                              
 blade_angle_outlet = atan(v_merid_exit / (v_blade_exit-v_exit_tang-v_slip));    % rad - angle between blade tip azimuth and local tangential azimuth (beta_2 in pump handbook)
 if blade_angle_outlet <= 0
 	blade_angle_outlet*180/pi

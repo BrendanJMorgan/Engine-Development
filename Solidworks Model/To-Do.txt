@@ -1,0 +1,15 @@
+Add seals to pumps
+Add seals to turbine
+Reconfigure lox pump cad like fuel pump cad
+Update volute/impeller/blade/curves
+Figure out clearance requirements on impellers
+Calculate both pump efficiencies and adjust power requirements
+Add in new angular contact bearings
+Add in thermal barriers
+Finish inducer code and cad
+Add in inlet and outlet piping
+Start gg code, then cad
+Figure out solid ignition system
+Run a thermal model and hand calcs
+Run a modal model and check for resonance on shaft speeds
+Run a centrifugal static model and check impellers + turbine blades

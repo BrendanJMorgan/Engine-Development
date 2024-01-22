@@ -11,17 +11,17 @@ r_guess = (lower_bound + upper_bound) / 2;
 
 % Using fzero with bounded search
 options = optimset('TolX',1e-12,'TolFun',1e-12);
-[r_eye, fval, exitflag, output] = fzero(@(r_eye) eye_solver(r_eye, vdot, shaft_speed, eye_flow_coeff, r_eye_inner), [lower_bound, upper_bound], options);
+[r_eye, fval, exitflag, output] = fzero(@(r_eye) eye_solver(r_eye, vdot_pump, shaft_speed, eye_flow_coeff, r_eye_inner), [lower_bound, upper_bound], options);
 
 if exitflag == 0
     error('Pump eye radius solver failed');
 end
 
 %% The exit radius r2 (or diameter D2)
-r_exit = 1 / shaft_speed * sqrt (g*head / head_coeff);
+r_exit = 1 / shaft_speed * sqrt (g*head_pump / head_coeff);
 
 %% The exit width b2
-w_exit = vdot / (2*pi*shaft_speed*r_exit^2*outlet_flow_coeff*blockage);
+w_exit = vdot_pump / (2*pi*shaft_speed*r_exit^2*outlet_flow_coeff*blockage);
 
 %% Hub and shroud profiles
 
@@ -42,8 +42,8 @@ if min_radius < 0.99*r_min
 end
 
 %% Functions 
-function f = eye_solver(r_eye, vdot, shaft_speed, eye_flow_coeff, r_eye_inner)
-    f = r_eye - (vdot / (pi*shaft_speed*eye_flow_coeff*(1-r_eye_inner^2/r_eye^2)) ) ^ (1/3);
+function f = eye_solver(r_eye, vdot_pump, shaft_speed, eye_flow_coeff, r_eye_inner)
+    f = r_eye - (vdot_pump / (pi*shaft_speed*eye_flow_coeff*(1-r_eye_inner^2/r_eye^2)) ) ^ (1/3);
 end
 
 % Function to compute slopes and minimum curvature for shroud and impeller curves in a pump

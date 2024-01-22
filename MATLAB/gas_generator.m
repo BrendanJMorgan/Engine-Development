@@ -1,7 +1,7 @@
 
 initial_p_gg = 100*6894.76; % Pa
 % options = optimset('Display','iter','PlotFcns',@optimplotfval);
-optimal_p_gg = fminsearch(@(p_gg) objectiveFunction(p_gg, norm(v_nozzle_abs), OF_gg, p_amb, T_amb, proof), initial_p_gg);
+optimal_p_gg = fminsearch(@(p_gg) objectiveFunction(p_gg, norm(v_spouting), OF_gg, p_amb, T_amb, proof), initial_p_gg);
 
 %%
 

@@ -10,7 +10,7 @@ PropsSI = @py.CoolProp.CoolProp.PropsSI;
 
 % Constants
 g = 9.81;
-p_amb = 13.49*6894.76;      % psi - ambient pressure at 2400 feet elevation
+p_amb = 13.62*6894.76;      % psi - ambient pressure at 2100 feet elevation
 T_amb = 293;                % K - Ambient Temperature
 
 % Overall Engine Performance Targets
@@ -27,10 +27,20 @@ c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma
 A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 
 % Gas Generator (GG)
-% p_gg = 500*6894.76;         % Pa - chamber pressure inside gas generator
-gg_fraction = 0.03;         % Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
-OF_gg = 0.2;                % OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
-c_star_eff_gg = 0.75;       % characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
+p_gg = 400*6894.76;             % Pa - chamber pressure inside gas generator
+gg_fraction_guess = 0.01;       % unitless - Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014
+OF_gg = 0.2;                    % unitless - OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
+c_star_eff_gg = 0.75;           % m/s - characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
+c_tau_eff_gg = 0.96;            % unitless - Thrust Coefficient Efficiency Factor
+diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
+
+% Turbomachinery
+shaft_speed = 20000*pi/30;          % rad/s - angular velocity of the pump shaft, impeller, and inducers
+gear_ratio = 80/20;                % unitless - higher makes for a smaller, faster turbine
+clock = 1;                          % 1 for counterclockwise and -1 for clockwise (looking down at ox pump)
+r_eye_inner = 1/4*0.0254;	        % m - a little bit of clearance around a 1/2 inch shaft
+r_shaft = 0.005;                     % m - portion of shaft that is stainless steel
+impeller_thickness = 1/8*0.0254;    % m - thickness of impeller at the exit point, not including blades
 
 % Chamber/Nozzle Geometry
 dx = 0.001;                 % m - position step 
@@ -53,43 +63,22 @@ merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transit
 flow_direction = -1;            % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
 % Film Cooling
-film_fraction = 0.03;   % Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
+film_fraction = 0.03;   % unitless - Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
 v_injection = 10;       % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
 injection_efficiency = 1.0; % I forgot what the hell this even is. FIX.
 
-% Turbomachinery
-shaft_speed = 20000*0.1047198;      % rad/s - angular velocity of the shaft, rotors, impeller, and inducers (no gearing)
-gear_ratio = 1;                     % unitless - turbine speed / pump speed
-clock = 1;                          % 1 for counterclockwise and -1 for clockwise (looking down at ox pump)
-r_eye_inner = 1/4*0.0254;	        % m - a little bit of clearance around a 1/2 inch shaft
-r_shaft = 3/16*0.0254;              % m - portion of shaft that is stainless steel
-impeller_thickness = 1/8*0.0254;    % m - thickness of impeller at the exit point, not including blades
-reaction_degree = 0;                % unitless - impulse turbine
-% r_pitchline = 5*0.0254;             % m - constant radius for rotors/stators/nozzles
-% turbine_stage_number = 1;			% number of stages in the turbine (one stage = one rotor + one stator)
 
 %% Properties
 
-wall = "aluminum";
-
-switch wall
-    case "aluminum" % 6061
-        k_wall = 253; % W/m-K - thermal conductivity (at 571 C)
-    case "steel"
-        k_wall = 42.6; % W/m-K - thermal conductivity (at 100 C)
-    case "stainless"
-        k_wall = 14.0;
-    case "copper"
-        k_wall = 398; % W/m-K - thermal conductivity
-end
+k_wall = 253; % W/m-K - thermal conductivity of aluminum (at 571 C)
 
 FSu_design = 2.0; % Minimum design factor of safety, ultimate
 
-shaft_tensile_strength = 480E6; % Pa - stainless steel 316, ultimate
-shaft_shear_strength = shaft_tensile_strength/2;  % Pa - conservative Tresca criterion
+shaft_tensile_strength = 510E6; % Pa - stainless steel 304, ultimate
+shaft_shear_strength = shaft_tensile_strength/sqrt(3);  % Pa - conservative Tresca criterion
 
 
-%% Runs and Plots
+%% Runs
 
 combustion_chamber
 cc_geometry
@@ -99,11 +88,7 @@ coolant_flow
 % T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
 % thermal_balance
 % thermal_balance
-% structures
-
 powerhead
-
-
 
 %% Results
 
@@ -133,33 +118,42 @@ powerhead
 
 % % Pump Impeller and Blades
 % figure(3); clf;
-% line(shroud_curve(:,1)/0.0254, shroud_curve(:,2)/0.0254)
+% line(shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254)
 % hold on
-% plot(control_points(:,1)/0.0254,control_points(:,2)/0.0254,'o','color','r')
 % axis equal
-% plot(impeller_curve(:,1)/0.0254, impeller_curve(:,2)/0.0254)
+% plot(impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254)
 % line([0 0], ylim);  % x-axis
 % line(xlim, [0 0]);  % y-axis
 % title("Impeller and Shroud Contours")
 % hold off
-% 
-% % Blades
-% figure(4); clf
-% hold on
-% delta_angle = 2 * pi / blade_number; % Calculate the angle to rotate each blade
-% for i = 0:(blade_number-1)
-%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-%     rotated_curve = blade_curve * rotation_matrix';
-%     plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2); 
-%     plot(NaN, NaN); % Prevent connection between different blades
-% end
-% plot(blade_control_points(:,1)/0.0254,blade_control_points(:,2)/0.0254,'o','color','r')
-% plot(r_volute.*cos(theta_volute)/0.0254, r_volute.*sin(theta_volute)/0.0254);
-% line([r_tongue,r_tongue+t_tongue]/0.0254, [0,0]/0.0254);
-% title('Impeller Blades and Volute');
-% axis equal;
-% grid on;
-% hold off;  
+
+% Blades
+figure(4); clf
+hold on
+delta_angle = 2 * pi / blade_number_ox; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1)
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve_ox * rotation_matrix';
+    plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+plot(volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254);
+
+delta_angle = 2 * pi / blade_number_fuel; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1)
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve_fuel * rotation_matrix';
+    plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254-6, 'LineWidth', 2); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+plot(volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254-6);
+
+plot(r_pitchline/0.0254*cos(theta), r_pitchline/0.0254*sin(theta), 'LineStyle','--')
+plot(r_rotor_tip/0.0254*cos(theta), r_rotor_tip/0.0254*sin(theta), r_rotor_base/0.0254*cos(theta), r_rotor_base/0.0254*sin(theta))
+
+title('Impellers, Volutes, and Rotor');
+axis equal;
+grid on;
 
 % figure(5)
 % clf
