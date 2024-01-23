@@ -26,8 +26,8 @@ volute
 
 % Other
 d_inlet_pump = 3/8*0.0254; % m
-v_inlet_pump = vdot_pump / (pi/4*d_inlet_pump^2) % m/s
-cavitation_inlet = (p_amb - vapor_pressure_pump) / (0.5*density_pump*v_inlet_pump^2) % unitless
+v_inlet_pump = vdot_pump / (pi/4*d_inlet_pump^2); % m/s
+cavitation_inlet = (p_amb - vapor_pressure_pump) / (0.5*density_pump*v_inlet_pump^2); % unitless
 
 d_outlet_pump = 3/8*0.0254; % m
 v_outlet_pump = vdot_pump / (pi/4*d_outlet_pump^2); % m/s
@@ -35,9 +35,9 @@ cavitation_outlet = (p_out - vapor_pressure_pump) / (0.5*density_pump*v_outlet_p
 
 
 %% Requirements for Turbine
-pump_efficiency = 0.5; % VERY ARBITRARY PLACEHOLDER
-pump_power = vdot_pump * head_pump * density_pump * g / pump_efficiency;
-
+hydraulic_efficiency
+pump_power = vdot_pump * head_pump * density_pump * g / hydraulic_efficiency % W
+pump_power_theory = vdot_pump * head_pump * density_pump * g % W
 
 
 

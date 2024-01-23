@@ -32,15 +32,22 @@ gg_fraction_guess = 0.01;       % unitless - Fraction of total mass flow sent to
 OF_gg = 0.2;                    % unitless - OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
 c_star_eff_gg = 0.75;           % m/s - characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
 c_tau_eff_gg = 0.96;            % unitless - Thrust Coefficient Efficiency Factor
-diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
 
-% Turbomachinery
+% Pumps
 shaft_speed = 20000*pi/30;          % rad/s - angular velocity of the pump shaft, impeller, and inducers
-gear_ratio = 80/20;                % unitless - higher makes for a smaller, faster turbine
+gear_ratio = 80/20;                 % unitless - higher makes for a smaller, faster turbine
+gear_efficiency = 0.95;             % unitless - arbitrary right now, but typical for spur gears
 clock = 1;                          % 1 for counterclockwise and -1 for clockwise (looking down at ox pump)
 r_eye_inner = 1/4*0.0254;	        % m - a little bit of clearance around a 1/2 inch shaft
-r_shaft = 0.005;                     % m - portion of shaft that is stainless steel
+r_shaft = 0.005;                    % m - portion of shaft that is stainless steel
 impeller_thickness = 1/8*0.0254;    % m - thickness of impeller at the exit point, not including blades
+
+% Turbine
+nozzle_number = 5;              % unitless
+nozzle_angle = 45*pi/180;       % rad
+diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
+blade_number_rotor = 24;        % unitless - total number of blades on the rotor
+blade_gap_rotor = 3/16*0.0254;   % m - perpendicular (i.e. the end mill diameter)
 
 % Chamber/Nozzle Geometry
 dx = 0.001;                 % m - position step 

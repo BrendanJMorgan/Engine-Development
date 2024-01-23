@@ -21,7 +21,8 @@ clock = 1; % Counterclockwise
 pump
 % inducer
 
-shaft_power = pump_power;
+shaft_power = pump_power; % W
+shaft_power_theory = pump_power_theory; % W
 
 % Write Results
 shroud_curve_ox = shroud_curve;
@@ -51,7 +52,8 @@ clock = -1;
 
 pump
 
-shaft_power = shaft_power + pump_power;
+shaft_power = shaft_power + pump_power; % W
+shaft_power_theory = shaft_power_theory + pump_power_theory; % W
 
 % Write Results
 shroud_curve_fuel = shroud_curve;
@@ -71,14 +73,18 @@ writematrix([volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, zeros
 gas_generator2
 
 %% Turbine
+turbine_shaft_power = shaft_power/gear_efficiency; % unitless
 turbine6
+
+% Efficiency
+transmission_efficiency = shaft_power_theory / turbine_shaft_power % unitless
 
 % Shaft
 shaft_torque = shaft_power/shaft_speed; % N*m
 shaft_polar_moment = pi/2*r_shaft^4; % m4
-shaft_stress = shaft_torque*r_shaft/shaft_polar_moment % Pa
-shaft_torsion_FSu = shaft_shear_strength / shaft_stress
-shaft_torsion_MSu = shaft_torsion_FSu / FSu_design - 1
+shaft_stress = shaft_torque*r_shaft/shaft_polar_moment; % Pa
+shaft_torsion_FSu = shaft_shear_strength / shaft_stress; % unitless
+shaft_torsion_MSu = shaft_torsion_FSu / FSu_design - 1; % unitless
 
 
 
