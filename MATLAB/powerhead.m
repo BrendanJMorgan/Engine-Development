@@ -7,14 +7,12 @@ mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
 % actual mdot_gg is not solved until turbine is called
 
 %% LOx Pump
-density_ox = PropsSI('D','Q',0,'P',p_amb,'Oxygen'); % kg/m3 - lox at boiling
+density_pump = PropsSI('D','Q',0,'P',p_amb,'Oxygen'); % kg/m3 - lox at boiling
 p_out = p_cc + 25*6894.76; % Pa - GUESS RIGHT NOW
 dp_inducer = 25*6894.76; % Pa - PLACEHOLDER
 p_in = p_amb + dp_inducer; % Pa - inlet pressure
 T_in = PropsSI("T", "P", p_amb, "Q", 0, "Oxygen");
-head_pump = (p_out - p_in) / (density_ox*g); % m
-vdot_pump = mdot_ox_total/density_ox; % m3/s - Oxidizer Mass Flow Rate
-density_pump = density_ox; % kg/m3
+mdot_pump = mdot_ox_total; % kg/s - Oxidizer Mass Flow Rate
 vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, "Oxygen");
 clock = 1; % Counterclockwise
 
@@ -39,14 +37,12 @@ writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -bla
 writematrix([volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254, zeros(length(volute_curve_ox(:,1)),1)], 'Curves/ox_volute_curve_inches.txt', 'Delimiter', ',')
 
 %% Fuel Pump
-density_fuel = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
+density_pump = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
 p_out = p_cool(1) + 50*6894.76; % Pa - outlet pressure plus 50 psi of margin for plumbing losses and various inefficiencies, TOTAL GUESS RIGHT NOW
 dp_inducer = 25*6894.76; % Pa - PLACEHOLDER
 p_in = p_amb + dp_inducer; % Pa - inlet pressure
-T_in = T_amb;
-head_pump = (p_out - p_in) / (density_fuel*g); % m
-vdot_pump = mdot_fuel_total/density_fuel; % m3/s - Oxidizer Mass Flow Rate
-density_pump = density_fuel; % kg/m3
+T_in = T_amb; % K
+mdot_pump = mdot_fuel_total; % kg/s - Fuel Mass Flow Rate
 vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, ['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
 clock = -1;
 

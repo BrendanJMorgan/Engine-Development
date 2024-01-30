@@ -96,9 +96,9 @@ end
 T_input = T_amb;
 for i = flow % Find heat and temperatures along engine contour
 	%% Regenerative Coolant Properties
-    cp_cool = py.CoolProp.CoolProp.PropsSI("C", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
-    visc_cool = py.CoolProp.CoolProp.PropsSI("V", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % Pa-s
-    k_cool = py.CoolProp.CoolProp.PropsSI("L", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % W/m-K
+    cp_cool = PropsSI("C", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
+    visc_cool = PropsSI("V", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % Pa-s
+    k_cool = PropsSI("L", "T", T_cool(i), "P", p_cool(i),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % W/m-K
     Pr_cool = cp_cool*visc_cool/k_cool; % Prandtl Number
 
     if (Re_cool(i)<3000) % Really should be < 2300, but using laminar flow in transition region for conservatism

@@ -1,8 +1,9 @@
 %% Establishing the Pump Configuration
 dr = 0.0001;
+head_pump = (p_out - p_in) / (density_pump*g); % m
+vdot_pump = mdot_pump/density_pump; % m3/s - Volumetric Flow Rate
 
 %% Sizing the Pump
-
 
 specific_speed = shaft_speed*sqrt(vdot_pump)/(head_pump*g)^0.75;
 outlet_flow_coeff = 0.175*sqrt(specific_speed); % phi_i in pump handbook
@@ -23,6 +24,10 @@ while (abs(new_blockage-blockage) > 0.01)
 end
 volute
 
+%% Requirements for Turbine
+hydraulic_efficiency
+pump_power = vdot_pump * head_pump * density_pump * g / hydraulic_efficiency % W
+pump_power_theory = vdot_pump * head_pump * density_pump * g % W
 
 % Other
 d_inlet_pump = 3/8*0.0254; % m
@@ -33,11 +38,9 @@ d_outlet_pump = 3/8*0.0254; % m
 v_outlet_pump = vdot_pump / (pi/4*d_outlet_pump^2); % m/s
 cavitation_outlet = (p_out - vapor_pressure_pump) / (0.5*density_pump*v_outlet_pump^2); % unitless
 
+v_volute_pump = sqrt(2*pump_power / mdot_pump); % m/s - average tangential velocity along the contour of the volute
+2*pi*mean(r_volute)
 
-%% Requirements for Turbine
-hydraulic_efficiency
-pump_power = vdot_pump * head_pump * density_pump * g / hydraulic_efficiency % W
-pump_power_theory = vdot_pump * head_pump * density_pump * g % W
 
 
 
