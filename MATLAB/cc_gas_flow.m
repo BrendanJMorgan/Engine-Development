@@ -21,28 +21,28 @@ segment3 = linspace(dens_gas(3), dens_gas(4), n3);
 dens_gas = [segment1, segment2, segment3]; % kg/m^3
 
 %% Pressure
-p_gas = cea.output.eql.density;
+p_gas = cea.output.eql.pressure;
 segment1 = linspace(p_gas(1), p_gas(2), n1);
 segment2 = linspace(p_gas(2), p_gas(3), n2);
 segment3 = linspace(p_gas(3), p_gas(4), n3);
 p_gas = 1E5 * [segment1, segment2, segment3]; % Pa
 
 %% Specific Heat, Constant Pressure
-cp_gas = cea.output.eql.density;
+cp_gas = cea.output.eql.cp;
 segment1 = linspace(cp_gas(1), cp_gas(2), n1);
 segment2 = linspace(cp_gas(2), cp_gas(3), n2);
 segment3 = linspace(cp_gas(3), cp_gas(4), n3);
 cp_gas = [segment1, segment2, segment3]; % J/(kg*K)
 
 %% Ratio of Specific Heats
-gamma_gas = cea.output.eql.density;
+gamma_gas = cea.output.eql.gamma;
 segment1 = linspace(gamma_gas(1), gamma_gas(2), n1);
 segment2 = linspace(gamma_gas(2), gamma_gas(3), n2);
 segment3 = linspace(gamma_gas(3), gamma_gas(4), n3);
 gamma_gas = [segment1, segment2, segment3]; % unitless
 
 %% Molar Mass
-mol_gas = cea.output.eql.density;
+mol_gas = cea.output.eql.mw;
 segment1 = linspace(mol_gas(1), mol_gas(2), n1);
 segment2 = linspace(mol_gas(2), mol_gas(3), n2);
 segment3 = linspace(mol_gas(3), mol_gas(4), n3);

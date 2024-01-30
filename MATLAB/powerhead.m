@@ -17,7 +17,6 @@ vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, "Oxygen");
 clock = 1; % Counterclockwise
 
 pump
-% inducer
 
 shaft_power = pump_power; % W
 shaft_power_theory = pump_power_theory; % W
@@ -73,7 +72,8 @@ turbine_shaft_power = shaft_power/gear_efficiency; % unitless
 turbine6
 
 % Efficiency
-transmission_efficiency = shaft_power_theory / turbine_shaft_power % unitless
+transmission_efficiency = shaft_power_theory / turbine_shaft_power; % unitless
+isp_real = isp_ideal*mdot_cc/mdot_total;
 
 % Shaft
 shaft_torque = shaft_power/shaft_speed; % N*m

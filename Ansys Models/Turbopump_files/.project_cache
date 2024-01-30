@@ -14,10 +14,17 @@ dp0/SYS/MECH/file.rth
 dp0/SYS/MECH/file0.err
 dp0/SYS/MECH/MatML.xml
 dp0/SYS/MECH/solve.out
+dp0/SYS-1/MECH/CAERep.xml
+dp0/SYS-1/MECH/CAERepOutput.xml
+dp0/SYS-1/MECH/ds.dat
+dp0/SYS-1/MECH/file0.err
+dp0/SYS-1/MECH/MatML.xml
+dp0/SYS-1/MECH/solve.out
 dp0/act.dat
 dp0/designPoint.wbdp
 session_files/journal1.wbjn
 session_files/journal2.wbjn
+session_files/journal3.wbjn
 dp0/
 dpall/
 session_files/

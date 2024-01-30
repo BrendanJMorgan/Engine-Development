@@ -23,11 +23,12 @@ while (abs(new_blockage-blockage) > 0.01)
     blades
 end
 volute
+inducer
 
 %% Requirements for Turbine
-hydraulic_efficiency
-pump_power = vdot_pump * head_pump * density_pump * g / hydraulic_efficiency % W
-pump_power_theory = vdot_pump * head_pump * density_pump * g % W
+hydraulic_efficiency;
+pump_power = vdot_pump * head_pump * density_pump * g / hydraulic_efficiency; % W
+pump_power_theory = vdot_pump * head_pump * density_pump * g; % W
 
 % Other
 d_inlet_pump = 3/8*0.0254; % m
@@ -39,7 +40,6 @@ v_outlet_pump = vdot_pump / (pi/4*d_outlet_pump^2); % m/s
 cavitation_outlet = (p_out - vapor_pressure_pump) / (0.5*density_pump*v_outlet_pump^2); % unitless
 
 v_volute_pump = sqrt(2*pump_power / mdot_pump); % m/s - average tangential velocity along the contour of the volute
-2*pi*mean(r_volute)
 
 
 

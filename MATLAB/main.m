@@ -1,11 +1,6 @@
 clear all
 PropsSI = @py.CoolProp.CoolProp.PropsSI;
 
-%% TO DO
-% Reevaluate why CEA machs are not even close to isentropic relations
-% Decide if c tau should be changed to a bell nozzle
-% Compare CEA transport properties to those found from mixture() function
-
 %% Inputs 
 
 % Constants
@@ -70,9 +65,10 @@ merge_radius = 0.45*d1_chamber; % m - when contour is below this radius, transit
 flow_direction = -1;            % 1 = forward flow (injector to nozzle), -1 = counter flow (nozzle to injector)
 
 % Film Cooling
-film_fraction = 0.03;   % unitless - Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
-v_injection = 10;       % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
-injection_efficiency = 1.0; % I forgot what the hell this even is. FIX.
+film_fraction = 0.03;               % unitless - Fraction of the fuel mass flow dedicated to film cooling orifices - typically 3%-10% (Huzel and Huang)
+v_injection = 10;                   % m/s - combustion gas must have some initial velocity for injector film cooling to work mathematically
+injection_efficiency = 1.0;         % I forgot what this is
+
 
 
 %% Properties
@@ -94,45 +90,43 @@ coolant_flow
 
 % T_wall_hot = 800*ones(1,length(x)); % K - initial GUESS for the hot wall temperatures
 % thermal_balance
-% thermal_balance
+% thermal_balance % intentioanlly run twice (greater convergence)
+
 powerhead
 
 %% Results
 
-% thrust_lbf = thrust/4.44822;
-% thrust_lbf
-% isp_ideal
-% isp_real
-% mdot_total
-% impeller_diameter_inches = 2*r_exit/0.0254
+thrust_lbf = thrust/4.44822;
+thrust_lbf
+isp_ideal
+isp_real
+mdot_total
 
-% figure(1)
-% clf
-% colororder('default')
-% plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-% axis equal
-% xlabel("Distance from Injector (m)");
-% title("Combustion Chamber Contours")
+figure(1); clf
+colororder('default')
+plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
+axis equal
+xlabel("Distance from Injector (m)");
+title("Combustion Chamber Contours")
 
-% figure(2)
-% clf
-% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_film,x,T_free,x,T_ab,x,T_recovery,x,T_ref)
-% yline(0)
-% legend("Cold Wall","Hot Wall","Regen Coolant","Film Coolant","Free-Stream Gas","Adiabatic", "Recovery", "Gas Property Reference",'Location','northeast');
-% xlabel("Distance from Injector (m)");
-% ylabel("Temperature (K)");
-% title("Engine Steady-State Temperatures")
+figure(2); clf
+plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_film,x,T_free,x,T_ab,x,T_recovery,x,T_ref)
+yline(0)
+legend("Cold Wall","Hot Wall","Regen Coolant","Film Coolant","Free-Stream Gas","Adiabatic", "Recovery", "Gas Property Reference",'Location','northeast');
+xlabel("Distance from Injector (m)");
+ylabel("Temperature (K)");
+title("Engine Steady-State Temperatures")
 
-% % Pump Impeller and Blades
-% figure(3); clf;
-% line(shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254)
-% hold on
-% axis equal
-% plot(impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254)
-% line([0 0], ylim);  % x-axis
-% line(xlim, [0 0]);  % y-axis
-% title("Impeller and Shroud Contours")
-% hold off
+% Pump Impeller and Blades
+figure(3); clf;
+line(shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254)
+hold on
+axis equal
+plot(impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254)
+line([0 0], ylim);  % x-axis
+line(xlim, [0 0]);  % y-axis
+title("Impeller and Shroud Contours")
+hold off
 
 % Blades
 figure(4); clf
@@ -161,30 +155,3 @@ plot(r_rotor_tip/0.0254*cos(theta), r_rotor_tip/0.0254*sin(theta), r_rotor_base/
 title('Impellers, Volutes, and Rotor');
 axis equal;
 grid on;
-
-% figure(5)
-% clf
-% yyaxis left
-% colororder('default')
-% plot(x,p_gas/6894.76, 'color','blue');
-% ylabel("Chamber Pressure (psi)")
-% hold on
-% yyaxis right
-% colororder('default')
-% plot(x,yield_cc./hoop,'color','red');
-% hold on
-% hold off
-% xlabel("Distance from Injector");
-% plot(x,FS_design*ones(1,length(x)),'--','color','red')
-% ylabel("Chamber Wall FSy");
-% title("Combustion Chamber Structural Integrity")
-
-% figure(6)
-% plot(x,p_cool*0.000145038);
-% xlabel("Distance from Injector (m)");
-% ylabel("Pressure (psi)");
-% 
-% figure(3)
-% plot(x,v_cool);
-% xlabel("Distance from Injector (m)");
-% ylabel("Velocity (m/s)");

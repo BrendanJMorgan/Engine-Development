@@ -495,22 +495,6 @@
             </Unit>
           </Units>
         </ParameterDetails>
-        <ParameterDetails id="pa14">
-          <Name>Tensile Ultimate Strength</Name>
-          <Units name="Stress">
-            <Unit>
-              <Name>Pa</Name>
-            </Unit>
-          </Units>
-        </ParameterDetails>
-        <ParameterDetails id="pa15">
-          <Name>Tensile Yield Strength</Name>
-          <Units name="Stress">
-            <Unit>
-              <Name>Pa</Name>
-            </Unit>
-          </Units>
-        </ParameterDetails>
         <ParameterDetails id="pa16">
           <Name>Specific Heat</Name>
           <Units name="Specific Heat Capacity">
@@ -536,6 +520,22 @@
             </Unit>
             <Unit power="-1">
               <Name>C</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa14">
+          <Name>Tensile Ultimate Strength</Name>
+          <Units name="Stress">
+            <Unit>
+              <Name>Pa</Name>
+            </Unit>
+          </Units>
+        </ParameterDetails>
+        <ParameterDetails id="pa15">
+          <Name>Tensile Yield Strength</Name>
+          <Units name="Stress">
+            <Unit>
+              <Name>Pa</Name>
             </Unit>
           </Units>
         </ParameterDetails>

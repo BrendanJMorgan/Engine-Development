@@ -1,4 +1,5 @@
-%% Objective: finds the temperatue distributions of the combustion chamber and nozzle walls
+%% Objective: finds the temperature distributions of the combustion chamber and nozzle walls
+
 %% Combustion Thermal Environment
 T_free = Tc ./ (1 + (gamma_gas-1)/2 .* M_gas.^2); % Free-Stream Temperature
 
@@ -17,11 +18,11 @@ mdot_film = [0.5, 0.5]*film_fraction*mdot_cc;
 mdot_gas = (1-film_fraction)*mdot_cc;
 
 T_injection = T_amb; % K - PLACEHOLDER UNTIL REPLACED WITH REGEN TEMPERATURE AT THAT LOCATION
-heat_vap_film = py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',1,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']) - py.CoolProp.CoolProp.PropsSI('H','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg - heat of vaporization of film coolant
-cp_film = py.CoolProp.CoolProp.PropsSI('C','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
-T_sat_film = py.CoolProp.CoolProp.PropsSI('T','P',pc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % THIS SHOULD BE DEPENDENT ON PRESSURE IN THROAT/NOZZLE
+heat_vap_film = PropsSI('H','P',p_cc,'Q',1,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']) - PropsSI('H','P',p_cc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg - heat of vaporization of film coolant
+cp_film = PropsSI('C','P',p_cc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
+T_sat_film = PropsSI('T','P',p_cc,'Q',0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % THIS SHOULD BE DEPENDENT ON PRESSURE IN THROAT/NOZZLE
 T_film = T_amb*ones(1,length(x));
-film_injection_x = [0, l_chamber]; % m - film cooling orifices around perimeter of injector and along bottom edge of chamber wall
+film_injection_x = [0, l_chamber];  % m - film cooling orifices around perimeter of injector and along bottom edge of chamber wall
 
 %% Thermal Balance
 
@@ -32,7 +33,6 @@ fractions = interp1( [0; x_combustor; x2_throat; x_exit], fractions', x )' ; % I
 
 % Preallocate several arrays
 T_wall_cold = zeros(1,length(x)); % K - wall temperature on coolant side
-% T_wall_hot = T_amb*ones(1,length(x)); % K - wall temperature on chamber interior side
 Tab = zeros(1,length(x));
 T_cool = T_amb*ones(1,length(x));
 T_ab = T_amb*ones(1,length(x));
@@ -67,19 +67,19 @@ film_phase = zeros(1,length(x)); % 0 means film coolant is a gas, and 1 means it
 for i = 1:1:length(film_injection_x)
 	% Liquid Film Coolant Distribution
 	boiling_energy = injection_efficiency*mdot_film(i)*(cp_film*(T_sat_film - T_injection) + heat_vap_film); % J - energy required to boil all liquid film coolant into gas
-	liquid_start = floor(film_injection_x(i)/dx)+1;
-	accumulated_energy = cumtrapz( h_gas(1,liquid_start:end) .* ( T_recovery(1,liquid_start:end)-T_sat_film*ones(1,length(x)-liquid_start+1) ) ).*dA(liquid_start:end); % J - total heat energy outputted y combustion gas up to each point
-	liquid_end = find(accumulated_energy >= boiling_energy, 1, 'first') + liquid_start - 1;
+	liquid_start = floor(film_injection_x(i)/dx)+1; % location at which liquid film coolant is injected
+	accumulated_energy = cumtrapz( h_gas(1,liquid_start:end) .* ( T_recovery(1,liquid_start:end)-T_sat_film*ones(1,length(x)-liquid_start+1) ) ).*dA(liquid_start:end); % J - total heat energy outputted by combustion gas up to each point
+	liquid_end = find(accumulated_energy >= boiling_energy, 1, 'first') + liquid_start - 1; % location at which film coolant boils into a gas
 	if isempty(liquid_end)
 		liquid_end = length(accumulated_energy) + liquid_start - 1;
 	end
-	film_phase(liquid_start:liquid_end) = ones(1, liquid_end-liquid_start+1);
-	T_film(liquid_start:liquid_end) = T_sat_film;
+	film_phase(liquid_start:liquid_end) = ones(1, liquid_end-liquid_start+1); % 1 for liquid and 0 for gas
+	T_film(liquid_start:liquid_end) = T_sat_film; % temperature of the liquid coolant is always the saturation temperature
 
 	% Gaseous Film Coolant Distribution
 	for j = liquid_end+1:1:length(x)
-		cp_film = py.CoolProp.CoolProp.PropsSI('C','P',p_gas(j),'T',T_film(j-1),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
-		k_film = py.CoolProp.CoolProp.PropsSI('L','P',p_gas(j),'T',T_film(j-1),['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % J/kg-K
+		cp_film = PropsSI('C','P',p_gas(j),'T',T_film(j-1),'Ethanol'); % J/kg-K
+		k_film = PropsSI('L','P',p_gas(j),'T',T_film(j-1),'Ethanol'); % W/m-K
 		dT = dx * 1.628 * (2*pi*r1(j)*h_gas(j)/cp_film) * ((v_gas(j)/v_injection) * (1/(2*pi*r1(j))) * (cp_film/k_film))^0.125 * (mdot_film(i))^-0.875 * (T_recovery(j)-T_film(j-1)); % K
 		T_film(j) = T_film(j-1) + dT;
 	end
@@ -128,21 +128,21 @@ for i = flow % Find heat and temperatures along engine contour
 		if round(T_wall_hot(i)) ~= round(T_film(i))
 			error("Wall temperature and film temperature do not match in liquid film cooled region at %g m from injector (%g m from exit plane)\n", x(i), x_exit-x(i));
 		end
-	elseif film_phase(i) == 0
+	elseif film_phase(i) == 0 % Gaseous State
 		q_wall(i) = (T_film(i)-T_cool(i)) / ( 1/(h_gas(i)*A_gas(i)) + 1/(k_wall*A_gas(i)/t_wall(i)) + 1/(h_cool(i)*A_cool(i)) ); % W
 		T_wall_cold(i) = q_wall(i)/(h_cool(i)*A_cool(i)) + T_cool(i); % K
 		T_wall_hot(i)= q_wall(i)/(k_wall*A_gas(i)/t_wall(i)) + T_wall_cold(i); % K
 	end
 
-	dT = q_wall(i)*n_pipe(i) / (cp_cool*mdot_fuel_cc); % Coolant Temperature change at one channel MAYBE THIS SHOULD BE CV
+	dT = q_wall(i)*n_pipe(i) / (cp_cool*mdot_fuel_cc); % Coolant Temperature change at one channel
     if i ~= flow(end)
         T_cool(i+flow_direction) = T_cool(i) + dT;
 	end
 
     % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
-	boiling_cool = py.CoolProp.CoolProp.PropsSI( 'T', 'P', p_cool(i), 'Q', 0,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % K - Ethanol Saturation Temperature
+    boiling_cool = PropsSI( 'T', 'P', p_cool(i), 'Q', 0,'Ethanol'); % K - Ethanol Saturation Temperature
     if T_cool(i) > boiling_cool
         error("Coolant starts boiling at %g m from injector (%g m from exit plane)", x(i), x_exit-x(i));
-	end
+    end
 
 end

@@ -46,7 +46,6 @@ mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
 %% Nozzle Plate
 A_throat_np = mdot_gg*c_star_gg/p_gg/nozzle_number; % m2
 d_throat_np = 2*sqrt(A_throat_np/pi); % m
-d_throat_np/0.0254
 
 
 
