@@ -1,0 +1,304 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS")
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+solutionComponent1 = system1.GetComponent(Name="Solution")
+system2 = GetSystem(Name="SYS 1")
+setupComponent1 = system2.GetComponent(Name="Setup")
+solutionComponent1.DeleteTransfer(TargetComponent=setupComponent1)
+model1.Exit()
+setup1 = system2.GetContainer(ComponentName="Setup")
+setup1.Edit()
+system2.Copy(KeepConnections=False)
+system3 = GetSystem(Name="SYS 3")
+geometryComponent1 = system3.GetComponent(Name="Geometry")
+system4 = GetSystem(Name="Geom")
+geometryComponent2 = system4.GetComponent(Name="Geometry")
+geometryComponent1.ReplaceWithShare(
+    TargetSystem=system3,
+    ComponentToShare=geometryComponent2,
+    SourceSystem=system4)
+engineeringDataComponent1 = system3.GetComponent(Name="Engineering Data")
+system5 = GetSystem(Name="ENGD")
+engineeringDataComponent2 = system5.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.ReplaceWithShare(
+    TargetSystem=system3,
+    ComponentToShare=engineeringDataComponent2,
+    SourceSystem=system5)
+model1.Exit()
+modelComponent1 = system3.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model2 = system3.GetContainer(ComponentName="Model")
+model2.Edit()
+engineeringData1 = system5.GetContainer(ComponentName="Engineering Data")
+material1 = engineeringData1.GetMaterial(Name="304 Stainless Steel")
+matlProp1 = material1.GetProperty(Name="Coefficient of Thermal Expansion")
+matlProp1.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=-1,
+    Variables=["Temperature"],
+    Values=[["0 [C]"]])
+matlProp1.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=3,
+    Variables=["Coefficient of Thermal Expansion"],
+    Values=[["0 [C^-1]"]])
+matlProp2 = material1.CreateProperty(
+    Name="Coefficient of Thermal Expansion",
+    Definition="Instantaneous",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "Instantaneous", "Behavior": "Isotropic"})
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Instantaneous", "Behavior": "Isotropic"},
+    Index=-1,
+    Variables=["Temperature"],
+    Values=[["100 [C]"]])
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Instantaneous", "Behavior": "Isotropic"},
+    Variables=["Coefficient of Thermal Expansion"],
+    Values=[["1.73E-05 [C^-1]"]])
+matlProp2.Delete(
+    Definition="Instantaneous",
+    Behavior="Isotropic")
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["20 [C]"]])
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=1,
+    Variables=["Temperature"],
+    Values=[["250 [C]"]])
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=2,
+    Variables=["Temperature"],
+    Values=[["500 [C]"]])
+material2 = engineeringData1.GetMaterial(Name="6061 Aluminum")
+matlProp3 = material2.GetProperty(Name="Coefficient of Thermal Expansion")
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="F")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["212.00000000000017 [F]", "571.99999999999989 [F]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="C")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["100 [C]", "300 [C]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="R")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["671.67000000006715 [R]", "1031.6700000001033 [R]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="F")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["212.00000000000017 [F]", "572 [F]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="C")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["100 [C]", "300.00000000000011 [C]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["20 [C]"]])
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=1,
+    Variables=["Temperature"],
+    Values=[["250 [C]"]])
+Save(Overwrite=True)
+matlProp4 = material1.GetProperty(Name="Elasticity")
+materialPropertyData1 = matlProp4.GetPropertyData(
+    Name="Elasticity",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic", "Derive from": "Young's Modulus and Poisson's Ratio"})
+materialPropertyData1.SetSuppression(Suppressed=False)
+materialPropertyData2 = matlProp2.GetPropertyData(
+    Name="Coefficient of Thermal Expansion",
+    Qualifiers={"Definition": "Secant", "Behavior": "Isotropic"})
+materialPropertyData2.SetSuppression(Suppressed=False)
+materialPropertyData3 = matlProp2.GetPropertyData(
+    Name="Zero-Thermal-Strain Reference Temperature",
+    Qualifiers={"Definition": "Secant", "Behavior": "Isotropic"})
+materialPropertyData3.SetSuppression(Suppressed=False)
+Save(Overwrite=True)
+model2.Exit()
+modelComponent2 = system1.GetComponent(Name="Model")
+modelComponent2.Refresh()
+setupComponent1.Refresh()
+setup1.Edit()
+solutionComponent1.TransferData(TargetComponent=setupComponent1)
+model1.Exit()
+modelComponent2.Refresh()
+setupComponent1.Refresh()
+setup1.Edit()
+matlProp2.DeleteData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=3)
+Save(Overwrite=True)
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="K")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["293.15 [K]", "523.15 [K]"]])
+matlProp3.EndBatchUpdate()
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=-1,
+    Variables=["Temperature"],
+    Values=[["90 [K]"]])
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=2,
+    Variables=["Temperature"],
+    Values=[["70 [K]"]])
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=2,
+    Variables=["Coefficient of Thermal Expansion"],
+    Values=[["2.36E-05 [C^-1]"]])
+matlProp3.BeginBatchUpdate()
+matlProp3.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="C")
+matlProp3.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["20 [C]", "250 [C]", "-203.14999999999998 [C]"]])
+matlProp3.EndBatchUpdate()
+matlProp2.BeginBatchUpdate()
+matlProp2.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="K")
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["293.15 [K]", "523.15 [K]", "773.15 [K]"]])
+matlProp2.EndBatchUpdate()
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=-1,
+    Variables=["Temperature"],
+    Values=[["70 [K]"]])
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Index=3,
+    Variables=["Coefficient of Thermal Expansion"],
+    Values=[["1.73E-05 [C^-1]"]])
+matlProp2.BeginBatchUpdate()
+matlProp2.SetVariableProperty(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    VariableName="Temperature",
+    VariableQualifiers={"Field Variable": "Temperature", "Default Data": "22", "Field Units": "C", "Upper Limit": "Program Controlled", "Lower Limit": "Program Controlled"},
+    Property="Unit",
+    Value="C")
+matlProp2.SetData(
+    SheetName="Coefficient of Thermal Expansion",
+    SheetQualifiers={"Definition": "Secant", "Behavior": "Isotropic"},
+    Variables=["Temperature"],
+    Values=[["20 [C]", "250 [C]", "500 [C]", "-203.14999999999998 [C]"]])
+matlProp2.EndBatchUpdate()
+Save(Overwrite=True)
+system3.Delete()
+system6 = GetSystem(Name="SYS 2")
+CopySystems(
+    Systems=[system6, system4, system1, system2],
+    KeepConnections=True)
+system7 = GetSystem(Name="Geom 1")
+geometry1 = system7.GetContainer(ComponentName="Geometry")
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Simplified CAD/Turbopump FEM 2.STEP")
+system8 = GetSystem(Name="SYS 3")
+modelComponent3 = system8.GetComponent(Name="Model")
+modelComponent3.Refresh()
+model3 = system8.GetContainer(ComponentName="Model")
+model3.Edit()
+model3.Exit()
+Save(Overwrite=True)
+model1.Exit()
+Save(Overwrite=True)

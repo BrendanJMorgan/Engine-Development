@@ -1,4 +1,5 @@
 clear all
+format short g
 PropsSI = @py.CoolProp.CoolProp.PropsSI;
 
 %% Inputs 
@@ -36,12 +37,13 @@ clock = 1;                          % 1 for counterclockwise and -1 for clockwis
 r_eye_inner = 1/4*0.0254;	        % m - a little bit of clearance around a 1/2 inch shaft
 r_shaft = 0.005;                    % m - portion of shaft that is stainless steel
 impeller_thickness = 1/8*0.0254;    % m - thickness of impeller at the exit point, not including blades
+cavitation_target = 2.0;            % unitless
 
 % Turbine
 nozzle_number = 5;              % unitless
 nozzle_angle = 45*pi/180;       % rad
 diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
-blade_number_rotor = 24;        % unitless - total number of blades on the rotor
+blade_number_rotor = 32;        % unitless - total number of blades on the rotor
 blade_gap_rotor = 3/16*0.0254;   % m - perpendicular (i.e. the end mill diameter)
 
 % Chamber/Nozzle Geometry
@@ -96,62 +98,62 @@ powerhead
 
 %% Results
 
-thrust_lbf = thrust/4.44822;
-thrust_lbf
-isp_ideal
-isp_real
-mdot_total
-
-figure(1); clf
-colororder('default')
-plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
-axis equal
-xlabel("Distance from Injector (m)");
-title("Combustion Chamber Contours")
-
-figure(2); clf
-plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_film,x,T_free,x,T_ab,x,T_recovery,x,T_ref)
-yline(0)
-legend("Cold Wall","Hot Wall","Regen Coolant","Film Coolant","Free-Stream Gas","Adiabatic", "Recovery", "Gas Property Reference",'Location','northeast');
-xlabel("Distance from Injector (m)");
-ylabel("Temperature (K)");
-title("Engine Steady-State Temperatures")
-
-% Pump Impeller and Blades
-figure(3); clf;
-line(shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254)
-hold on
-axis equal
-plot(impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254)
-line([0 0], ylim);  % x-axis
-line(xlim, [0 0]);  % y-axis
-title("Impeller and Shroud Contours")
-hold off
+% thrust_lbf = thrust/4.44822;
+% thrust_lbf
+% isp_ideal
+% isp_real
+% mdot_total
+% 
+% figure(1); clf
+% colororder('default')
+% plot(x,r1,x,r2,x,-1*r1,x,-1*r2, 'color','blue');
+% axis equal
+% xlabel("Distance from Injector (m)");
+% title("Combustion Chamber Contours")
+% 
+% figure(2); clf
+% plot(x,T_wall_cold,x,T_wall_hot,x,T_cool,x,T_film,x,T_free,x,T_ab,x,T_recovery,x,T_ref)
+% yline(0)
+% legend("Cold Wall","Hot Wall","Regen Coolant","Film Coolant","Free-Stream Gas","Adiabatic", "Recovery", "Gas Property Reference",'Location','northeast');
+% xlabel("Distance from Injector (m)");
+% ylabel("Temperature (K)");
+% title("Engine Steady-State Temperatures")
+% 
+% % Pump Impeller and Blades
+% figure(3); clf;
+% line(shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254)
+% hold on
+% axis equal
+% plot(impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254)
+% line([0 0], ylim);  % x-axis
+% line(xlim, [0 0]);  % y-axis
+% title("Impeller and Shroud Contours")
+% hold off
 
 % Blades
-figure(4); clf
-hold on
-delta_angle = 2 * pi / blade_number_ox; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve_ox * rotation_matrix';
-    plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-plot(volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254);
-
-delta_angle = 2 * pi / blade_number_fuel; % Calculate the angle to rotate each blade
-for i = 0:(blade_number-1)
-    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-    rotated_curve = blade_curve_fuel * rotation_matrix';
-    plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254-6, 'LineWidth', 2); 
-    plot(NaN, NaN); % Prevent connection between different blades
-end
-plot(volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254-6);
-
-plot(r_pitchline/0.0254*cos(theta), r_pitchline/0.0254*sin(theta), 'LineStyle','--')
-plot(r_rotor_tip/0.0254*cos(theta), r_rotor_tip/0.0254*sin(theta), r_rotor_base/0.0254*cos(theta), r_rotor_base/0.0254*sin(theta))
-
-title('Impellers, Volutes, and Rotor');
-axis equal;
-grid on;
+% figure(4); clf
+% hold on
+% delta_angle = 2 * pi / blade_number_ox; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve_ox * rotation_matrix';
+%     plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% plot(volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254);
+% 
+% delta_angle = 2 * pi / blade_number_fuel; % Calculate the angle to rotate each blade
+% for i = 0:(blade_number-1)
+%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+%     rotated_curve = blade_curve_fuel * rotation_matrix';
+%     plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254-6, 'LineWidth', 2); 
+%     plot(NaN, NaN); % Prevent connection between different blades
+% end
+% plot(volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254-6);
+% 
+% plot(r_pitchline/0.0254*cos(theta), r_pitchline/0.0254*sin(theta), 'LineStyle','--')
+% plot(r_rotor_tip/0.0254*cos(theta), r_rotor_tip/0.0254*sin(theta), r_rotor_base/0.0254*cos(theta), r_rotor_base/0.0254*sin(theta))
+% 
+% title('Impellers, Volutes, and Rotor');
+% axis equal;
+% grid on;

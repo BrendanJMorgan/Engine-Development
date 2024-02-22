@@ -17,10 +17,10 @@
  <COLUMN ID="   14">DOF with Max DOF Incr</COLUMN>
  <COLUMN ID="   15">Node with Max Resi F</COLUMN>
  <COLUMN ID="   16">DOF with Max Resi F</COLUMN>
- <UNITS>SI</UNITS>
+ <UNITS>BIN</UNITS>
 </HEADER>
 <COLDATA>
-    1.000000                    1                1                1     1.000000         728.0000         0.000000                    0     8.476324        0.4354020                    0     0.000000                50648             TEMP             7489             TEMP  
+    1.000000                    1                1                1     1.000000        -367.6885         0.000000                    0     68.06291         3.905201                    0     0.000000                 3127             TEMP            36156             TEMP  
 </COLDATA>
 </LOADSTEPDATA>
 </SOLUTION>

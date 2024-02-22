@@ -37,7 +37,7 @@ r_rotor_base = r_pitchline - blade_length_rotor/2; % m
 
 %% Mass Flow Adjustments
 mdot_total = mdot_cc + mdot_gg; 
-gg_fraction = mdot_gg / mdot_total; % not totally sure if denominator should be cc instead of total
+gg_fraction = mdot_gg / mdot_total % not totally sure if denominator should be cc instead of total
 mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
 mdot_ox_gg = mdot_gg*(OF_gg/(1+OF_gg)); % kg/s - Oxidizer Mass Flow Rate
 mdot_fuel_total = mdot_fuel_cc+mdot_fuel_gg; % kg/s

@@ -9,9 +9,10 @@ theta = linspace(0, 2*pi, 1000)'; % rad
 A_volute = ( vdot_pump.*theta./(7.6*pi*r_exit*v_exit_tang) .* ( 1 + sqrt(1+30.4*pi*r_exit*r_tongue*v_exit_tang./(vdot_pump*theta)) ) ).^2; % m2
 A_volute(isnan(A_volute)) = 0;
 
-h_volute = sqrt(0.25*t_tongue^2+A_volute(end)) - 0.5*t_tongue; % m - height of volute gap - set so the outlet is a square
+h_volute = sqrt(0.25*t_tongue^2+A_volute(end)) - 0.5*t_tongue % m - height of volute gap - set so the outlet is a square
 r_volute = r_tongue + A_volute/h_volute; % m - radius of volute wall
-r_volute_outlet = sqrt(A_volute(end)/pi);
+OD_volute_outlet = 2*sqrt(A_volute(end)/pi); % m - diameter of volute outlet hole
+r_volute_outlet = r_volute(end) - h_volute(end)/2;
 
 v_throat = vdot_pump./A_throat; % m/s - fluid exit velocity into plumbing
 

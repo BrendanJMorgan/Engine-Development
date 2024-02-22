@@ -1,42 +1,10 @@
-/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       20:41:49
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       03:57:47
 
- *** WARNING ***                         CP =       0.219   TIME= 20:41:50
- Material property ALPX of material 1 is evaluated at a temperature of   
- 0, which is below the supplied temperature range.  Temperature range    
- checking terminates.                                                    
-
- *** WARNING ***                         CP =       0.406   TIME= 20:41:50
+ *** WARNING ***                         CP =       0.172   TIME= 03:57:48
  Element shape checking is currently inactive.  Issue SHPP,ON or         
  SHPP,WARN to reactivate, if desired.                                    
 
- *** WARNING ***                         CP =       1.234   TIME= 20:41:51
- Node 35765 connects both contact element 50262 and target element       
- 51202.  Please check the model carefully.                               
-
- *** WARNING ***                         CP =       2.422   TIME= 20:41:53
- Node 35765 connects both contact element 50262 and target element       
- 51202.  Please check the model carefully.                               
-
- *** WARNING ***                         CP =       3.234   TIME= 20:41:54
- Node 35765 connects both contact element 50262 and target element       
- 51202.  Please check the model carefully.                               
-
- *** WARNING ***                         CP =       4.688   TIME= 20:41:56
- There is at least 1 small equation solver pivot term (e.g., at the TEMP 
- degree of freedom of node 53930) which may indicate a numerically       
- unstable model.  Please check your results carefully.                   
-
- *** WARNING ***                         CP =       4.703   TIME= 20:41:57
- Material property KXX of material 5 of element 24124 is evaluated at a  
- temperature of 750, which is above the supplied temperature range.      
- Temperature range checking terminates.                                  
-
- *** WARNING ***                         CP =       4.703   TIME= 20:41:57
- Material property KXX of material 5 of element 21248 is evaluated at a  
- temperature of -179.992638, which is below the supplied temperature     
- range.  Temperature range checking terminates.                          
-
- *** WARNING ***                         CP =       4.703   TIME= 20:41:57
- Material property KXX of material 5 of element 18160 is evaluated at a  
- temperature of -156.949922, which is below the supplied temperature     
+ *** WARNING ***                         CP =       4.219   TIME= 03:57:55
+ Material property KXX of material 6 of element 1809 is evaluated at a   
+ temperature of -290.524116, which is below the supplied temperature     
  range.  Temperature range checking terminates.                          

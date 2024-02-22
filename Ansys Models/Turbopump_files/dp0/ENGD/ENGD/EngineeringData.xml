@@ -574,18 +574,18 @@
               <Qualifier name="ExtrapolationType">Projection to the Bounding Box</Qualifier>
             </ParameterValue>
             <ParameterValue parameter="pa11" format="float">
-              <Data>1.73e-05,1.78e-05,1.87e-05</Data>
-              <Qualifier name="Variable Type">Dependent,Dependent,Dependent</Qualifier>
-              <Qualifier name="Offset">0 [C^-1],0 [C^-1],0 [C^-1]</Qualifier>
-              <Qualifier name="Scale">1,1,1</Qualifier>
-              <Qualifier name="Units">C^-1,C^-1,C^-1</Qualifier>
+              <Data>1.73e-05,1.73e-05,1.78e-05,1.87e-05</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Offset">0 [C^-1],0 [C^-1],0 [C^-1],0 [C^-1]</Qualifier>
+              <Qualifier name="Scale">1,1,1,1</Qualifier>
+              <Qualifier name="Units">C^-1,C^-1,C^-1,C^-1</Qualifier>
             </ParameterValue>
             <ParameterValue parameter="pa8" format="float">
-              <Data>100,315,650</Data>
-              <Qualifier name="Variable Type">Independent,Independent,Independent</Qualifier>
-              <Qualifier name="Offset">0 [C],0 [C],0 [C]</Qualifier>
-              <Qualifier name="Scale">1,1,1</Qualifier>
-              <Qualifier name="Units">C,C,C</Qualifier>
+              <Data>-203.15,20,250,500</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Offset">0 [C],0 [C],0 [C],0 [C]</Qualifier>
+              <Qualifier name="Scale">1,1,1,1</Qualifier>
+              <Qualifier name="Units">C,C,C,C</Qualifier>
               <Qualifier name="Field Variable">Temperature</Qualifier>
               <Qualifier name="Default Data">22</Qualifier>
               <Qualifier name="Field Units">C</Qualifier>
@@ -718,18 +718,18 @@
               <Qualifier name="ExtrapolationType">Projection to the Bounding Box</Qualifier>
             </ParameterValue>
             <ParameterValue parameter="pa11" format="float">
-              <Data>2.36e-05,2.52e-05</Data>
-              <Qualifier name="Variable Type">Dependent,Dependent</Qualifier>
-              <Qualifier name="Offset">0 [C^-1],0 [C^-1]</Qualifier>
-              <Qualifier name="Scale">1,1</Qualifier>
-              <Qualifier name="Units">C^-1,C^-1</Qualifier>
+              <Data>2.36e-05,2.36e-05,2.52e-05</Data>
+              <Qualifier name="Variable Type">Dependent,Dependent,Dependent</Qualifier>
+              <Qualifier name="Offset">0 [C^-1],0 [C^-1],0 [C^-1]</Qualifier>
+              <Qualifier name="Scale">1,1,1</Qualifier>
+              <Qualifier name="Units">C^-1,C^-1,C^-1</Qualifier>
             </ParameterValue>
             <ParameterValue parameter="pa8" format="float">
-              <Data>100,300</Data>
-              <Qualifier name="Variable Type">Independent,Independent</Qualifier>
-              <Qualifier name="Offset">0 [C],0 [C]</Qualifier>
-              <Qualifier name="Scale">1,1</Qualifier>
-              <Qualifier name="Units">C,C</Qualifier>
+              <Data>-203.15,20,250</Data>
+              <Qualifier name="Variable Type">Independent,Independent,Independent</Qualifier>
+              <Qualifier name="Offset">0 [C],0 [C],0 [C]</Qualifier>
+              <Qualifier name="Scale">1,1,1</Qualifier>
+              <Qualifier name="Units">C,C,C</Qualifier>
               <Qualifier name="Field Variable">Temperature</Qualifier>
               <Qualifier name="Default Data">22</Qualifier>
               <Qualifier name="Field Units">C</Qualifier>
@@ -1075,21 +1075,18 @@
     <Materials>
       <Material>
         <Name>Structural Steel</Name>
-        <DataTransferID>05ea12ae-0d31-4bae-9664-261136a8fac0</DataTransferID>
-        <PreviousTransferIDs>
-        </PreviousTransferIDs>
+        <DataTransferID>16d0a747-65b7-4d11-b8f7-be7eff572c07</DataTransferID>
+        <PreviousTransferIDs>05ea12ae-0d31-4bae-9664-261136a8fac0,,</PreviousTransferIDs>
       </Material>
       <Material>
         <Name>304 Stainless Steel</Name>
-        <DataTransferID>0db2ee3d-1934-454d-aebe-4cdd12b43034</DataTransferID>
-        <PreviousTransferIDs>
-        </PreviousTransferIDs>
+        <DataTransferID>0a75dc04-5165-4ae6-b2b2-a55c1a2975d2</DataTransferID>
+        <PreviousTransferIDs>0db2ee3d-1934-454d-aebe-4cdd12b43034,,</PreviousTransferIDs>
       </Material>
       <Material>
         <Name>6061 Aluminum</Name>
-        <DataTransferID>c681c6b9-7441-4448-b981-5fda53923bf7</DataTransferID>
-        <PreviousTransferIDs>
-        </PreviousTransferIDs>
+        <DataTransferID>a9538845-2d25-45ec-9569-4a3c1961f96c</DataTransferID>
+        <PreviousTransferIDs>c681c6b9-7441-4448-b981-5fda53923bf7,,</PreviousTransferIDs>
       </Material>
     </Materials>
   </ANSYSWBTransferData>

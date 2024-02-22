@@ -1,135 +1,52 @@
-/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       20:45:40
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       04:07:41
 
- *** WARNING ***                         CP =       0.156   TIME= 20:45:41
- Material property ALPX of material 1 is evaluated at a temperature of   
- 22, which is below the supplied temperature range.  Temperature range   
- checking terminates.                                                    
-
- *** WARNING ***                         CP =       0.281   TIME= 20:45:41
+ *** WARNING ***                         CP =       0.078   TIME= 04:07:42
  Element shape checking is currently inactive.  Issue SHPP,ON or         
  SHPP,WARN to reactivate, if desired.                                    
 
- *** WARNING ***                         CP =       0.281   TIME= 20:45:41
+ *** WARNING ***                         CP =       0.078   TIME= 04:07:42
  MPC184 elements are being used in the current analysis and the          
  NLGEOM,ON command has not been used.  Thus, only linearized behavior    
  will be considered.  If finite rotation and large deflection effects    
  are to be considered, please use the NLGEOM,ON command.                 
 
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 16317 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 16612 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 16907 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 17202 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 17497 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 17792 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 18087 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 18382 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 19375 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 19511 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 19647 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 19783 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 19919 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20055 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20191 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20327 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20463 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20599 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20735 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 20871 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 21007 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 21143 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 21279 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 21415 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 22364 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23235 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23285 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23335 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23385 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23435 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23485 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23535 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23585 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23635 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 23947 references undefined EX of material 5.                    
-
- *** ERROR ***                           CP =       0.359   TIME= 20:45:41
- Element 24696 references undefined EX of material 5.                    
-
- *** WARNING ***                         CP =       0.359   TIME= 20:45:41
- Material number 83 (used by element 40221) should normally have at      
+ *** WARNING ***                         CP =       0.109   TIME= 04:07:42
+ Material number 32 (used by element 40220) should normally have at      
  least one MP or one TB type command associated with it.  Output of      
  energy by material may not be available.                                
 
- *** ERROR ***                           CP =       0.375   TIME= 20:45:41
- The step data was checked and there were errors found.                  
-  Please check output or errors file (                                   
- C:\Users\brend\Desktop\Engine-Development\Ansys                         
- Models\_ProjectScratch\ScrAC96\file0.err ) for messages.                
+ *** WARNING ***                         CP =       4.828   TIME= 04:07:49
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       4.828   TIME= 04:07:49
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 3666).                    
+
+ *** WARNING ***                         CP =       4.828   TIME= 04:07:49
+ Certain contact elements (for example 49863 & 48907) overlap with       
+ other.                                                                  
+
+ *** WARNING ***                         CP =       4.828   TIME= 04:07:49
+ Certain contact pairs (for example 28 & 26) overlap with other.         
+
+ *** WARNING ***                         CP =      13.781   TIME= 04:08:03
+ Multiple constraints have been applied on degree of freedom 1 of        
+ contact node 3148.  The program will remove certain internal MPCs.      
+ Please check the model carefully.                                       
+
+ *** WARNING ***                         CP =      13.781   TIME= 04:08:03
+ Or use relaxation option (target element KEYOPT(11) = 1) to overcome    
+ the over-constraint.                                                    
+
+ *** WARNING ***                         CP =      15.891   TIME= 04:08:07
+ The sparse solver must be used if any current technology elements with  
+ u-P formulation or MPC184 elements using Lagrangian multiplier          
+ entangle with other contraint equtions.  The equation solver option     
+ has been switched to the sparse solver.                                 
+
+ *** WARNING ***                         CP =      19.578   TIME= 04:08:12
+ Pivoting has been activated for the Distributed Sparse Matrix Solver .  
+ The memory required may greatly exceed the predicted amount.  In that   
+ event, use the DSPOPTION command to change the memory mode and/or       
+ memory size used by the Distributed Sparse Matrix Solver.               

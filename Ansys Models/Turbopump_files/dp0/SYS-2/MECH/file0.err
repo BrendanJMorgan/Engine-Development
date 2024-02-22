@@ -1,0 +1,34 @@
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       03:59:58
+
+ *** WARNING ***                         CP =       0.156   TIME= 03:59:59
+ Material number 32 (used by element 40220) should normally have at      
+ least one MP or one TB type command associated with it.  Output of      
+ energy by material may not be available.                                
+
+ *** WARNING ***                         CP =       0.172   TIME= 03:59:59
+ The sparse solver must be used if any current technology elements with  
+ u-P formulation or MPC184 elements using Lagrangian multiplier are      
+ included in the model.  The equation solver option has been switched    
+ to the sparse solver.                                                   
+
+ *** WARNING ***                         CP =       0.625   TIME= 04:00:00
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       0.625   TIME= 04:00:00
+ Multi Point Constraint element (MPC184) is present in the model.  When  
+ performing modal analysis (ANTYPE,MODAL) make sure that MPC184          
+ elements are employed with other elements that provide flexibility to   
+ the structure.                                                          
+
+ *** WARNING ***                         CP =       0.656   TIME= 04:00:00
+ Material number 32 (used by element 40220) should normally have at      
+ least one MP or one TB type command associated with it.  Output of      
+ energy by material may not be available.                                
+
+ *** WARNING ***                         CP =       0.672   TIME= 04:00:00
+ A linear perturbation analysis with contact usually requires turning on 
+ large deflection option (NLGEOM,ON) in the base analysis.  Otherwise    
+ the down-stream analysis will not use the current deformation           
+ configuration which might lead to inaccurate solution or even memory    
+ error.                                                                  

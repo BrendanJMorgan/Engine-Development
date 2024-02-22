@@ -17,6 +17,7 @@ vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, "Oxygen");
 clock = 1; % Counterclockwise
 
 pump
+inducer
 
 shaft_power = pump_power; % W
 shaft_power_theory = pump_power_theory; % W

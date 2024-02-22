@@ -23,7 +23,6 @@ while (abs(new_blockage-blockage) > 0.01)
     blades
 end
 volute
-inducer
 
 %% Requirements for Turbine
 hydraulic_efficiency;
