@@ -1,3 +1,5 @@
+% Lox Pump, Fuel Pump (each with impeller/blades/volute/inducer), Turbine, Gas Generator
+
 %% Total Mass Flow Rate GUESSES
 mdot_gg = mdot_cc*gg_fraction_guess/(1-gg_fraction_guess); % kg/s - Propellant mass flow rate into gas generator
 mdot_fuel_gg = mdot_gg*(1/(1+OF_gg)); % kg/s - Fuel Mass Flow Rate
@@ -6,23 +8,22 @@ mdot_fuel_total = mdot_fuel_cc+mdot_fuel_gg; % kg/s
 mdot_ox_total = mdot_ox_cc+mdot_ox_gg; % kg/s
 % actual mdot_gg is not solved until turbine is called
 
-%% LOx Pump
+%% Liquid Oxygen Pump
 density_pump = PropsSI('D','Q',0,'P',p_amb,'Oxygen'); % kg/m3 - lox at boiling
-p_out = p_cc + 25*6894.76; % Pa - GUESS RIGHT NOW
-dp_inducer = 25*6894.76; % Pa - PLACEHOLDER
-p_in = p_amb + dp_inducer; % Pa - inlet pressure
+p_out = p_cc*(1+cc_stiffness) + 10*6894.76; % Pa - injector inlet pressure plus 10 psi of margin for plumbing losses
+p_in = p_amb; % Pa - inlet pressure; assumes zero dp across inducer for conservatism
 T_in = PropsSI("T", "P", p_amb, "Q", 0, "Oxygen");
 mdot_pump = mdot_ox_total; % kg/s - Oxidizer Mass Flow Rate
 vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, "Oxygen");
 clock = 1; % Counterclockwise
+hub_tip_ratio_inducer = 0.3; % unitless - between 0.2 and 0.4 for rear drive and between 0.5 and 0.6 for front drive
 
 pump
-inducer
 
 shaft_power = pump_power; % W
 shaft_power_theory = pump_power_theory; % W
 
-% Write Results
+% Write Results to ox specific variables
 shroud_curve_ox = shroud_curve;
 impeller_curve_ox = impeller_curve; 
 blade_curve_ox = blade_curve;
@@ -31,46 +32,69 @@ volute_curve_ox = volute_curve;
 t_tongue_ox = t_tongue;
 h_volute_ox = h_volute;
 
+h_min_ox = h_min_inducer;
+r_tip_ox = r_tip_inducer;
+r_hub_ox = r_hub_inducer;
+blade_lead_ox = blade_lead_inducer;
+clearance_ox = clearance_inducer;
+
 writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/ox_impeller_curve_inches.txt', 'Delimiter', ',')  
 writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/ox_shroud_curve_inches.txt', 'Delimiter', ',')
 writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/ox_blade_curve_inches.txt', 'Delimiter', ',')
 writematrix([volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254, zeros(length(volute_curve_ox(:,1)),1)], 'Curves/ox_volute_curve_inches.txt', 'Delimiter', ',')
 
-%% Fuel Pump
+% Define the variable names and corresponding values
+data_labels = {'h_min_ox';'r_tip_ox';'r_hub_ox';'blade_lead_ox';'clearance_ox'};
+data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_inducer/0.0254;blade_lead_inducer/0.0254;clearance_inducer/0.0254});
+writetable(data, 'Curves/ox_inducer_inches.xlsx', 'WriteVariableNames',0);
+
+
+%% Fuel Pump(0.75/0.25 Ethanol/Water)
 density_pump = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
-p_out = p_cool(1) + 50*6894.76; % Pa - outlet pressure plus 50 psi of margin for plumbing losses and various inefficiencies, TOTAL GUESS RIGHT NOW
-dp_inducer = 25*6894.76; % Pa - PLACEHOLDER
-p_in = p_amb + dp_inducer; % Pa - inlet pressure
+p_out = p_cool(1) + 10*6894.76; % Pa - regen inlet pressure plus 10 psi of margin for plumbing losses
+p_in = p_amb; % Pa - inlet pressure; assumes zero dp across inducer for conservatism
 T_in = T_amb; % K
 mdot_pump = mdot_fuel_total; % kg/s - Fuel Mass Flow Rate
 vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, ['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
 clock = -1;
+hub_tip_ratio_inducer = 0.55; % unitless - between 0.2 and 0.4 for rear drive and between 0.5 and 0.6 for front drive
 
 pump
 
 shaft_power = shaft_power + pump_power; % W
 shaft_power_theory = shaft_power_theory + pump_power_theory; % W
 
-% Write Results
+% Write Results to fuel specific variables
 shroud_curve_fuel = shroud_curve;
 impeller_curve_fuel = impeller_curve; 
 blade_curve_fuel = blade_curve;
 blade_number_fuel = blade_number; 
 volute_curve_fuel = volute_curve;
 t_tongue_fuel = t_tongue;
-h_volute_fuel = h_volute; 
+h_volute_fuel = h_volute;
+
+h_min_fuel = h_min_inducer;
+r_tip_fuel = r_tip_inducer;
+r_hub_fuel = r_hub_inducer;
+blade_lead_fuel = blade_lead_inducer;
+clearance_fuel = clearance_inducer;
+
 
 writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/fuel_impeller_curve_inches.txt', 'Delimiter', ',')  
 writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/fuel_shroud_curve_inches.txt', 'Delimiter', ',')
 writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/fuel_blade_curve_inches.txt', 'Delimiter', ',')
 writematrix([volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, zeros(length(volute_curve_fuel(:,1)),1)], 'Curves/fuel_volute_curve_inches.txt', 'Delimiter', ',')
 
+data_labels = {'h_min_ox';'r_tip_ox';'r_hub_ox';'blade_lead_ox';'clearance_ox'};
+data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_inducer/0.0254;blade_lead_inducer/0.0254;clearance_inducer/0.0254});
+writetable(data, 'Curves/fuel_inducer_inches.xlsx', 'WriteVariableNames',0);
+
 % Gas Generator
 gas_generator2
 
 %% Turbine
 turbine_shaft_power = shaft_power/gear_efficiency; % unitless
-turbine6
+turbine
 
 % Efficiency
 transmission_efficiency = shaft_power_theory / turbine_shaft_power; % unitless

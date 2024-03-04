@@ -139,7 +139,7 @@ for i = flow % Find heat and temperatures along engine contour
         T_cool(i+flow_direction) = T_cool(i) + dT;
 	end
 
-    % Check if the coolant boils. Gaseous coolant will be extremely ineffective, and harder to analyze
+    % Check if the regen coolant boils. Gaseous coolant will be extremely ineffective, as well as harder to analyze
     boiling_cool = PropsSI( 'T', 'P', p_cool(i), 'Q', 0,'Ethanol'); % K - Ethanol Saturation Temperature
     if T_cool(i) > boiling_cool
         error("Coolant starts boiling at %g m from injector (%g m from exit plane)", x(i), x_exit-x(i));

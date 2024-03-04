@@ -9,6 +9,8 @@
 
 
 Finish inducer code and cad
+Figure out clearances 
+Minimum endmill of 1/4"
 	Add in inlet and outlet piping
 Start gg code, then cad
 Figure out solid ignition system

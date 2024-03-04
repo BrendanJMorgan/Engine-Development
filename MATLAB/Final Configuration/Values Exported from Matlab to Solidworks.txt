@@ -1,0 +1,20 @@
+Values Exported from Matlab to Solidworks
+
+ox impeller curve
+fuel impeller curve
+
+ox blade curve
+fuel blade curve
+
+volute curve
+volute height (Casing Volute AND Casing Cap)
+
+inducer height minimum
+inducer blade lead
+inducer blade number
+inducer axial clearance
+inducer tip radius
+inducer hub radius
+
+
+

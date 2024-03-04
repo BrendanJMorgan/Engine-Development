@@ -57,6 +57,6 @@ for i = flow
 
 end
 
-p_cool = p_cool + p_cc - p_cool(end); % Pa - ending pressure EXPAND TO ACCOUNT FOR PLUMBING AND INJECTOR STIFFNESS
+p_cool = p_cool + p_cc*(1+cc_stiffness) - p_cool(end); % Pa - ending pressure EXPAND TO ACCOUNT FOR PLUMBING AND INJECTOR STIFFNESS
 
 
