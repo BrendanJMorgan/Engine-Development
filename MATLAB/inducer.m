@@ -50,15 +50,19 @@ blade_lead_inducer = 2*pi*r_tip_inducer*tan(blade_angle_inducer); % m - how much
 solidity_inducer = 2.5;
 h_min_inducer = blade_lead_inducer*solidity_inducer/blade_number_inducer*sin(blade_angle_inducer); % m - height of inducer
 
-%% Clearance Losses
-
-
 %% Axial Clearance
 % Between inducer and impeller
-clearance_inducer = blade_lead_inducer / blade_number_inducer; % m
+clearance_axial_inducer = blade_lead_inducer / blade_number_inducer; % m
 
-%% 
+%% Head
 v_tip_inducer = shaft_speed*r_tip_inducer; % m/s
 head_coeff_inducer = NPSH_inducer*g / v_tip_inducer^2; % unitless - 0.15 is the cutoff between low and high head - camber needed if >0.075
 
+%% Hub Construction
+r_hub_base = r_eye_inner; % m
+r_hub_top = 2*hub_tip_ratio_inducer*r_tip_inducer - r_hub_base; % m
 
+%% Clearance Losses
+r_cavity_inducer = r_tip_inducer + clearance_radial_inducer; % m
+ss_speed_clearanced = ss_speed*(1-0.575*sqrt((r_cavity_inducer-r_tip_inducer)/(r_tip_inducer-r_hub_inducer))); % unitless
+head_coeff_inducer_clearanced = head_coeff_inducer*(1-1.0*sqrt((r_cavity_inducer-r_tip_inducer)/(r_tip_inducer-r_hub_inducer))); % unitless

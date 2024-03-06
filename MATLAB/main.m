@@ -41,8 +41,9 @@ r_shaft = 0.005;                    % m - portion of shaft that is stainless ste
 impeller_thickness = 1/8*0.0254;    % m - thickness of impeller at the exit point, not including blades ??????????????????????????????????????????
 eye_flow_coeff = 0.25;              % unitless - higher means smaller impeller but larger inducer
                                     % phi_e in pump handbook; pg 2.29: 0.2-0.3 for impellers, ~0.1 or less for inducers
-NPSH_margin = 1.5;                  % unitless - Margin of extra net postive suction head (NPSH) to be provided by inducers to prevent cavitation
-blade_number_inducer = 3;           % unitless - 3 or 4 is considered good
+NPSH_margin = 1.5;                  % unitless - Margin of extra net positive suction head (NPSH) to be provided by inducers to prevent cavitation
+blade_number_inducer = 4;           % unitless - 3 or 4 is considered good
+clearance_radial_inducer = 0.010*0.0254;   % m - radial clearance between inducer blades and housing cavity
 
 % Turbine
 nozzle_number = 2;              % unitless
