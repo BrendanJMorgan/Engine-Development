@@ -1,0 +1,2250 @@
+
+ Ansys Mechanical Enterprise Academic Student      
+
+
+ *------------------------------------------------------------------*
+ |                                                                  |
+ |   W E L C O M E   T O   T H E   A N S Y S (R)  P R O G R A M     |
+ |                                                                  |
+ *------------------------------------------------------------------*
+
+
+
+
+ ***************************************************************
+ *         ANSYS MAPDL 2024 R1          LEGAL NOTICES          *
+ ***************************************************************
+ *                                                             *
+ * Copyright 1971-2024 Ansys, Inc.  All rights reserved.       *
+ * Unauthorized use, distribution or duplication is            *
+ * prohibited.                                                 *
+ *                                                             *
+ * Ansys is a registered trademark of Ansys, Inc. or its       *
+ * subsidiaries in the United States or other countries.       *
+ * See the Ansys, Inc. online documentation or the Ansys, Inc. *
+ * documentation CD or online help for the complete Legal      *
+ * Notice.                                                     *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * THIS ANSYS SOFTWARE PRODUCT AND PROGRAM DOCUMENTATION       *
+ * INCLUDE TRADE SECRETS AND CONFIDENTIAL AND PROPRIETARY      *
+ * PRODUCTS OF ANSYS, INC., ITS SUBSIDIARIES, OR LICENSORS.    *
+ * The software products and documentation are furnished by    *
+ * Ansys, Inc. or its subsidiaries under a software license    *
+ * agreement that contains provisions concerning               *
+ * non-disclosure, copying, length and nature of use,          *
+ * compliance with exporting laws, warranties, disclaimers,    *
+ * limitations of liability, and remedies, and other           *
+ * provisions.  The software products and documentation may be *
+ * used, disclosed, transferred, or copied only in accordance  *
+ * with the terms and conditions of that software license      *
+ * agreement.                                                  *
+ *                                                             *
+ * Ansys, Inc. is a UL registered                              *
+ * ISO 9001:2015 company.                                      *
+ *                                                             *
+ ***************************************************************
+ *                                                             *
+ * This product is subject to U.S. laws governing export and   *
+ * re-export.                                                  *
+ *                                                             *
+ * For U.S. Government users, except as specifically granted   *
+ * by the Ansys, Inc. software license agreement, the use,     *
+ * duplication, or disclosure by the United States Government  *
+ * is subject to restrictions stated in the Ansys, Inc.        *
+ * software license agreement and FAR 12.212 (for non-DOD      *
+ * licenses).                                                  *
+ *                                                             *
+ ***************************************************************
+
+ 2024 R1 
+     
+ Point Releases and Patches installed:   
+     
+ Discovery 2024 R1   
+ Fluids 2024 R1  
+ Ansys Dynamic Reporting 2024 R1 
+ SpaceClaim 2024 R1  
+ CFX (includes CFD-Post) 2024 R1 
+ Chemkin 2024 R1 
+ EnSight 2024 R1 
+ FENSAP-ICE 2024 R1  
+ Fluent (includes CFD-Post) 2024 R1  
+ Polyflow (includes CFD-Post) 2024 R1
+ Forte (includes EnSight) 2024 R1
+ TurboGrid 2024 R1   
+ ACIS Geometry Interface 2024 R1 
+ AutoCAD Geometry Interface 2024 R1  
+ Catia, Version 4 Geometry Interface 2024 R1 
+ Catia, Version 5 Geometry Interface 2024 R1 
+ Catia, Version 6 Geometry Interface 2024 R1 
+ Creo Elements/Direct Modeling Geometry Interface 2024 R1
+ Creo Parametric Geometry Interface 2024 R1  
+ Inventor Geometry Interface 2024 R1 
+ JTOpen Geometry Interface 2024 R1   
+ NX Geometry Interface 2024 R1   
+ Parasolid Geometry Interface  2024 R1   
+ Solid Edge Geometry Interface 2024 R1   
+ SOLIDWORKS Geometry Interface 2024 R1   
+ Speos 2024 R1   
+ Aqwa 2024 R1
+ Autodyn 2024 R1 
+ Material Calibration App 2024 R1
+ Customization Files for User Programmable Features 2024 R1  
+ Mechanical Products 2024 R1 
+ Motion 2024 R1  
+ Academic Student 2024 R1
+
+
+          *****  MAPDL COMMAND LINE ARGUMENTS  *****
+  BATCH MODE REQUESTED (-b)    = NOLIST
+  INPUT FILE COPY MODE (-c)    = COPY
+  DISTRIBUTED MEMORY PARALLEL REQUESTED
+       4 PARALLEL PROCESSES REQUESTED WITH SINGLE THREAD PER PROCESS
+    TOTAL OF     4 CORES REQUESTED
+  INPUT FILE NAME              = C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290\dummy.dat
+  OUTPUT FILE NAME             = C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290\solve.out
+  START-UP FILE MODE           = NOREAD
+  STOP FILE MODE               = NOREAD
+
+ RELEASE= 2024 R1              BUILD= 24.1      UP20231106   VERSION=WINDOWS x64 
+ CURRENT JOBNAME=file0  15:15:39  APR 22, 2024 CP=      0.016
+
+
+ PARAMETER _DS_PROGRESS =     999.0000000    
+
+ /INPUT FILE= ds.dat  LINE=       0
+
+
+
+ *** NOTE ***                            CP =       0.047   TIME= 15:15:40
+ The /CONFIG,NOELDB command is not valid in a distributed memory         
+ parallel solution.  Command is ignored.                                 
+
+ *GET  _WALLSTRT  FROM  ACTI  ITEM=TIME WALL  VALUE=  15.2611111    
+
+ TITLE= 
+ Rotor FEA--Static Structural (C5)                                             
+
+  ACT Extensions:
+      LSDYNA, 2024.1
+      5f463412-bd3e-484b-87e7-cbc0a665e474, wbex
+ /COM,     ANSYSMotion, 2024.1
+      20180725-3f81-49eb-9f31-41364844c769, wbex
+  
+
+ SET PARAMETER DIMENSIONS ON  _WB_PROJECTSCRATCH_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_PROJECTSCRATCH_DIR(1) = C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290\
+
+ SET PARAMETER DIMENSIONS ON  _WB_SOLVERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_SOLVERFILES_DIR(1) = C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\Rotor FEA_files\dp0\SYS-2\MECH\
+
+ SET PARAMETER DIMENSIONS ON  _WB_USERFILES_DIR
+  TYPE=STRI  DIMENSIONS=      248        1        1
+
+ PARAMETER _WB_USERFILES_DIR(1) = C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\Rotor FEA_files\user_files\
+ --- Data in consistent BIN units. See Solving Units in the help system for more
+
+ U.S. CUSTOMARY INCH UNITS SPECIFIED FOR INTERNAL    
+  LENGTH      = INCHES (IN)
+  MASS        = LBF-S**2/IN 
+  TIME        = SECONDS (SEC)  
+  TEMPERATURE = FAHRENHEIT
+  TOFFSET     = 460.0
+  FORCE       = LBF
+  HEAT        = IN-LBF
+  PRESSURE    = PSI (LBF/IN**2)
+  ENERGY      = IN-LBF
+  POWER       = IN-LBF/SEC
+
+ INPUT  UNITS ARE ALSO SET TO BIN 
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2024 R1          24.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   15:15:40  APR 22, 2024 CP=      0.047
+
+ Rotor FEA--Static Structural (C5)                                             
+
+
+
+          ***** MAPDL ANALYSIS DEFINITION (PREP7) *****
+ *********** Nodes for the whole assembly ***********
+ *********** Nodes for all Remote Points ***********
+ *********** Elements for Body 1 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2" **
+ *********** Elements for Body 2 "[TP] [Turb] Rotor Blade Mount|CirPattern2" ***
+ *********** Elements for Body 3 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[2]"
+ *********** Elements for Body 4 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[3]"
+ *********** Elements for Body 5 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[4]"
+ *********** Elements for Body 6 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[5]"
+ *********** Elements for Body 7 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[6]"
+ *********** Elements for Body 8 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[7]"
+ *********** Elements for Body 9 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[8]"
+ *********** Elements for Body 10 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[9]
+ *********** Elements for Body 11 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[10
+ *********** Elements for Body 12 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[11
+ *********** Elements for Body 13 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[12
+ *********** Elements for Body 14 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[13
+ *********** Elements for Body 15 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[14
+ *********** Elements for Body 16 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[15
+ *********** Elements for Body 17 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[16
+ *********** Elements for Body 18 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[17
+ *********** Elements for Body 19 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[18
+ *********** Elements for Body 20 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[19
+ *********** Elements for Body 21 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[20
+ *********** Elements for Body 22 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[21
+ *********** Elements for Body 23 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[22
+ *********** Elements for Body 24 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[23
+ *********** Elements for Body 25 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[24
+ *********** Elements for Body 26 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[25
+ *********** Elements for Body 27 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[26
+ *********** Elements for Body 28 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[27
+ *********** Elements for Body 29 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[28
+ *********** Elements for Body 30 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[29
+ *********** Elements for Body 31 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[30
+ *********** Elements for Body 32 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[31
+ *********** Elements for Body 33 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[32
+ *********** Elements for Body 34 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[33
+ *********** Elements for Body 35 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[34
+ *********** Elements for Body 36 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[35
+ *********** Elements for Body 37 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[36
+ *********** Elements for Body 38 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[37
+ *********** Elements for Body 39 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[38
+ *********** Elements for Body 40 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[39
+ *********** Elements for Body 41 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[40
+ *********** Elements for Body 42 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[41
+ *********** Elements for Body 43 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[42
+ *********** Elements for Body 44 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[43
+ *********** Elements for Body 45 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[44
+ *********** Elements for Body 46 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[45
+ *********** Elements for Body 47 "[TP] [Turb] Rotor Blade|#6 Clearance Hole2[46
+ *********** Elements for Body 48 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 49 "[TP] [Turb] Rotor Central Spacer|CirPattern1"
+ *********** Elements for Body 50 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 51 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 52 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 53 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 54 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 55 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 56 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 57 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 58 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 59 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 60 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 61 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 62 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 63 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 64 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 65 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 66 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 67 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 68 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 69 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 70 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 71 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 72 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 73 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 74 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 75 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 76 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 77 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 78 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 79 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 80 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 81 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 82 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 83 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 84 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 85 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 86 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 87 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 88 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 89 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 90 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 91 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 92 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 93 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 94 "[TP] [Turb] Blade Retaining Bolt - 92220A146_
+ *********** Elements for Body 95 "[TP] [Turb] Rotor Outer Plate|CirPattern2" **
+ *********** Elements for Body 96 "[TP] [Turb] Rotor Outer Plate|CirPattern2[2]"
+ *********** Elements for Body 97 "[TP] [Turb] Rotor Blade Retaining Ring|CirPat
+ *********** Elements for Body 98 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196A
+ *********** Elements for Body 99 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196A
+ *********** Elements for Body 100 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 101 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 102 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 103 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 104 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 105 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 106 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 107 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 108 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 109 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 110 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 111 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 112 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 113 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 114 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 115 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 116 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 117 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 118 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 119 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 120 "[TP] [Turb] Rotor Rim Bolt - 92196A112_92196
+ *********** Elements for Body 121 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 122 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 123 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 124 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 125 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 126 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 127 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Elements for Body 128 "[TP] [Turb] Rotor Sandwich Bolt - 92196A150_
+ *********** Send User Defined Coordinate System(s) ***********
+ *********** Set Reference Temperature ***********
+ *********** Send Materials ***********
+ *********** Create Contact "Bonded - Multiple To [TP] [Turb] Rotor Blade Mount|
+             Real Constant Set For Above Contact Is 130 & 129
+ *********** Create Contact "Bonded - Multiple To Multiple" ***********
+             Real Constant Set For Above Contact Is 132 & 131
+ *********** Create Contact "Bonded - Multiple To Multiple" ***********
+             Real Constant Set For Above Contact Is 134 & 133
+ *********** Create Contact "Bonded - [TP] [Turb] Rotor Blade Retaining Ring|Cir
+             Real Constant Set For Above Contact Is 136 & 135
+ *********** Create Contact "Axial Fasteners" ***********
+             Real Constant Set For Above Contact Is 138 & 137
+ *********** Fixed Supports ***********
+ *********** Create Remote Point "Internal Remote Point" ***********
+ *********** Construct Moment Using Remote Attachment ***********
+ *********** Define Rotational Velocity ***********
+
+
+ ***** ROUTINE COMPLETED *****  CP =         0.172
+
+
+ --- Number of total nodes = 82315
+ --- Number of contact elements = 96440
+ --- Number of spring elements = 0
+ --- Number of bearing elements = 0
+ --- Number of solid elements = 26363
+ --- Number of condensed parts = 0
+ --- Number of total elements = 122804
+
+ *GET  _WALLBSOL  FROM  ACTI  ITEM=TIME WALL  VALUE=  15.2611111    
+ ****************************************************************************
+ *************************    SOLUTION       ********************************
+ ****************************************************************************
+
+ *****  MAPDL SOLUTION ROUTINE  *****
+
+
+ PERFORM A STATIC ANALYSIS
+  THIS WILL BE A NEW ANALYSIS
+
+ PARAMETER _THICKRATIO =     0.000000000    
+
+ USE SPARSE MATRIX DIRECT SOLVER
+
+ CONTACT INFORMATION PRINTOUT LEVEL       1
+
+ CHECK INITIAL OPEN/CLOSED STATUS OF SELECTED CONTACT ELEMENTS
+      AND LIST DETAILED CONTACT PAIR INFORMATION
+
+ SPLIT CONTACT SURFACES AT SOLVE PHASE
+
+    NUMBER OF SPLITTING TBD BY PROGRAM
+
+ DO NOT COMBINE ELEMENT MATRIX FILES (.emat) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ DO NOT COMBINE ELEMENT SAVE DATA FILES (.esav) AFTER DISTRIBUTED PARALLEL SOLUTION
+
+ NLDIAG: Nonlinear diagnostics CONT option is set to ON. 
+         Writing frequency : each ITERATION.
+
+ DO NOT SAVE ANY RESTART FILES AT ALL
+ ****************************************************
+ ******************* SOLVE FOR LS 1 OF 1 ****************
+
+ SELECT       FOR ITEM=NODE COMPONENT=    
+  IN RANGE     82315 TO      82315 STEP          1
+
+          1  NODES (OF      82315  DEFINED) SELECTED BY  NSEL  COMMAND.
+
+ SPECIFIED NODAL LOAD MX   FOR SELECTED NODES         1 TO    82315 BY        1
+  REAL=  0.00000000       IMAG=  0.00000000    
+
+ SPECIFIED NODAL LOAD MY   FOR SELECTED NODES         1 TO    82315 BY        1
+  REAL= -136.000000       IMAG=  0.00000000    
+
+ SPECIFIED NODAL LOAD MZ   FOR SELECTED NODES         1 TO    82315 BY        1
+  REAL=  0.00000000       IMAG=  0.00000000    
+
+ ALL SELECT   FOR ITEM=NODE COMPONENT=    
+  IN RANGE         1 TO      82315 STEP          1
+
+      82315  NODES (OF      82315  DEFINED) SELECTED BY NSEL  COMMAND.
+
+ CGOMGA=  0.0000     -5385.6      0.0000    
+
+ PRINTOUT RESUMED BY /GOP
+
+ USE       1 SUBSTEPS INITIALLY THIS LOAD STEP FOR ALL  DEGREES OF FREEDOM
+ FOR AUTOMATIC TIME STEPPING:
+   USE      1 SUBSTEPS AS A MAXIMUM
+   USE      1 SUBSTEPS AS A MINIMUM
+
+ TIME=  1.0000    
+
+ ERASE THE CURRENT DATABASE OUTPUT CONTROL TABLE.
+
+
+ WRITE ALL  ITEMS TO THE DATABASE WITH A FREQUENCY OF NONE
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE NSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE RSOL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EANG ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE ETMP ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE VENG ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE STRS ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPEL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE EPPL ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ WRITE CONT ITEMS TO THE DATABASE WITH A FREQUENCY OF ALL 
+   FOR ALL APPLICABLE ENTITIES
+
+ *GET  ANSINTER_  FROM  ACTI  ITEM=INT        VALUE=  0.00000000    
+
+ *IF  ANSINTER_                         ( =   0.00000     )  NE  
+      0                                 ( =   0.00000     )  THEN    
+
+ *ENDIF
+
+ *** NOTE ***                            CP =       0.188   TIME= 15:15:40
+ The automatic domain decomposition logic has selected the MESH domain   
+ decomposition method with 4 processes per solution.                     
+
+ *****  MAPDL SOLVE    COMMAND  *****
+
+ *** WARNING ***                         CP =       0.203   TIME= 15:15:40
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** NOTE ***                            CP =       0.219   TIME= 15:15:40
+ The model data was checked and warning messages were found.             
+  Please review output or errors file (                                  
+ C:\Users\brend\Desktop\Engine-Development\Ansys                         
+ Models\Rotor\_ProjectScratch\Scr4290\file0.err ) for these warning      
+ messages.                                                               
+
+ *** SELECTION OF ELEMENT TECHNOLOGIES FOR APPLICABLE ELEMENTS ***
+      --- GIVE SUGGESTIONS AND RESET THE KEY OPTIONS ---
+
+ ELEMENT TYPE         1 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         2 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE         3 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         4 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         5 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         6 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         7 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         8 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE         9 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        10 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        11 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        12 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        13 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        14 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        15 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        16 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        17 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        18 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        19 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        20 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        21 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        22 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        23 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        24 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        25 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        26 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        27 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        28 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        29 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        30 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        31 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        32 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        33 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        34 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        35 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        36 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        37 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        38 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        39 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        40 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        41 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        42 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        43 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        44 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        45 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        46 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        47 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        48 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        49 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        50 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        51 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        52 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        53 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        54 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        55 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        56 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        57 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        58 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        59 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        60 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        61 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        62 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        63 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        64 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        65 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        66 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        67 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        68 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        69 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        70 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        71 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        72 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        73 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        74 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        75 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        76 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        77 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        78 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        79 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        80 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        81 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        82 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        83 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        84 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        85 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        86 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        87 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        88 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        89 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        90 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        91 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        92 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        93 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        94 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        95 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        96 IS SOLID186. KEYOPT(2)=0 IS SUGGESTED AND HAS BEEN RESET.
+  KEYOPT(1-12)=    0    0    0    0    0    0    0    0    0    0    0    0
+
+ ELEMENT TYPE        97 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        98 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE        99 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       100 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       101 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       102 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       103 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       104 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       105 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       106 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       107 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       108 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       109 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       110 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       111 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       112 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       113 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       114 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       115 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       116 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       117 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       118 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       119 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       120 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       121 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       122 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       123 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       124 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       125 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       126 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       127 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+ ELEMENT TYPE       128 IS SOLID187. IT IS NOT ASSOCIATED WITH FULLY INCOMPRESSIBLE
+ HYPERELASTIC MATERIALS. NO SUGGESTION IS AVAILABLE AND NO RESETTING IS NEEDED.
+
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2024 R1          24.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   15:15:40  APR 22, 2024 CP=      0.219
+
+ Rotor FEA--Static Structural (C5)                                             
+
+
+
+                       S O L U T I O N   O P T I O N S
+
+   PROBLEM DIMENSIONALITY. . . . . . . . . . . . .3-D                  
+   DEGREES OF FREEDOM. . . . . . UX   UY   UZ   ROTX ROTY ROTZ
+   ANALYSIS TYPE . . . . . . . . . . . . . . . . .STATIC (STEADY-STATE)
+   OFFSET TEMPERATURE FROM ABSOLUTE ZERO . . . . .  459.67    
+   EQUATION SOLVER OPTION. . . . . . . . . . . . .SPARSE             
+   GLOBALLY ASSEMBLED MATRIX . . . . . . . . . . .SYMMETRIC  
+
+ *** NOTE ***                            CP =       0.219   TIME= 15:15:40
+ The conditions for direct assembly have been met.  No .emat or .erot    
+ files will be produced.                                                 
+
+ CHECK INITIAL OPEN/CLOSED STATUS OF SELECTED CONTACT ELEMENTS
+      AND LIST DETAILED CONTACT PAIR INFORMATION
+
+ *** NOTE ***                            CP =       0.234   TIME= 15:15:41
+ Internal nodes from 82316 to 82316 are created.                         
+ 1 internal nodes are used for handling degrees of freedom on pilot      
+ nodes of rigid target surfaces.                                         
+
+ *** NOTE ***                            CP =       0.328   TIME= 15:15:41
+ Internal nodes from 82316 to 82316 are created.                         
+ 1 internal nodes are used for handling degrees of freedom on pilot      
+ nodes of rigid target surfaces.                                         
+ *WARNING*: Some MPC/Lagrange based elements (e.g.60573) in real         
+ constant set 129 overlap with other MPC/Lagrange based elements         
+ (e.g.88953) in real constant set 132 which can cause overconstraint.    
+ *WARNING*: Most likely no MPC equations (or Lagrange multiliers) will   
+ be built due to overlapping with other pairs (i.e.  Real constant set   
+ 129).                                                                   
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 36091).                   
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Certain contact elements (for example 149744 & 86834) overlap with      
+ other.                                                                  
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Certain contact pairs (for example 132 & 129) overlap with other.       
+
+   23414 CONTACT ELEMENTS &   24788 TARGET ELEMENTS ARE UNSELECTED FOR PREPARATION OF          SPLITTING.
+       5 CONTACT PAIRS ARE UNSELECTED. 
+
+ *** NOTE ***                            CP =      12.938   TIME= 15:15:59
+ No contact pairs are being split by the CNCH,DMP logic.  This may be    
+ due to CHCH,DMP command has been applied before for this model or       
+ number of contact elements in each domain is small enough for good      
+ scalability.                                                            
+
+ BECAUSE SPLIT WAS NOT DONE FOR CONNECT REGION(S), UNSELECTED ELEMENTS ARE REVERTED (SELECTED). 
+
+ *** NOTE ***                            CP =      13.141   TIME= 15:15:59
+ Internal nodes from 82316 to 82316 are created.                         
+ 1 internal nodes are used for handling degrees of freedom on pilot      
+ nodes of rigid target surfaces.                                         
+
+ *** NOTE ***                            CP =      13.453   TIME= 15:16:00
+ Internal nodes from 82316 to 82316 are created.                         
+ 1 internal nodes are used for handling degrees of freedom on pilot      
+ nodes of rigid target surfaces.                                         
+ *WARNING*: Some MPC/Lagrange based elements (e.g.60573) in real         
+ constant set 129 overlap with other MPC/Lagrange based elements         
+ (e.g.88953) in real constant set 132 which can cause overconstraint.    
+
+ *** NOTE ***                            CP =      26.469   TIME= 15:16:17
+ Smoothing on certain target nodes (e.g.844) for pair ID 129 may have    
+ accuracy issue.  Please verify element normal of connected target       
+ elements (e.g.71589 & 72584).                                           
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 129 and contact element type 129 has been set up.  The     
+ companion pair has real constant set ID 130.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will keep the current pair and deactivate its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example 844)  
+ may have an accuracy issue.  You may switch contact and target          
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ *WARNING*: Certain contact elements (for example 67840&129200) overlap  
+ each other.  Overconstraint may occur.                                  
+ Average contact surface length               0.97290E-01
+ Average contact pair depth                   0.64107E-01
+ Average target surface length                0.12152    
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.16027E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 1.098079198E-02 was detected between contact  
+ element 63305 and target element 72302.                                 
+ You may move entire target surface by : x= 4.080421265E-03, y=          
+ 9.08034522E-03, z= -4.634143448E-03,to reduce initial penetration.      
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 130 and contact element type 129 has been set up.  The     
+ companion pair has real constant set ID 129.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will deactivate the current pair and keep its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 35034) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.12687    
+ Average contact pair depth                   0.78916E-01
+ Average target surface length                0.94006E-01
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.19729E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 1.34359649E-02 was detected between contact   
+ element 68217 and target element 57055.                                 
+ You may move entire target surface by : x= -1.003673434E-02, y=         
+ 8.926177549E-03, z= -3.353670098E-04,to reduce initial penetration.     
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 131 and contact element type 131 has been set up.  The     
+ companion pair has real constant set ID 132.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will deactivate the current pair and keep its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 35034) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.95497E-01
+ Average contact pair depth                   0.68293E-01
+ Average target surface length                0.94006E-01
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.17073E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Min.  Initial gap 3.0016651E-03 was detected between contact element    
+ 88190 and target element 102665.                                        
+ Contact is detected due to initial settings.                            
+  
+ Max.  Geometric gap 1.416927335E-02 has been detected between contact   
+ element 86336 and target element 100784.                                
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 132 and contact element type 131 has been set up.  The     
+ companion pair has real constant set ID 131.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will keep the current pair and deactivate its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example 32)   
+ may have an accuracy issue.  You may switch contact and target          
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ *WARNING*: Most likely no MPC equations (or Lagrange multiliers) will   
+ be built due to overlapping with other pairs (i.e.  Real constant set   
+ 129).                                                                   
+ Average contact surface length               0.97290E-01
+ Average contact pair depth                   0.64107E-01
+ Average target surface length                0.92374E-01
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.16027E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Min.  Initial gap 2.838505542E-03 was detected between contact element  
+ 95081 and target element 80990.                                         
+ Contact is detected due to initial settings.                            
+  
+ Max.  Geometric gap 1.555209175E-02 has been detected between contact   
+ element 90147 and target element 76471.                                 
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 133 and contact element type 133 has been set up.  The     
+ companion pair has real constant set ID 134.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will keep the current pair and deactivate its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 58359) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ *WARNING*: Boundary conditions, coupling, and/or constraint equations   
+ has been applied on certain contact nodes (for example 36091).          
+ Overconstraint may occur.                                               
+ *WARNING*: Certain contact elements (for example 111716&144118) overlap 
+ each other.  Overconstraint may occur.                                  
+ Average contact surface length               0.13318    
+ Average contact pair depth                   0.91266E-01
+ Average target surface length                0.16739    
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.22817E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 2.480664443E-05 was detected between contact  
+ element 111386 and target element 115863.                               
+ You may move entire target surface by : x= -1.036442975E-09, y=         
+ 2.48066444E-05, z= -4.829153556E-10,to reduce initial penetration.      
+  
+ Max.  Geometric gap 5.247474845E-03 has been detected between contact   
+ element 109985 and target element 115653.                               
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 134 and contact element type 133 has been set up.  The     
+ companion pair has real constant set ID 133.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will deactivate the current pair and keep its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example 844)  
+ may have an accuracy issue.  You may switch contact and target          
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.17404    
+ Average contact pair depth                   0.12882    
+ Average target surface length                0.12709    
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.32204E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 2.759203962E-05 was detected between contact  
+ element 112300 and target element 104038.                               
+ You may move entire target surface by : x= 9.854303532E-06, y=          
+ 1.906900122E-05, z= -1.733743189E-05,to reduce initial penetration.     
+  
+ Max.  Geometric gap 3.113305786E-02 has been detected between contact   
+ element 111830 and target element 104614.                               
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 135 and contact element type 135 has been set up.  The     
+ companion pair has real constant set ID 136.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will keep the current pair and deactivate its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 35034) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.13554    
+ Average contact pair depth                   0.89936E-01
+ Average target surface length                0.94006E-01
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.22484E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 7.284676937E-10 was detected between contact  
+ element 120054 and target element 131808.                               
+  
+ Max.  Geometric gap 2.147820081E-02 has been detected between contact   
+ element 121130 and target element 131062.                               
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 136 and contact element type 135 has been set up.  The     
+ companion pair has real constant set ID 135.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will deactivate the current pair and keep its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 65799) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.97290E-01
+ Average contact pair depth                   0.64107E-01
+ Average target surface length                0.12999    
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.16027E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Min.  Initial gap 1.171959595E-05 was detected between contact element  
+ 121965 and target element 117628.                                       
+ Contact is detected due to initial settings.                            
+  
+ Max.  Geometric gap 4.455634907E-03 has been detected between contact   
+ element 125573 and target element 118894.                               
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 137 and contact element type 137 has been set up.  The     
+ companion pair has real constant set ID 138.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will keep the current pair and deactivate its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 35655) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.90763E-01
+ Average contact pair depth                   0.61740E-01
+ Average target surface length                0.16944    
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.15435E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 5.539929742E-16 was detected between contact  
+ element 143196 and target element 149456.                               
+  
+ Max.  Geometric gap 1.307227633E-02 has been detected between contact   
+ element 142135 and target element 147556.                               
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Symmetric Deformable- deformable contact pair identified by real        
+ constant set 138 and contact element type 137 has been set up.  The     
+ companion pair has real constant set ID 137.  Both pairs should have    
+ the same behavior.                                                      
+ MAPDL will deactivate the current pair and keep its companion pair,     
+ resulting in asymmetric contact.                                        
+ Auto surface constraint is built
+ Contact algorithm: MPC based approach
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Contact related postprocess items (ETABLE, pressure ...) are not        
+ available.                                                              
+ Contact detection at: nodal point (normal to target surface)
+ *WARNING*: Smoothing on certain contact/target nodes (for example       
+ 72024) may have an accuracy issue.  You may switch contact and target   
+ surfaces, or split the current pair into multiple pairs, or use Gauss   
+ detection.                                                              
+ MPC will be built internally to handle bonded contact.
+ Average contact surface length               0.17696    
+ Average contact pair depth                   0.13974    
+ Average target surface length                0.87941E-01
+ Default pinball region factor PINB           0.25000    
+ *WARNING*: The default pinball radius may be too small to capture       
+ contacting zone under small sliding assumption.  Redefine the pinball   
+ radius if necessary.                                                    
+ The resulting pinball region                 0.34936E-01
+ Default target edge extension factor TOLS     2.0000    
+ Initial penetration/gap is excluded.
+ Bonded contact (always) is defined.
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Max.  Initial penetration 1.050800452E-05 was detected between contact  
+ element 146611 and target element 138770.                               
+ You may move entire target surface by : x= -7.151832575E-06, y=         
+ 7.266846103E-06, z= 2.542124599E-06,to reduce initial penetration.      
+  
+ Max.  Geometric gap 3.492654839E-02 has been detected between contact   
+ element 145320 and target element 139100.                               
+ *WARNING*: The geometric gap/penetration may be too large.  Increase    
+ pinball radius if it is a true geometric gap/penetration.  Decrease     
+ pinball if it is a false one.                                           
+ ****************************************
+  
+
+ *** NOTE ***                            CP =      37.422   TIME= 15:16:32
+ Force-distributed-surface identified by real constant set 139 and       
+ contact element type 139 has been set up.  The pilot node 82315 is      
+ used to apply the force.  Internal MPC will be built.                   
+ The used degrees of freedom set is  UX   UY   UZ   ROTX ROTY ROTZ
+ *WARNING*: Certain contact elements (for example 149744&86834) overlap  
+ each other.                                                             
+ Please verify constraints (including rotational degrees of freedom)
+  on the pilot node by yourself.
+ ****************************************
+  
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+ The reasons for possible overconstraint are:                            
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 36091).                   
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Certain contact elements (for example 149744 & 86834) overlap with      
+ other.                                                                  
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Certain contact pairs (for example 132 & 129) overlap with other.       
+ ****************************************
+  
+  
+
+ *** NOTE ***                            CP =      39.906   TIME= 15:16:35
+ Internal nodes from 82316 to 82316 are created.                         
+ 1 internal nodes are used for handling degrees of freedom on pilot      
+ nodes of rigid target surfaces.                                         
+
+  
+  
+     D I S T R I B U T E D   D O M A I N   D E C O M P O S E R
+  
+  ...Number of elements: 122804
+  ...Number of nodes:    82316
+  ...Decompose to 4 CPU domains
+  ...Element load balance ratio =     3.602
+
+
+                      L O A D   S T E P   O P T I O N S
+
+   LOAD STEP NUMBER. . . . . . . . . . . . . . . .     1
+   TIME AT END OF THE LOAD STEP. . . . . . . . . .  1.0000    
+   NUMBER OF SUBSTEPS. . . . . . . . . . . . . . .     1
+   STEP CHANGE BOUNDARY CONDITIONS . . . . . . . .    NO
+   INERTIA LOADS                        X           Y           Z 
+      CGLOC. . . . . . . . . . . .  0.0000     0.18750      0.0000    
+      CGOMGA . . . . . . . . . . .  0.0000     -5385.6      0.0000    
+   PRINT OUTPUT CONTROLS . . . . . . . . . . . . .NO PRINTOUT
+   DATABASE OUTPUT CONTROLS
+      ITEM     FREQUENCY   COMPONENT
+       ALL       NONE               
+      NSOL        ALL               
+      RSOL        ALL               
+      EANG        ALL               
+      ETMP        ALL               
+      VENG        ALL               
+      STRS        ALL               
+      EPEL        ALL               
+      EPPL        ALL               
+      CONT        ALL               
+
+
+ SOLUTION MONITORING INFO IS WRITTEN TO FILE= file.mntr                                                                                                                                                                                                                                                           
+
+
+ *** WARNING ***                         CP =      48.844   TIME= 15:16:53
+ Multiple constraints have been applied on degree of freedom 1 of        
+ contact node 35277.  The program will remove certain internal MPCs.     
+ Please check the model carefully.                                       
+
+
+                         ***********  PRECISE MASS SUMMARY  ***********
+
+   TOTAL RIGID BODY MASS MATRIX ABOUT ORIGIN
+               Translational mass               |   Coupled translational/rotational mass
+        0.61029E-02    0.0000        0.0000     |     0.0000       0.14826E-06  -0.15624E-04
+         0.0000       0.61029E-02    0.0000     |   -0.14826E-06    0.0000      -0.39311E-06
+         0.0000        0.0000       0.61029E-02 |    0.15624E-04   0.39311E-06    0.0000    
+     ------------------------------------------ | ------------------------------------------
+                                                |         Rotational mass (inertia)
+                                                |    0.12662E-01  -0.11928E-07  -0.33947E-07
+                                                |   -0.11928E-07   0.25011E-01  -0.72419E-08
+                                                |   -0.33947E-07  -0.72419E-08   0.12661E-01
+
+   TOTAL MASS = 0.61029E-02
+     The mass principal axes coincide with the global Cartesian axes
+
+   CENTER OF MASS (X,Y,Z)=  -0.64414E-04   0.25601E-02   0.24293E-04
+
+   TOTAL INERTIA ABOUT CENTER OF MASS
+        0.12662E-01  -0.12935E-07  -0.33957E-07
+       -0.12935E-07   0.25011E-01  -0.68623E-08
+       -0.33957E-07  -0.68623E-08   0.12661E-01
+     The inertia principal axes coincide with the global Cartesian axes
+
+
+  *** MASS SUMMARY BY ELEMENT TYPE ***
+
+  TYPE      MASS
+     1  0.108572E-04
+     2  0.462716E-03
+     3  0.108572E-04
+     4  0.108572E-04
+     5  0.108572E-04
+     6  0.108572E-04
+     7  0.108572E-04
+     8  0.108572E-04
+     9  0.108572E-04
+    10  0.108572E-04
+    11  0.108572E-04
+    12  0.108572E-04
+    13  0.108572E-04
+    14  0.108572E-04
+    15  0.108572E-04
+    16  0.108572E-04
+    17  0.108572E-04
+    18  0.108572E-04
+    19  0.108572E-04
+    20  0.108572E-04
+    21  0.108572E-04
+    22  0.108572E-04
+    23  0.108572E-04
+    24  0.108572E-04
+    25  0.108572E-04
+    26  0.108572E-04
+    27  0.108572E-04
+    28  0.108572E-04
+    29  0.108572E-04
+    30  0.108572E-04
+    31  0.108572E-04
+    32  0.108572E-04
+    33  0.108572E-04
+    34  0.108572E-04
+    35  0.108572E-04
+    36  0.108572E-04
+    37  0.108572E-04
+    38  0.108572E-04
+    39  0.108572E-04
+    40  0.108572E-04
+    41  0.108572E-04
+    42  0.108572E-04
+    43  0.108572E-04
+    44  0.108572E-04
+    45  0.108572E-04
+    46  0.108572E-04
+    47  0.108572E-04
+    48  0.125091E-04
+    49  0.498463E-03
+    50  0.125091E-04
+    51  0.125091E-04
+    52  0.125091E-04
+    53  0.125091E-04
+    54  0.125091E-04
+    55  0.125091E-04
+    56  0.125091E-04
+    57  0.125091E-04
+    58  0.125091E-04
+    59  0.125091E-04
+    60  0.125091E-04
+    61  0.125091E-04
+    62  0.125091E-04
+    63  0.125091E-04
+    64  0.125091E-04
+    65  0.125091E-04
+    66  0.125091E-04
+    67  0.125091E-04
+    68  0.125091E-04
+    69  0.125091E-04
+    70  0.125091E-04
+    71  0.125091E-04
+    72  0.125091E-04
+    73  0.125091E-04
+    74  0.125091E-04
+    75  0.125091E-04
+    76  0.125091E-04
+    77  0.125091E-04
+    78  0.125091E-04
+    79  0.125091E-04
+    80  0.125091E-04
+    81  0.125091E-04
+    82  0.125091E-04
+    83  0.125091E-04
+    84  0.125091E-04
+    85  0.125091E-04
+    86  0.125091E-04
+    87  0.125091E-04
+    88  0.125091E-04
+    89  0.125091E-04
+    90  0.125091E-04
+    91  0.125091E-04
+    92  0.125091E-04
+    93  0.125091E-04
+    94  0.125091E-04
+    95  0.173812E-02
+    96  0.173812E-02
+    97  0.361085E-03
+    98  0.635120E-05
+    99  0.635120E-05
+   100  0.635120E-05
+   101  0.635120E-05
+   102  0.635120E-05
+   103  0.635120E-05
+   104  0.635120E-05
+   105  0.635120E-05
+   106  0.635120E-05
+   107  0.635120E-05
+   108  0.635120E-05
+   109  0.635120E-05
+   110  0.635120E-05
+   111  0.635120E-05
+   112  0.635120E-05
+   113  0.635120E-05
+   114  0.635120E-05
+   115  0.635120E-05
+   116  0.635120E-05
+   117  0.635120E-05
+   118  0.635120E-05
+   119  0.635120E-05
+   120  0.635120E-05
+   121  0.104365E-04
+   122  0.104365E-04
+   123  0.104365E-04
+   124  0.104365E-04
+   125  0.104365E-04
+   126  0.104365E-04
+   127  0.104365E-04
+   128  0.104365E-04
+
+ Range of element maximum matrix coefficients in global coordinates
+ Maximum = 42350919.5 at element 4059.                                   
+ Minimum = 597761.128 at element 22567.                                  
+
+   *** ELEMENT MATRIX FORMULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1        84  SOLID186      0.000   0.000000
+        2      4681  SOLID187      0.219   0.000047
+        3        84  SOLID186      0.000   0.000000
+        4        84  SOLID186      0.000   0.000000
+        5        84  SOLID186      0.016   0.000186
+        6        84  SOLID186      0.000   0.000000
+        7        84  SOLID186      0.000   0.000000
+        8        84  SOLID186      0.000   0.000000
+        9        84  SOLID186      0.000   0.000000
+       10        84  SOLID186      0.000   0.000000
+       11        84  SOLID186      0.000   0.000000
+       12        84  SOLID186      0.000   0.000000
+       13        84  SOLID186      0.000   0.000000
+       14        84  SOLID186      0.000   0.000000
+       15        84  SOLID186      0.000   0.000000
+       16        84  SOLID186      0.000   0.000000
+       17        84  SOLID186      0.000   0.000000
+       18        84  SOLID186      0.000   0.000000
+       19        84  SOLID186      0.000   0.000000
+       20        84  SOLID186      0.000   0.000000
+       21        84  SOLID186      0.000   0.000000
+       22        84  SOLID186      0.000   0.000000
+       23        84  SOLID186      0.000   0.000000
+       24        84  SOLID186      0.000   0.000000
+       25        84  SOLID186      0.000   0.000000
+       26        84  SOLID186      0.000   0.000000
+       27        84  SOLID186      0.000   0.000000
+       28        84  SOLID186      0.000   0.000000
+       29        84  SOLID186      0.000   0.000000
+       30        84  SOLID186      0.000   0.000000
+       31        84  SOLID186      0.000   0.000000
+       32        84  SOLID186      0.000   0.000000
+       33        84  SOLID186      0.000   0.000000
+       34        84  SOLID186      0.000   0.000000
+       35        84  SOLID186      0.000   0.000000
+       36        84  SOLID186      0.000   0.000000
+       37        84  SOLID186      0.000   0.000000
+       38        84  SOLID186      0.000   0.000000
+       39        84  SOLID186      0.016   0.000186
+       40        84  SOLID186      0.062   0.000744
+       41        84  SOLID186      0.016   0.000186
+       42        84  SOLID186      0.000   0.000000
+       43        84  SOLID186      0.031   0.000372
+       44        84  SOLID186      0.016   0.000186
+       45        84  SOLID186      0.000   0.000000
+       46        84  SOLID186      0.000   0.000000
+       47        84  SOLID186      0.000   0.000000
+       48       210  SOLID187      0.000   0.000000
+       49       116  SOLID186      0.000   0.000000
+       50       210  SOLID187      0.000   0.000000
+       51       210  SOLID187      0.000   0.000000
+       52       210  SOLID187      0.016   0.000074
+       53       210  SOLID187      0.000   0.000000
+       54       210  SOLID187      0.000   0.000000
+       55       210  SOLID187      0.000   0.000000
+       56       210  SOLID187      0.000   0.000000
+       57       210  SOLID187      0.000   0.000000
+       58       210  SOLID187      0.000   0.000000
+       59       210  SOLID187      0.000   0.000000
+       60       210  SOLID187      0.000   0.000000
+       61       210  SOLID187      0.000   0.000000
+       62       210  SOLID187      0.000   0.000000
+       63       210  SOLID187      0.016   0.000074
+       64       210  SOLID187      0.000   0.000000
+       65       210  SOLID187      0.000   0.000000
+       66       210  SOLID187      0.000   0.000000
+       67       210  SOLID187      0.016   0.000074
+       68       210  SOLID187      0.000   0.000000
+       69       210  SOLID187      0.000   0.000000
+       70       210  SOLID187      0.000   0.000000
+       71       210  SOLID187      0.000   0.000000
+       72       210  SOLID187      0.000   0.000000
+       73       210  SOLID187      0.000   0.000000
+       74       210  SOLID187      0.000   0.000000
+       75       210  SOLID187      0.000   0.000000
+       76       210  SOLID187      0.000   0.000000
+       77       210  SOLID187      0.047   0.000223
+       78       210  SOLID187      0.000   0.000000
+       79       210  SOLID187      0.000   0.000000
+       80       210  SOLID187      0.000   0.000000
+       81       210  SOLID187      0.000   0.000000
+       82       210  SOLID187      0.000   0.000000
+       83       210  SOLID187      0.000   0.000000
+       84       210  SOLID187      0.000   0.000000
+       85       210  SOLID187      0.000   0.000000
+       86       210  SOLID187      0.000   0.000000
+       87       210  SOLID187      0.000   0.000000
+       88       210  SOLID187      0.000   0.000000
+       89       210  SOLID187      0.000   0.000000
+       90       210  SOLID187      0.000   0.000000
+       91       210  SOLID187      0.000   0.000000
+       92       210  SOLID187      0.062   0.000298
+       93       210  SOLID187      0.000   0.000000
+       94       210  SOLID187      0.000   0.000000
+       95       517  SOLID186      0.016   0.000030
+       96       517  SOLID186      0.016   0.000030
+       97      2529  SOLID187      0.094   0.000037
+       98       145  SOLID187      0.000   0.000000
+       99       145  SOLID187      0.000   0.000000
+      100       145  SOLID187      0.000   0.000000
+      101       145  SOLID187      0.000   0.000000
+      102       145  SOLID187      0.016   0.000108
+      103       145  SOLID187      0.000   0.000000
+      104       145  SOLID187      0.000   0.000000
+      105       145  SOLID187      0.000   0.000000
+      106       145  SOLID187      0.000   0.000000
+      107       145  SOLID187      0.016   0.000108
+      108       145  SOLID187      0.000   0.000000
+      109       145  SOLID187      0.000   0.000000
+      110       145  SOLID187      0.000   0.000000
+      111       145  SOLID187      0.000   0.000000
+      112       145  SOLID187      0.000   0.000000
+      113       145  SOLID187      0.062   0.000431
+      114       145  SOLID187      0.062   0.000431
+      115       145  SOLID187      0.000   0.000000
+      116       145  SOLID187      0.000   0.000000
+      117       145  SOLID187      0.000   0.000000
+      118       145  SOLID187      0.000   0.000000
+      119       145  SOLID187      0.000   0.000000
+      120       145  SOLID187      0.000   0.000000
+      121       143  SOLID187      0.000   0.000000
+      122       143  SOLID187      0.016   0.000109
+      123       143  SOLID187      0.000   0.000000
+      124       143  SOLID187      0.000   0.000000
+      125       143  SOLID187      0.000   0.000000
+      126       143  SOLID187      0.000   0.000000
+      127       143  SOLID187      0.000   0.000000
+      128       143  SOLID187      0.000   0.000000
+      129     11016  CONTA174      0.422   0.000038
+      130     11016  TARGE170      0.000   0.000000
+      131     14076  CONTA174      0.547   0.000039
+      132     14076  TARGE170      0.000   0.000000
+      133      6726  CONTA174      0.484   0.000072
+      134      6726  TARGE170      0.000   0.000000
+      135      9764  CONTA174      0.406   0.000042
+      136      9764  TARGE170      0.000   0.000000
+      137      6620  CONTA174      0.531   0.000080
+      138      6620  TARGE170      0.000   0.000000
+      139        36  CONTA174      0.000   0.000000
+      140         1  TARGE170      0.000   0.000000
+ Time at end of element matrix formulation CP = 51.765625.               
+
+ DISTRIBUTED SPARSE MATRIX DIRECT SOLVER.
+  Number of equations =      209577,    Maximum wavefront =   1236
+
+ *** NOTE ***                            CP =      53.000   TIME= 15:17:03
+ The initial memory allocation (-m) has been exceeded.                   
+  Supplemental memory allocations are being used.                        
+
+  Process memory allocated for solver              =   324.672 MB
+  Process memory required for in-core solution     =   311.453 MB
+  Process memory required for out-of-core solution =   175.963 MB
+
+  Total memory allocated for solver                =  1479.824 MB
+  Total memory required for in-core solution       =  1426.967 MB
+  Total memory required for out-of-core solution   =   929.267 MB
+
+ *** NOTE ***                            CP =      53.000   TIME= 15:17:03
+ The Distributed Sparse Matrix Solver is currently running in the        
+ in-core memory mode.  This memory mode uses the most amount of memory   
+ in order to avoid using the hard drive as much as possible, which most  
+ often results in the fastest solution time.  This mode is recommended   
+ if enough physical memory is present to accommodate all of the solver   
+ data.                                                                   
+ curEqn=  23347  totEqn=  55404 Job CP sec=     53.719
+      Factor Done=  51% Factor Wall sec=      0.735 rate=       7.0 GFlops
+ curEqn=  55404  totEqn=  55404 Job CP sec=     54.094
+      Factor Done= 100% Factor Wall sec=      1.347 rate=       7.5 GFlops
+ Distributed sparse solver maximum pivot= 46027489.7 at node 63763 UY.   
+ Distributed sparse solver minimum pivot= 25690.3887 at node 66708 UY.   
+ Distributed sparse solver minimum pivot in absolute value= 25690.3887   
+ at node 66708 UY.                                                       
+
+   *** ELEMENT RESULT CALCULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1        84  SOLID186      0.000   0.000000
+        2      4681  SOLID187      0.109   0.000023
+        3        84  SOLID186      0.000   0.000000
+        4        84  SOLID186      0.000   0.000000
+        5        84  SOLID186      0.000   0.000000
+        6        84  SOLID186      0.000   0.000000
+        7        84  SOLID186      0.000   0.000000
+        8        84  SOLID186      0.000   0.000000
+        9        84  SOLID186      0.000   0.000000
+       10        84  SOLID186      0.000   0.000000
+       11        84  SOLID186      0.000   0.000000
+       12        84  SOLID186      0.016   0.000186
+       13        84  SOLID186      0.000   0.000000
+       14        84  SOLID186      0.000   0.000000
+       15        84  SOLID186      0.000   0.000000
+       16        84  SOLID186      0.000   0.000000
+       17        84  SOLID186      0.016   0.000186
+       18        84  SOLID186      0.016   0.000186
+       19        84  SOLID186      0.000   0.000000
+       20        84  SOLID186      0.000   0.000000
+       21        84  SOLID186      0.016   0.000186
+       22        84  SOLID186      0.000   0.000000
+       23        84  SOLID186      0.016   0.000186
+       24        84  SOLID186      0.000   0.000000
+       25        84  SOLID186      0.000   0.000000
+       26        84  SOLID186      0.000   0.000000
+       27        84  SOLID186      0.000   0.000000
+       28        84  SOLID186      0.016   0.000186
+       29        84  SOLID186      0.000   0.000000
+       30        84  SOLID186      0.000   0.000000
+       31        84  SOLID186      0.000   0.000000
+       32        84  SOLID186      0.000   0.000000
+       33        84  SOLID186      0.016   0.000186
+       34        84  SOLID186      0.000   0.000000
+       35        84  SOLID186      0.000   0.000000
+       36        84  SOLID186      0.000   0.000000
+       37        84  SOLID186      0.000   0.000000
+       38        84  SOLID186      0.016   0.000186
+       39        84  SOLID186      0.000   0.000000
+       40        84  SOLID186      0.000   0.000000
+       41        84  SOLID186      0.000   0.000000
+       42        84  SOLID186      0.000   0.000000
+       43        84  SOLID186      0.000   0.000000
+       44        84  SOLID186      0.000   0.000000
+       45        84  SOLID186      0.000   0.000000
+       46        84  SOLID186      0.000   0.000000
+       47        84  SOLID186      0.000   0.000000
+       48       210  SOLID187      0.016   0.000074
+       49       116  SOLID186      0.000   0.000000
+       50       210  SOLID187      0.016   0.000074
+       51       210  SOLID187      0.031   0.000149
+       52       210  SOLID187      0.000   0.000000
+       53       210  SOLID187      0.000   0.000000
+       54       210  SOLID187      0.000   0.000000
+       55       210  SOLID187      0.000   0.000000
+       56       210  SOLID187      0.000   0.000000
+       57       210  SOLID187      0.000   0.000000
+       58       210  SOLID187      0.000   0.000000
+       59       210  SOLID187      0.000   0.000000
+       60       210  SOLID187      0.000   0.000000
+       61       210  SOLID187      0.031   0.000149
+       62       210  SOLID187      0.016   0.000074
+       63       210  SOLID187      0.000   0.000000
+       64       210  SOLID187      0.016   0.000074
+       65       210  SOLID187      0.000   0.000000
+       66       210  SOLID187      0.000   0.000000
+       67       210  SOLID187      0.000   0.000000
+       68       210  SOLID187      0.016   0.000074
+       69       210  SOLID187      0.000   0.000000
+       70       210  SOLID187      0.000   0.000000
+       71       210  SOLID187      0.000   0.000000
+       72       210  SOLID187      0.000   0.000000
+       73       210  SOLID187      0.016   0.000074
+       74       210  SOLID187      0.000   0.000000
+       75       210  SOLID187      0.000   0.000000
+       76       210  SOLID187      0.000   0.000000
+       77       210  SOLID187      0.000   0.000000
+       78       210  SOLID187      0.000   0.000000
+       79       210  SOLID187      0.016   0.000074
+       80       210  SOLID187      0.000   0.000000
+       81       210  SOLID187      0.000   0.000000
+       82       210  SOLID187      0.016   0.000074
+       83       210  SOLID187      0.000   0.000000
+       84       210  SOLID187      0.000   0.000000
+       85       210  SOLID187      0.000   0.000000
+       86       210  SOLID187      0.016   0.000074
+       87       210  SOLID187      0.000   0.000000
+       88       210  SOLID187      0.000   0.000000
+       89       210  SOLID187      0.000   0.000000
+       90       210  SOLID187      0.016   0.000074
+       91       210  SOLID187      0.000   0.000000
+       92       210  SOLID187      0.000   0.000000
+       93       210  SOLID187      0.000   0.000000
+       94       210  SOLID187      0.016   0.000074
+       95       517  SOLID186      0.016   0.000030
+       96       517  SOLID186      0.016   0.000030
+       97      2529  SOLID187      0.000   0.000000
+       98       145  SOLID187      0.000   0.000000
+       99       145  SOLID187      0.016   0.000108
+      100       145  SOLID187      0.000   0.000000
+      101       145  SOLID187      0.000   0.000000
+      102       145  SOLID187      0.000   0.000000
+      103       145  SOLID187      0.000   0.000000
+      104       145  SOLID187      0.000   0.000000
+      105       145  SOLID187      0.000   0.000000
+      106       145  SOLID187      0.000   0.000000
+      107       145  SOLID187      0.000   0.000000
+      108       145  SOLID187      0.016   0.000108
+      109       145  SOLID187      0.000   0.000000
+      110       145  SOLID187      0.000   0.000000
+      111       145  SOLID187      0.000   0.000000
+      112       145  SOLID187      0.000   0.000000
+      113       145  SOLID187      0.000   0.000000
+      114       145  SOLID187      0.000   0.000000
+      115       145  SOLID187      0.000   0.000000
+      116       145  SOLID187      0.000   0.000000
+      117       145  SOLID187      0.000   0.000000
+      118       145  SOLID187      0.000   0.000000
+      119       145  SOLID187      0.000   0.000000
+      120       145  SOLID187      0.000   0.000000
+      121       143  SOLID187      0.000   0.000000
+      122       143  SOLID187      0.000   0.000000
+      123       143  SOLID187      0.000   0.000000
+      124       143  SOLID187      0.000   0.000000
+      125       143  SOLID187      0.000   0.000000
+      126       143  SOLID187      0.000   0.000000
+      127       143  SOLID187      0.031   0.000219
+      128       143  SOLID187      0.016   0.000109
+      129      6606  CONTA174      0.125   0.000019
+      131     14053  CONTA174      0.062   0.000004
+      133      6726  CONTA174      0.031   0.000005
+      135      9764  CONTA174      0.109   0.000011
+      137      6620  CONTA174      0.016   0.000002
+      139        36  CONTA174      0.000   0.000000
+
+   *** NODAL LOAD CALCULATION TIMES
+     TYPE    NUMBER   ENAME      TOTAL CP  AVE CP
+
+        1        84  SOLID186      0.000   0.000000
+        2      4681  SOLID187      0.016   0.000003
+        3        84  SOLID186      0.000   0.000000
+        4        84  SOLID186      0.000   0.000000
+        5        84  SOLID186      0.000   0.000000
+        6        84  SOLID186      0.000   0.000000
+        7        84  SOLID186      0.000   0.000000
+        8        84  SOLID186      0.000   0.000000
+        9        84  SOLID186      0.000   0.000000
+       10        84  SOLID186      0.000   0.000000
+       11        84  SOLID186      0.000   0.000000
+       12        84  SOLID186      0.000   0.000000
+       13        84  SOLID186      0.000   0.000000
+       14        84  SOLID186      0.000   0.000000
+       15        84  SOLID186      0.000   0.000000
+       16        84  SOLID186      0.000   0.000000
+       17        84  SOLID186      0.000   0.000000
+       18        84  SOLID186      0.000   0.000000
+       19        84  SOLID186      0.000   0.000000
+       20        84  SOLID186      0.000   0.000000
+       21        84  SOLID186      0.000   0.000000
+       22        84  SOLID186      0.000   0.000000
+       23        84  SOLID186      0.000   0.000000
+       24        84  SOLID186      0.000   0.000000
+       25        84  SOLID186      0.000   0.000000
+       26        84  SOLID186      0.000   0.000000
+       27        84  SOLID186      0.000   0.000000
+       28        84  SOLID186      0.000   0.000000
+       29        84  SOLID186      0.000   0.000000
+       30        84  SOLID186      0.000   0.000000
+       31        84  SOLID186      0.000   0.000000
+       32        84  SOLID186      0.000   0.000000
+       33        84  SOLID186      0.000   0.000000
+       34        84  SOLID186      0.000   0.000000
+       35        84  SOLID186      0.000   0.000000
+       36        84  SOLID186      0.016   0.000186
+       37        84  SOLID186      0.000   0.000000
+       38        84  SOLID186      0.000   0.000000
+       39        84  SOLID186      0.000   0.000000
+       40        84  SOLID186      0.000   0.000000
+       41        84  SOLID186      0.000   0.000000
+       42        84  SOLID186      0.000   0.000000
+       43        84  SOLID186      0.000   0.000000
+       44        84  SOLID186      0.000   0.000000
+       45        84  SOLID186      0.000   0.000000
+       46        84  SOLID186      0.000   0.000000
+       47        84  SOLID186      0.000   0.000000
+       48       210  SOLID187      0.000   0.000000
+       49       116  SOLID186      0.000   0.000000
+       50       210  SOLID187      0.000   0.000000
+       51       210  SOLID187      0.000   0.000000
+       52       210  SOLID187      0.000   0.000000
+       53       210  SOLID187      0.000   0.000000
+       54       210  SOLID187      0.000   0.000000
+       55       210  SOLID187      0.000   0.000000
+       56       210  SOLID187      0.000   0.000000
+       57       210  SOLID187      0.000   0.000000
+       58       210  SOLID187      0.000   0.000000
+       59       210  SOLID187      0.000   0.000000
+       60       210  SOLID187      0.000   0.000000
+       61       210  SOLID187      0.000   0.000000
+       62       210  SOLID187      0.000   0.000000
+       63       210  SOLID187      0.000   0.000000
+       64       210  SOLID187      0.000   0.000000
+       65       210  SOLID187      0.000   0.000000
+       66       210  SOLID187      0.000   0.000000
+       67       210  SOLID187      0.000   0.000000
+       68       210  SOLID187      0.000   0.000000
+       69       210  SOLID187      0.000   0.000000
+       70       210  SOLID187      0.000   0.000000
+       71       210  SOLID187      0.000   0.000000
+       72       210  SOLID187      0.000   0.000000
+       73       210  SOLID187      0.000   0.000000
+       74       210  SOLID187      0.000   0.000000
+       75       210  SOLID187      0.000   0.000000
+       76       210  SOLID187      0.000   0.000000
+       77       210  SOLID187      0.000   0.000000
+       78       210  SOLID187      0.000   0.000000
+       79       210  SOLID187      0.000   0.000000
+       80       210  SOLID187      0.000   0.000000
+       81       210  SOLID187      0.000   0.000000
+       82       210  SOLID187      0.000   0.000000
+       83       210  SOLID187      0.000   0.000000
+       84       210  SOLID187      0.000   0.000000
+       85       210  SOLID187      0.000   0.000000
+       86       210  SOLID187      0.016   0.000074
+       87       210  SOLID187      0.000   0.000000
+       88       210  SOLID187      0.000   0.000000
+       89       210  SOLID187      0.016   0.000074
+       90       210  SOLID187      0.000   0.000000
+       91       210  SOLID187      0.000   0.000000
+       92       210  SOLID187      0.000   0.000000
+       93       210  SOLID187      0.000   0.000000
+       94       210  SOLID187      0.000   0.000000
+       95       517  SOLID186      0.000   0.000000
+       96       517  SOLID186      0.000   0.000000
+       97      2529  SOLID187      0.000   0.000000
+       98       145  SOLID187      0.000   0.000000
+       99       145  SOLID187      0.000   0.000000
+      100       145  SOLID187      0.000   0.000000
+      101       145  SOLID187      0.000   0.000000
+      102       145  SOLID187      0.000   0.000000
+      103       145  SOLID187      0.000   0.000000
+      104       145  SOLID187      0.000   0.000000
+      105       145  SOLID187      0.016   0.000108
+      106       145  SOLID187      0.000   0.000000
+      107       145  SOLID187      0.000   0.000000
+      108       145  SOLID187      0.000   0.000000
+      109       145  SOLID187      0.000   0.000000
+      110       145  SOLID187      0.000   0.000000
+      111       145  SOLID187      0.000   0.000000
+      112       145  SOLID187      0.000   0.000000
+      113       145  SOLID187      0.000   0.000000
+      114       145  SOLID187      0.000   0.000000
+      115       145  SOLID187      0.000   0.000000
+      116       145  SOLID187      0.000   0.000000
+      117       145  SOLID187      0.000   0.000000
+      118       145  SOLID187      0.000   0.000000
+      119       145  SOLID187      0.000   0.000000
+      120       145  SOLID187      0.000   0.000000
+      121       143  SOLID187      0.000   0.000000
+      122       143  SOLID187      0.000   0.000000
+      123       143  SOLID187      0.000   0.000000
+      124       143  SOLID187      0.000   0.000000
+      125       143  SOLID187      0.000   0.000000
+      126       143  SOLID187      0.000   0.000000
+      127       143  SOLID187      0.000   0.000000
+      128       143  SOLID187      0.000   0.000000
+      129      6606  CONTA174      0.000   0.000000
+      131     14053  CONTA174      0.000   0.000000
+      133      6726  CONTA174      0.016   0.000002
+      135      9764  CONTA174      0.000   0.000000
+      137      6620  CONTA174      0.000   0.000000
+      139        36  CONTA174      0.000   0.000000
+ *** LOAD STEP     1   SUBSTEP     1  COMPLETED.    CUM ITER =      1
+ *** TIME =   1.00000         TIME INC =   1.00000      NEW TRIANG MATRIX
+
+
+ *** MAPDL BINARY FILE STATISTICS
+  BUFFER SIZE USED= 16384
+        2.875 MB WRITTEN ON ELEMENT SAVED DATA FILE: file0.esav
+       38.125 MB WRITTEN ON ASSEMBLED MATRIX FILE: file0.full
+        2.750 MB WRITTEN ON RESULTS FILE: file0.rst
+ *************** Write FE CONNECTORS *********
+
+ WRITE OUT CONSTRAINT EQUATIONS TO FILE= file.ce                                                                                                                                                                                                                                                             
+ ****************************************************
+ *************** FINISHED SOLVE FOR LS 1 *************
+
+ *GET  _WALLASOL  FROM  ACTI  ITEM=TIME WALL  VALUE=  15.2861111    
+
+ PRINTOUT RESUMED BY /GOP
+
+ FINISH SOLUTION PROCESSING
+
+
+ ***** ROUTINE COMPLETED *****  CP =        56.281
+
+
+
+ *** MAPDL - ENGINEERING ANALYSIS SYSTEM  RELEASE 2024 R1          24.1     ***
+ Ansys Mechanical Enterprise Academic Student      
+ 01055371  VERSION=WINDOWS x64   15:17:11  APR 22, 2024 CP=     56.281
+
+ Rotor FEA--Static Structural (C5)                                             
+
+
+
+          ***** MAPDL RESULTS INTERPRETATION (POST1) *****
+
+ *** NOTE ***                            CP =      56.281   TIME= 15:17:11
+ Reading results into the database (SET command) will update the current 
+ displacement and force boundary conditions in the database with the     
+ values from the results file for that load set.  Note that any          
+ subsequent solutions will use these values unless action is taken to    
+ either SAVE the current values or not overwrite them (/EXIT,NOSAVE).    
+
+ Set Encoding of XML File to:ISO-8859-1
+
+ Set Output of XML File to:
+     PARM,     ,     ,     ,     ,     ,     ,     ,     ,     ,     ,     ,
+         ,     ,     ,     ,     ,     ,     ,
+
+ DATABASE WRITTEN ON FILE  parm.xml                                                                                                                                                                                                                                                            
+
+ EXIT THE MAPDL POST1 DATABASE PROCESSOR
+
+
+ ***** ROUTINE COMPLETED *****  CP =        56.281
+
+
+
+ PRINTOUT RESUMED BY /GOP
+
+ *GET  _WALLDONE  FROM  ACTI  ITEM=TIME WALL  VALUE=  15.2863889    
+
+ PARAMETER _PREPTIME =     0.000000000    
+
+ PARAMETER _SOLVTIME =     90.00000000    
+
+ PARAMETER _POSTTIME =     1.000000000    
+
+ PARAMETER _TOTALTIM =     91.00000000    
+
+ *GET  _DLBRATIO  FROM  ACTI  ITEM=SOLU DLBR  VALUE=  3.60201461    
+
+ *GET  _COMBTIME  FROM  ACTI  ITEM=SOLU COMB  VALUE= 0.299352900    
+
+ *GET  _SSMODE   FROM  ACTI  ITEM=SOLU SSMM  VALUE=  2.00000000    
+
+ *GET  _NDOFS    FROM  ACTI  ITEM=SOLU NDOF  VALUE=  209577.000    
+
+ *GET  _SOL_END_TIME  FROM  ACTI  ITEM=SET  TIME  VALUE=  1.00000000    
+
+ *IF  _sol_end_time                     ( =   1.00000     )  EQ  
+      1.000000                          ( =   1.00000     )  THEN    
+
+ /FCLEAN COMMAND REMOVING ALL LOCAL FILES
+
+ *ENDIF
+ --- Total number of nodes = 82315
+ --- Total number of elements = 122804
+ --- Element load balance ratio = 3.60201461
+ --- Time to combine distributed files = 0.2993529
+ --- Sparse memory mode = 2
+ --- Number of DOF = 209577
+
+ EXIT MAPDL WITHOUT SAVING DATABASE
+
+
+ NUMBER OF WARNING MESSAGES ENCOUNTERED=         10
+ NUMBER OF ERROR   MESSAGES ENCOUNTERED=          0
+
++--------------------- M A P D L   S T A T I S T I C S ------------------------+
+
+Release: 2024 R1            Build: 24.1       Update: UP20231106   Platform: WINDOWS x64 
+Date Run: 04/22/2024   Time: 15:17     Process ID: 1964
+Operating System: Windows 11  (Build: 22621)
+
+Processor Model: 13th Gen Intel(R) Core(TM) i7-1355U
+
+Compiler: Intel(R) Fortran Compiler Classic Version 2021.9  (Build: 20230302)
+          Intel(R) C/C++ Compiler Classic Version 2021.9  (Build: 20230302)
+          Intel(R) Math Kernel Library Version 2020.0.0 Product Build 20191125
+          BLAS Library supplied by Intel(R) MKL
+
+Number of machines requested            :    1
+Total number of cores available         :   12
+Number of physical cores available      :   10
+Number of processes requested           :    4
+Number of threads per process requested :    1
+Total number of cores requested         :    4 (Distributed Memory Parallel)               
+MPI Type: INTELMPI
+MPI Version: Intel(R) MPI Library 2021.10 for Windows* OS
+
+
+GPU Acceleration: Not Requested
+
+Job Name: file0
+Input File: dummy.dat
+
+  Core                Machine Name   Working Directory
+ -----------------------------------------------------
+     0             Brendans_Lenovo   C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290
+     1             Brendans_Lenovo   C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290
+     2             Brendans_Lenovo   C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290
+     3             Brendans_Lenovo   C:\Users\brend\Desktop\Engine-Development\Ansys Models\Rotor\_ProjectScratch\Scr4290
+ 
+Latency time from master to core     1 =    2.300 microseconds
+Latency time from master to core     2 =    2.336 microseconds
+Latency time from master to core     3 =    2.800 microseconds
+ 
+Communication speed from master to core     1 =  3396.26 MB/sec
+Communication speed from master to core     2 =  3037.46 MB/sec
+Communication speed from master to core     3 =  3601.85 MB/sec
+
+Total CPU time for main thread                    :       56.0 seconds
+Total CPU time summed for all threads             :       56.3 seconds
+
+Elapsed time spent obtaining a license            :        0.4 seconds
+Elapsed time spent pre-processing model (/PREP7)  :        0.4 seconds
+Elapsed time spent solution - preprocessing       :       57.6 seconds
+Elapsed time spent computing solution             :       30.9 seconds
+Elapsed time spent solution - postprocessing      :        0.3 seconds
+Elapsed time spent post-processing model (/POST1) :        0.0 seconds
+ 
+Equation solver used                              :            Sparse (symmetric)
+Equation solver computational rate                :       33.7 Gflops
+Equation solver effective I/O rate                :       15.5 GB/sec
+
+Sum of disk space used on all processes           :     1138.9 MB
+
+Sum of memory used on all processes               :     3277.0 MB
+Sum of memory allocated on all processes          :     5652.0 MB
+Physical memory available                         :         16 GB
+Total amount of I/O written to disk               :        1.9 GB
+Total amount of I/O read from disk                :        1.0 GB
+
++------------------ E N D   M A P D L   S T A T I S T I C S -------------------+
+
+
+ *-----------------------------------------------------------------------------*
+ |                                                                             |
+ |                               RUN COMPLETED                                 |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Ansys MAPDL 2024 R1         Build 24.1         UP20231106    WINDOWS x64   |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |  Database Requested(-db)     1024 MB     Scratch Memory Requested   1024 MB |
+ |  Max Database Used(Master)    240 MB     Max Scratch Used(Master)    525 MB |
+ |  Max Database Used(Workers)     1 MB     Max Scratch Used(Workers)  1390 MB |
+ |  Sum Database Used(All)       243 MB     Sum Scratch Used(All)      3034 MB |
+ |                                                                             |
+ |-----------------------------------------------------------------------------|
+ |                                                                             |
+ |        CP Time      (sec) =         56.344       Time  =  15:17:12          |
+ |        Elapsed Time (sec) =         94.000       Date  =  04/22/2024        |
+ |                                                                             |
+ *-----------------------------------------------------------------------------*

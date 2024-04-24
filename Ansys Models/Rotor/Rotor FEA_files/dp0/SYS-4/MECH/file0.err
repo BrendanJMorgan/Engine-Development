@@ -1,0 +1,15 @@
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       02:12:44
+
+ *** WARNING ***                         CP =       0.156   TIME= 02:12:45
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =     137.500   TIME= 02:18:16
+ During this session the elapsed time exceeds the CPU time by 142%.      
+ This often indicates either a lack of physical memory (RAM) required    
+ to efficiently handle this simulation or a particularly slow hard       
+ drive configuration.  This simulation can be expected to run faster on  
+ identical hardware if additional RAM or a faster hard drive             
+ configuration is made available.  For more details, please see the      
+ Mechanical APDL Performance Guide which is part of the Ansys Help       
+ system.                                                                 

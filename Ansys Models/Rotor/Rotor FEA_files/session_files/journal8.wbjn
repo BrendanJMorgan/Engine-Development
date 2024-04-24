@@ -1,0 +1,31 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = GetSystem(Name="SYS 1")
+system2 = template1.CreateSystem(
+    Position="Right",
+    RelativeTo=system1)
+engineeringDataComponent1 = system2.GetComponent(Name="Engineering Data")
+engineeringDataComponent2 = system1.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.ReplaceWithShare(
+    TargetSystem=system2,
+    ComponentToShare=engineeringDataComponent2,
+    SourceSystem=system1)
+geometry1 = system2.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor21.STEP")
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system2.GetContainer(ComponentName="Model")
+model1.Edit()
+system3 = GetSystem(Name="SYS")
+engineeringData1 = system3.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.CreateMaterial(Name="Inconel 718")
+material1 = engineeringData1.GetMaterial(Name="Inconel 625")
+matl2 = material1.Duplicate(TargetContainer=engineeringData1)
+matl1.Delete()
+matl2.DisplayName = "Inconel 718"
+model1.Exit()
+Save(Overwrite=True)

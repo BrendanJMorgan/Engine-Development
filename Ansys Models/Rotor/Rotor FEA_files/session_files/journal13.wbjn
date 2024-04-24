@@ -1,0 +1,26 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS 5")
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+system1.Copy(KeepConnections=True)
+system2 = GetSystem(Name="SYS 6")
+system2.Move(
+    Position="Right",
+    RelativeTo=system1)
+geometry1 = system2.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor31.STEP")
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model2 = system2.GetContainer(ComponentName="Model")
+model2.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor32.STEP")
+modelComponent1.Refresh()
+model2.Edit()
+model2.Exit()
+model1.Exit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor34.STEP")
+modelComponent1.Refresh()
+model2.Edit()
+Save(Overwrite=True)

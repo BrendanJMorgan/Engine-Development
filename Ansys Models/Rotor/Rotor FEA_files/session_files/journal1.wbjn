@@ -1,0 +1,67 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = template1.CreateSystem()
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.CreateMaterial(Name="304 ")
+matl1 = engineeringData1.CreateMaterial(Name="SS 304 (")
+matl1.DisplayName = "SS 304 (740 C)"
+matlProp1 = matl1.CreateProperty(
+    Name="Density",
+    Qualifiers={"Definition": "", "Behavior": ""})
+matlProp2 = matl1.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp2.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="MPa")
+matlProp2.SetData(
+    Index=-1,
+    Variables=["Young's Modulus"],
+    Values=[["133 [MPa]"]])
+matlProp2.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.26"]])
+matl1.DisplayName = "SS 304 (760 C)"
+material1 = engineeringData1.GetMaterial(Name="Structural Steel")
+matlProp3 = material1.GetProperty(Name="Density")
+matlProp3.SetData(
+    Variables=["Density"],
+    Values=[["7600 [kg m^-3]"]])
+matlProp1.SetData(
+    Index=-1,
+    Variables=["Density"],
+    Values=[["7600 [kg m^-3]"]])
+Save(Overwrite=True)
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Rotor FEM.STEP")
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+matlProp2.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="GPa")
+matlProp2.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["0.133 [GPa]"]])
+matlProp2.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["133.4 [GPa]"]])
+Save(Overwrite=True)
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Rotor FEM.STEP")
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Rotor FEM.STEP")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/[TP] [Turb] Turbine.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/rotor.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+Save(Overwrite=True)

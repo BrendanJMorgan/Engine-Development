@@ -1,0 +1,10 @@
+Base Radius (in),2.40224413452404
+Pitchline Radius (in),2.69741486984926
+Tip Radius (in),2.99258560517447
+Blade Width (in),0.5
+Blade Depth (in),0.590341470650435
+Blade Angle (deg),15.9283159691386
+Blade Opening (in),0.101242953726077
+Blade Number,46
+Nozzle Angle (deg),29.7170225049581
+Nozzle Diameter (in),0.25

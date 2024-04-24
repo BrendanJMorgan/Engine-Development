@@ -23,37 +23,40 @@ pump
 shaft_power = pump_power; % W
 shaft_power_theory = pump_power_theory; % W
 
-% Write Results to ox specific variables
-shroud_curve_ox = shroud_curve;
-impeller_curve_ox = impeller_curve; 
-blade_curve_ox = blade_curve;
-blade_number_ox = blade_number;
+    % Write results to ox specific variables
+    p_in_ox = p_in;
+    p_out_ox = p_out;
 
-volute_curve_ox = volute_curve;
-h_volute_ox = h_volute;
-t_tongue_ox = t_tongue;
-r_volute_outlet_ox = r_volute_outlet;
-OD_volute_outlet_ox = OD_volute_outlet;
+    shroud_curve_ox = shroud_curve;
+    impeller_curve_ox = impeller_curve; 
+    blade_curve_ox = blade_curve;
+    blade_number_ox = blade_number;
+    
+    volute_curve_ox = volute_curve;
+    h_volute_ox = h_volute;
+    t_tongue_ox = t_tongue;
+    r_volute_outlet_ox = r_volute_outlet;
+    OD_volute_outlet_ox = OD_volute_outlet;
+    
+    h_min_ox = h_min_inducer;
+    r_tip_ox = r_tip_inducer;
+    r_hub_base_ox = r_hub_base;
+    r_hub_top_ox = r_hub_top;
+    blade_lead_ox = blade_lead_inducer;
+    clearance_ox = clearance_axial_inducer;
 
-h_min_ox = h_min_inducer;
-r_tip_ox = r_tip_inducer;
-r_hub_base_ox = r_hub_base;
-r_hub_top_ox = r_hub_top;
-blade_lead_ox = blade_lead_inducer;
-clearance_ox = clearance_axial_inducer;
-
-writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/ox_impeller_curve_inches.txt', 'Delimiter', ',')  
-writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/ox_shroud_curve_inches.txt', 'Delimiter', ',')
-writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/ox_blade_curve_inches.txt', 'Delimiter', ',')
-writematrix([volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254, zeros(length(volute_curve_ox(:,1)),1)], 'Curves/ox_volute_curve_inches.txt', 'Delimiter', ',')
-
-data_labels = {'h_volute_ox';'t_tongue_ox';'r_volute_outlet_ox';'OD_volute_outlet_ox'};
-data = table(data_labels, {h_volute/0.0254;t_tongue/0.0254;r_volute_outlet/0.0254;OD_volute_outlet/0.0254});
-writetable(data, 'Curves/ox_volute_inches.txt', 'WriteVariableNames',0);
-
-data_labels = {'h_min_ox';'r_tip_ox';'r_hub_base_ox';'r_hub_top_ox';'blade_lead_ox';'clearance_ox'};
-data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_base/0.0254;r_hub_top/0.0254;blade_lead_inducer/0.0254;clearance_axial_inducer/0.0254});
-writetable(data, 'Curves/ox_inducer_inches.txt', 'WriteVariableNames',0);
+    writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/ox_impeller_curve_inches.txt', 'Delimiter', ',')  
+    writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/ox_shroud_curve_inches.txt', 'Delimiter', ',')
+    writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/ox_blade_curve_inches.txt', 'Delimiter', ',')
+    writematrix([volute_curve_ox(:,1)/0.0254, volute_curve_ox(:,2)/0.0254, zeros(length(volute_curve_ox(:,1)),1)], 'Curves/ox_volute_curve_inches.txt', 'Delimiter', ',')
+    
+    data_labels = {'h_volute_ox';'t_tongue_ox';'r_volute_outlet_ox';'OD_volute_outlet_ox'};
+    data = table(data_labels, {h_volute/0.0254;t_tongue/0.0254;r_volute_outlet/0.0254;OD_volute_outlet/0.0254});
+    writetable(data, 'Output Parameters/ox_volute_inches.txt', 'WriteVariableNames',0);
+    
+    data_labels = {'h_min_ox';'r_tip_ox';'r_hub_base_ox';'r_hub_top_ox';'blade_lead_ox';'clearance_ox'};
+    data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_base/0.0254;r_hub_top/0.0254;blade_lead_inducer/0.0254;clearance_axial_inducer/0.0254});
+    writetable(data, 'Output Parameters/ox_inducer_inches.txt', 'WriteVariableNames',0);
 
 %% Fuel Pump(0.75/0.25 Ethanol/Water)
 density_pump = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
@@ -70,45 +73,56 @@ pump
 shaft_power = shaft_power + pump_power; % W
 shaft_power_theory = shaft_power_theory + pump_power_theory; % W
 
-% Write Results to fuel specific variables
-shroud_curve_fuel = shroud_curve;
-impeller_curve_fuel = impeller_curve; 
-blade_curve_fuel = blade_curve;
-blade_number_fuel = blade_number;
+    % Write results to fuel specific variables
+    p_in_fuel = p_in;
+    p_out_fuel = p_out;
 
-volute_curve_fuel = volute_curve;
-h_volute_fuel = h_volute;
-t_tongue_fuel = t_tongue;
-r_volute_outlet_fuel = r_volute_outlet;
-OD_volute_outlet_fuel = OD_volute_outlet;
+    shroud_curve_fuel = shroud_curve;
+    impeller_curve_fuel = impeller_curve; 
+    blade_curve_fuel = blade_curve;
+    blade_number_fuel = blade_number;
+    
+    volute_curve_fuel = volute_curve;
+    h_volute_fuel = h_volute;
+    t_tongue_fuel = t_tongue;
+    r_volute_outlet_fuel = r_volute_outlet;
+    OD_volute_outlet_fuel = OD_volute_outlet;
+    
+    h_min_fuel = h_min_inducer;
+    r_tip_fuel = r_tip_inducer;
+    r_hub_base_fuel = r_hub_base;
+    r_hub_top_fuel = r_hub_top;
+    blade_lead_fuel = blade_lead_inducer;
+    clearance_fuel = clearance_axial_inducer;
+    
+    
+    writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/fuel_impeller_curve_inches.txt', 'Delimiter', ',')  
+    writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/fuel_shroud_curve_inches.txt', 'Delimiter', ',')
+    writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/fuel_blade_curve_inches.txt', 'Delimiter', ',')
+    writematrix([volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, zeros(length(volute_curve_fuel(:,1)),1)], 'Curves/fuel_volute_curve_inches.txt', 'Delimiter', ',')
+    
+    data_labels = {'h_volute_fuel';'t_tongue_fuel';'r_volute_outlet_fuel';'OD_volute_outlet_fuel'};
+    data = table(data_labels, {h_volute/0.0254;t_tongue/0.0254;r_volute_outlet/0.0254;OD_volute_outlet/0.0254});
+    writetable(data, 'Output Parameters/fuel_volute_inches.txt', 'WriteVariableNames',0);
+    
+    data_labels = {'h_min_fuel';'r_tip_fuel';'r_hub_base_fuel';'r_hub_top_fuel';'blade_lead_fuel';'clearance_fuel'};
+    data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_base/0.0254;r_hub_top/0.0254;blade_lead_inducer/0.0254;clearance_axial_inducer/0.0254});
+    writetable(data, 'Output Parameters/fuel_inducer_inches.txt', 'WriteVariableNames',0);
 
-h_min_fuel = h_min_inducer;
-r_tip_fuel = r_tip_inducer;
-r_hub_base_fuel = r_hub_base;
-r_hub_top_fuel = r_hub_top;
-blade_lead_fuel = blade_lead_inducer;
-clearance_fuel = clearance_axial_inducer;
-
-
-writematrix([impeller_curve/0.0254, zeros(length(impeller_curve(:,1)),1)], 'Curves/fuel_impeller_curve_inches.txt', 'Delimiter', ',')  
-writematrix([shroud_curve/0.0254, zeros(length(shroud_curve(:,1)),1)], 'Curves/fuel_shroud_curve_inches.txt', 'Delimiter', ',')
-writematrix([blade_curve(:,1)/0.0254, zeros(length(impeller_curve(:,1)),1), -blade_curve(:,2)/0.0254], 'Curves/fuel_blade_curve_inches.txt', 'Delimiter', ',')
-writematrix([volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, zeros(length(volute_curve_fuel(:,1)),1)], 'Curves/fuel_volute_curve_inches.txt', 'Delimiter', ',')
-
-data_labels = {'h_volute_fuel';'t_tongue_fuel';'r_volute_outlet_fuel';'OD_volute_outlet_fuel'};
-data = table(data_labels, {h_volute/0.0254;t_tongue/0.0254;r_volute_outlet/0.0254;OD_volute_outlet/0.0254});
-writetable(data, 'Curves/fuel_volute_inches.txt', 'WriteVariableNames',0);
-
-data_labels = {'h_min_fuel';'r_tip_fuel';'r_hub_base_fuel';'r_hub_top_fuel';'blade_lead_fuel';'clearance_fuel'};
-data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_base/0.0254;r_hub_top/0.0254;blade_lead_inducer/0.0254;clearance_axial_inducer/0.0254});
-writetable(data, 'Curves/fuel_inducer_inches.txt', 'WriteVariableNames',0);
-
-% Gas Generator
+%% Gas Generator
 gas_generator2
 
 %% Turbine
-turbine_shaft_power = shaft_power/gear_efficiency; % unitless
+turbine_shaft_power = shaft_power/gear_efficiency; % unitless - the power through the turbine SHAFT - not the turbine itself, which will be subject to a stage inefficiency
+
 turbine
+
+    % Write results to text file
+    data_labels = {'Base Radius (in)'; 'Pitchline Radius (in)'; 'Tip Radius (in)'; 'Blade Width (in)'; 'Blade Depth (in)';
+        'Blade Angle (deg)'; 'Blade Opening (in)'; 'Blade Number'; 'Nozzle Angle (deg)'; 'Nozzle Diameter (in)'};
+    data = table(data_labels, {r_rotor_base/0.0254; r_rotor_pitchline/0.0254; r_rotor_tip/0.0254; blade_width_rotor/0.0254; blade_length_rotor/0.0254; ...
+        angle_rotor*180/pi; blade_opening_rotor/0.0254; blade_number_rotor; angle_nozzle*180/pi; d_throat_nozzle/0.0254});
+    writetable(data, 'Output Parameters/turbine_inches.txt', 'WriteVariableNames',0);
 
 % Efficiency
 transmission_efficiency = shaft_power_theory / turbine_shaft_power; % unitless

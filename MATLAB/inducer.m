@@ -34,19 +34,12 @@ flow_blade_ratio = 0.35; % unitless
 
 flow_incidence_angle = atan(v_inlet_inducer(2) / v_inlet_inducer(1)); % rad - alpha
 blade_angle_inducer = flow_incidence_angle/(1-flow_blade_ratio); % rad - beta
-blade_angle_inducer*180/pi;
 
-%% Inducer Cavitation
-cavitation_limit_inducer = 0.02 + 0.02*(log10(flow_coeff_inducer*sin(blade_angle_inducer)/(1+cos(blade_angle_inducer)))+3)^3.5; % unitless
-tip_cavitation_inducer = 2*flow_coeff_inducer^2 / (1-2*flow_coeff_inducer^2); % unitless
-% if tip_cavitation_inducer < cavitation_limit_inducer
-%     fprintf("\nInducer above 3 percent head breakdown. Cavitation number of ~%.2f at tip, below limit of ~%.2f.", tip_cavitation_inducer, cavitation_limit_inducer)
-% end
+% Inducer Cavitation
+% cavitation_limit_inducer = 0.02 + 0.02*(log10(flow_coeff_inducer*sin(blade_angle_inducer)/(1+cos(blade_angle_inducer)))+3)^3.5; % unitless
+% tip_cavitation_inducer = 2*flow_coeff_inducer^2 / (1-2*flow_coeff_inducer^2); % unitless
 
-%% Blade Lead
-blade_lead_inducer = 2*pi*r_tip_inducer*tan(blade_angle_inducer); % m - how much the blade advances per turn
-
-%% Blade Height
+blade_lead_inducer = 2*pi*r_tip_inducer*tan(blade_angle_inducer); % m - blade lead - how much the blade advances per turn
 solidity_inducer = 2.5;
 h_min_inducer = blade_lead_inducer*solidity_inducer/blade_number_inducer*sin(blade_angle_inducer); % m - height of inducer
 
@@ -62,7 +55,11 @@ head_coeff_inducer = NPSH_inducer*g / v_tip_inducer^2; % unitless - 0.15 is the 
 r_hub_base = r_eye_inner; % m
 r_hub_top = 2*hub_tip_ratio_inducer*r_tip_inducer - r_hub_base; % m
 
-%% Clearance Losses
+%% Clearance Losses - not relevant with a proper shroud
 r_cavity_inducer = r_tip_inducer + clearance_radial_inducer; % m
 ss_speed_clearanced = ss_speed*(1-0.575*sqrt((r_cavity_inducer-r_tip_inducer)/(r_tip_inducer-r_hub_inducer))); % unitless
 head_coeff_inducer_clearanced = head_coeff_inducer*(1-1.0*sqrt((r_cavity_inducer-r_tip_inducer)/(r_tip_inducer-r_hub_inducer))); % unitless
+
+%% Other
+inducer_torque = mdot_pump*shaft_speed*r_tip_inducer^2; % N*m - this is a conservative maximum
+

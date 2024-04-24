@@ -1,0 +1,34 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+template1 = GetTemplate(
+    TemplateName="Static Structural",
+    Solver="ANSYS")
+system1 = GetSystem(Name="SYS")
+system2 = template1.CreateSystem(
+    Position="Below",
+    RelativeTo=system1)
+engineeringDataComponent1 = system2.GetComponent(Name="Engineering Data")
+engineeringDataComponent2 = system1.GetComponent(Name="Engineering Data")
+engineeringDataComponent1.ReplaceWithShare(
+    TargetSystem=system2,
+    ComponentToShare=engineeringDataComponent2,
+    SourceSystem=system1)
+geometry1 = system2.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Solidworks Model/Sample Rotor.STEP")
+modelComponent1 = system2.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system2.GetContainer(ComponentName="Model")
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Solidworks Model/Sample Rotor.STEP")
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Solidworks Model/Sample Rotor.STEP")
+model1.Edit()
+model1.Exit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Solidworks Model/Sample Rotor.STEP")
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Solidworks Model/Sample Rotor 2.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+model1.Exit()
+Save(Overwrite=True)

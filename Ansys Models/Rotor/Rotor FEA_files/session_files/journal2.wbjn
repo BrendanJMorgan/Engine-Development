@@ -1,0 +1,119 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS")
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.CreateMaterial(Name="mcmater ")
+matl1 = engineeringData1.CreateMaterial(Name="Ti Grade 5")
+matlProp1 = matl1.CreateProperty(
+    Name="Density",
+    Qualifiers={"Definition": "", "Behavior": ""})
+matlProp1.SetData(
+    Index=-1,
+    Variables=["Density"],
+    Values=[["4420 [kg m^-3]"]])
+matlProp2 = matl1.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp2.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="GPa")
+matlProp2.SetData(
+    Index=-1,
+    Variables=["Young's Modulus"],
+    Values=[["114 [GPa]"]])
+matlProp2.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.342"]])
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor.STEP")
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor.STEP")
+model1.Edit()
+model1.Edit()
+model1.Exit()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor.STEP")
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor.STEP")
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor1.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor2.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+model1.Edit()
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor3.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor4.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+matl2 = engineeringData1.CreateMaterial(Name="41")
+matl2.DisplayName = "4140 Tempered, "
+matl2.DisplayName = "4140 Tempered, 1200 F"
+matl2.DisplayName = "4135 Tempered, 1200 F"
+matl2.DisplayName = "4135 Tempered"
+matlProp3 = matl2.CreateProperty(
+    Name="Density",
+    Qualifiers={"Definition": "", "Behavior": ""})
+matlProp4 = matl2.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp4.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="psi")
+matlProp4.SetData(
+    Index=-1,
+    Variables=["Young's Modulus"],
+    Values=[["29000000 [psi]"]])
+matlProp4.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.32"]])
+matlProp3.SetVariableProperty(
+    VariableName="Density",
+    Property="Unit",
+    Value="lb in^-3")
+matlProp3.SetData(
+    Index=-1,
+    Variables=["Density"],
+    Values=[["0.283 [lb in^-3]"]])
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor5.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor6.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor6.STEP")
+model1.Edit()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor7.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor8.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor9.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor10.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor11.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor12.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+Save(Overwrite=True)

@@ -1,0 +1,86 @@
+# encoding: utf-8
+# 2024 R1
+SetScriptVersion(Version="24.1.144")
+system1 = GetSystem(Name="SYS")
+modelComponent1 = system1.GetComponent(Name="Model")
+modelComponent1.Refresh()
+model1 = system1.GetContainer(ComponentName="Model")
+model1.Edit()
+geometry1 = system1.GetContainer(ComponentName="Geometry")
+geometry1.Edit(IsDiscoveryGeometry=True)
+geometry1.Exit()
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor17.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+engineeringData1 = system1.GetContainer(ComponentName="Engineering Data")
+matl1 = engineeringData1.CreateMaterial(Name="Silicon Carbide")
+matlProp1 = matl1.CreateProperty(
+    Name="Density",
+    Qualifiers={"Definition": "", "Behavior": ""})
+matlProp1.SetVariableProperty(
+    VariableName="Density",
+    Property="Unit",
+    Value="lb in^-3")
+matlProp1.SetData(
+    Index=-1,
+    Variables=["Density"],
+    Values=[["0.095 [lb in^-3]"]])
+matl1.DisplayName = "Silicon Carbide, Nitride Bonded"
+matlProp2 = matl1.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp2.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="GPa")
+matlProp2.SetData(
+    Index=-1,
+    Variables=["Young's Modulus"],
+    Values=[["80 [GPa]"]])
+matlProp2.SetData(
+    Variables=["Poisson's Ratio"],
+    Values=[["0.15"]])
+matl2 = engineeringData1.CreateMaterial(Name="Inconel 625")
+matlProp3 = matl2.CreateProperty(
+    Name="Density",
+    Qualifiers={"Definition": "", "Behavior": ""})
+matlProp4 = matl2.CreateProperty(
+    Name="Elasticity",
+    Behavior="Isotropic",
+    Qualifiers={"Definition": "", "Behavior": "Isotropic"})
+matlProp4.SetData(
+    Index=-1,
+    Variables=["Poisson's Ratio"],
+    Values=[["0.33"]])
+matlProp4.SetVariableProperty(
+    VariableName="Young's Modulus",
+    Property="Unit",
+    Value="psi")
+matlProp4.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["7.8886090522101181E-31 [psi]"]])
+matlProp4.SetData(
+    Variables=["Young's Modulus"],
+    Values=[["20800000 [psi]"]])
+matlProp3.SetVariableProperty(
+    VariableName="Density",
+    Property="Unit",
+    Value="lb in^-3")
+matlProp3.SetData(
+    Index=-1,
+    Variables=["Density"],
+    Values=[["0.305 [lb in^-3]"]])
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor18.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor19.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+geometry1.SetFile(FilePath="C:/Users/brend/Desktop/Engine-Development/Ansys Models/Rotor/[TP] [Turb] Rotor20.STEP")
+modelComponent1.Refresh()
+model1.Edit()
+model1.Exit()
+Save(Overwrite=True)

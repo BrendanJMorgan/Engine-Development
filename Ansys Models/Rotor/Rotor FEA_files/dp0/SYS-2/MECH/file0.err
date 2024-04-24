@@ -1,0 +1,40 @@
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       15:15:39
+
+ *** WARNING ***                         CP =       0.203   TIME= 15:15:40
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 36091).                   
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Certain contact elements (for example 149744 & 86834) overlap with      
+ other.                                                                  
+
+ *** WARNING ***                         CP =      12.688   TIME= 15:15:59
+ Certain contact pairs (for example 132 & 129) overlap with other.       
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 36091).                   
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Certain contact elements (for example 149744 & 86834) overlap with      
+ other.                                                                  
+
+ *** WARNING ***                         CP =      37.422   TIME= 15:16:32
+ Certain contact pairs (for example 132 & 129) overlap with other.       
+
+ *** WARNING ***                         CP =      48.844   TIME= 15:16:53
+ Multiple constraints have been applied on degree of freedom 1 of        
+ contact node 35277.  The program will remove certain internal MPCs.     
+ Please check the model carefully.                                       

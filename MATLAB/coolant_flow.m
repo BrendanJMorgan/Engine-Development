@@ -11,9 +11,11 @@ p_cool = ones(1,length(x)); % Pa - coolant pressure
 if flow_direction == 1
     flow = 1:1:length(x)-1;
     v_cool = mdot_fuel_cc ./ (density_cool*n_pipe.*w_pipe*h_pipe); % m/s - fluid bulk speed
+    flow_exit_index = length(x);
 elseif flow_direction == -1
     flow = length(x):-1:2;
     v_cool = mdot_fuel_cc ./ (density_cool*n_pipe.*w_pipe*h_pipe); % m/s - fluid bulk speed
+        flow_exit_index = 1;
 end
 
 d_hydraulic = 4*w_pipe.*h_pipe./(2*w_pipe+2*h_pipe); % m - hydraulic diameter
@@ -57,6 +59,7 @@ for i = flow
 
 end
 
-p_cool = p_cool + p_cc*(1+cc_stiffness) - p_cool(end); % Pa - ending pressure EXPAND TO ACCOUNT FOR PLUMBING AND INJECTOR STIFFNESS
 
+p_cool = p_cool + p_cc*(1+cc_stiffness) - p_cool(end); % Pa - ending pressure - this is a msitake but I'm rolling with it bc manaufacturing already started
+% p_cool = p_cool + p_cc*(1+cc_stiffness) - p_cool(flow_exit_index); % Pa - ending pressure
 
