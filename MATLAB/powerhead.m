@@ -20,8 +20,8 @@ hub_tip_ratio_inducer = 0.4; % unitless - between 0.2 and 0.4 for rear drive and
 
 pump
 
-shaft_power = pump_power; % W
-shaft_power_theory = pump_power_theory; % W
+shaft_power_pump = power_pump; % W
+shaft_power_pump_theory = power_pump_theory; % W
 
     % Write results to ox specific variables
     p_in_ox = p_in;
@@ -70,8 +70,8 @@ hub_tip_ratio_inducer = 0.39; % unitless - between 0.2 and 0.4 for rear drive an
 
 pump
 
-shaft_power = shaft_power + pump_power; % W
-shaft_power_theory = shaft_power_theory + pump_power_theory; % W
+shaft_power_pump = shaft_power_pump + power_pump; % W
+shaft_power_pump_theory = shaft_power_pump_theory + power_pump_theory; % W
 
     % Write results to fuel specific variables
     p_in_fuel = p_in;
@@ -113,25 +113,25 @@ shaft_power_theory = shaft_power_theory + pump_power_theory; % W
 gas_generator2
 
 %% Turbine
-turbine_shaft_power = shaft_power/gear_efficiency; % unitless - the power through the turbine SHAFT - not the turbine itself, which will be subject to a stage inefficiency
+shaft_power_turbine = shaft_power_pump/gear_efficiency; % unitless - the power through the turbine SHAFT - not the turbine itself, which will be subject to a stage inefficiency
 
-turbine
+turbine2
 
     % Write results to text file
     data_labels = {'Base Radius (in)'; 'Pitchline Radius (in)'; 'Tip Radius (in)'; 'Blade Width (in)'; 'Blade Depth (in)';
-        'Blade Angle (deg)'; 'Blade Opening (in)'; 'Blade Number'; 'Nozzle Angle (deg)'; 'Nozzle Diameter (in)'};
-    data = table(data_labels, {r_rotor_base/0.0254; r_rotor_pitchline/0.0254; r_rotor_tip/0.0254; blade_width_rotor/0.0254; blade_length_rotor/0.0254; ...
-        angle_rotor*180/pi; blade_opening_rotor/0.0254; blade_number_rotor; angle_nozzle*180/pi; d_throat_nozzle/0.0254});
+        'Blade Angle (deg)'; 'Blade Opening (in)'; 'Blade Number'; 'Nozzle Angle (deg)'; 'Nozzle Diameter (in)'; 'Nozzle Number'};
+    data = table(data_labels, {r_rotor_base/0.0254; r_pitchline_rotor/0.0254; r_rotor_tip/0.0254; blade_width_rotor/0.0254; blade_length_rotor/0.0254; ...
+        incidence_angle_blade*180/pi; blade_opening_rotor/0.0254; blade_number_rotor; angle_nozzle*180/pi; d_throat_nozzle/0.0254; nozzle_number});
     writetable(data, 'Output Parameters/turbine_inches.txt', 'WriteVariableNames',0);
 
 % Efficiency
-transmission_efficiency = shaft_power_theory / turbine_shaft_power; % unitless
+transmission_efficiency = shaft_power_pump_theory / shaft_power_turbine; % unitless
 isp_real = isp_ideal*mdot_cc/mdot_total;
 
 % Shaft
-shaft_torque = shaft_power/shaft_speed; % N*m
+shaft_torque_pump = shaft_power_pump/shaft_speed; % N*m
 shaft_polar_moment = pi/2*r_shaft^4; % m4
-shaft_stress = shaft_torque*r_shaft/shaft_polar_moment; % Pa
+shaft_stress = shaft_torque_pump*r_shaft/shaft_polar_moment; % Pa
 shaft_torsion_FSu = shaft_shear_strength / shaft_stress; % unitless
 shaft_torsion_MSu = shaft_torsion_FSu / FSu_design - 1; % unitless
 

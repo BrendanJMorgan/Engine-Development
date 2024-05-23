@@ -25,3 +25,5 @@ c_tau_gg = c_tau_ideal_gg*lambda_cone_gg*c_tau_eff_gg; % Thrust Coefficient
 
 v_exhaust_ideal_gg = cea_gg.output.eql.sonvel(end)*cea_gg.output.eql.mach(end); % m/s - ideal exhaust velocity
 v_exhaust_gg = c_star_gg*c_tau_gg; % m/s - actual exhaust velocity
+
+dens_gas_spouted = cea_gg.output.eql.density(3); % kg/m3

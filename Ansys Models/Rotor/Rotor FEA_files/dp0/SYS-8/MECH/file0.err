@@ -1,0 +1,32 @@
+/COM,ANSYS RELEASE 2024 R1           BUILD 24.1      UP20231106       17:05:35
+
+ *** WARNING ***                         CP =       0.234   TIME= 17:05:36
+ Element shape checking is currently inactive.  Issue SHPP,ON or         
+ SHPP,WARN to reactivate, if desired.                                    
+
+ *** WARNING ***                         CP =       2.000   TIME= 17:05:39
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       2.000   TIME= 17:05:39
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 19308).                   
+
+ *** WARNING ***                         CP =       2.000   TIME= 17:05:39
+ Certain contact pairs (for example 31 & 30) overlap with other.         
+
+ *** WARNING ***                         CP =       2.766   TIME= 17:05:41
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       2.766   TIME= 17:05:41
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 19308).                   
+
+ *** WARNING ***                         CP =       3.828   TIME= 17:05:43
+ Overconstraint may occur for Lagrange multiplier or MPC based contact   
+ algorithm.                                                              
+
+ *** WARNING ***                         CP =       3.828   TIME= 17:05:43
+ Boundary conditions, coupling, and/or constraint equations have been    
+ applied on certain contact nodes (for example 19308).                   

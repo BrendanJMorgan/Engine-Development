@@ -1,4 +1,4 @@
-    clear all
+clear all
 format short g
 PropsSI = @py.CoolProp.CoolProp.PropsSI;
 
@@ -34,7 +34,6 @@ c_tau_eff_gg = 0.96;            % unitless - Thrust Coefficient Efficiency Facto
 
 % Pumps
 shaft_speed = 20000*pi/30;          % rad/s - angular velocity of the pump shaft, impeller, and inducers
-gear_ratio = 90/35;                 % unitless - higher makes for a smaller, faster turbine
 gear_efficiency = 0.95;             % unitless - arbitrary right now, but typical for spur gears
 clock = 1;                          % 1 for counterclockwise and -1 for clockwise (looking down at ox pump)
 r_eye_inner = 1/4*0.0254;	        % m - a little bit of clearance around a 10 mm shaft
@@ -47,10 +46,14 @@ blade_number_inducer = 4;           % unitless - 3 or 4 is considered good
 clearance_radial_inducer = 0.010*0.0254;   % m - radial clearance between inducer blades and housing cavity
 
 % Turbine
-d_throat_nozzle = 1/4*0.0254;   % m - diameter of each nozzle leading off the manifold - mdot_gg is a direct function of this and nozzle_number
-nozzle_number = 2;              % unitless
+r_pitchline_rotor = 3*0.0254;   % in
+gear_ratio = 75/50;             % unitless - higher makes for a smaller, faster turbine
+d_throat_nozzle = 0.1285*0.0254;  % m - diameter of each nozzle leading off the manifold - mdot_gg is a direct function of this and nozzle_number
 diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
-blade_width_rotor = 0.5*0.0254; % m - real turbines seems to be about 0.5 inches or so
+blade_width_rotor = 3/4*0.0254; % m - real turbines seems to be about 0.5 inches or so
+admission_fraction = 20/360;    % unitless - fraction of the nozzle plate circle that actually has nozzles
+blade_length_rotor = 1/4*0.0254;% m
+tip_clearance = 0.050*0.0254;   % m
 
 % Chamber/Nozzle Geometry
 dx = 0.001;                 % m - position step 
@@ -87,19 +90,22 @@ shaft_tensile_strength = 510E6; % Pa - stainless steel 304, ultimate
 shaft_shear_strength = shaft_tensile_strength/sqrt(3);  % Pa - conservative Tresca criterion
 
 
-%% Runs - these both have several subfunctions
+%% Runs - these both have several (nested) subfunctions
 
 thrust_chamber_assembly
 powerhead
 
 %% Results
+mdot_gg
 gg_fraction
-blade_width_rotor/0.0254
-r_rotor_pitchline/0.0254
-r_rotor_tip/0.0254
-angle_nozzle*180/pi
-angle_rotor*180/pi
-blade_number_rotor
+spin_time_ideal
+
+% blade_width_rotor/0.0254
+% r_rotor_pitchline/0.0254
+% r_rotor_tip/0.0254
+% angle_nozzle*180/pi
+% angle_rotor*180/pi
+% blade_number_rotor
 
 % thrust_lbf = thrust/4.44822;
 % thrust_lbf
