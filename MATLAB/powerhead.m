@@ -58,7 +58,7 @@ shaft_power_pump_theory = power_pump_theory; % W
     data = table(data_labels, {h_min_inducer/0.0254;r_tip_inducer/0.0254;r_hub_base/0.0254;r_hub_top/0.0254;blade_lead_inducer/0.0254;clearance_axial_inducer/0.0254});
     writetable(data, 'Output Parameters/ox_inducer_inches.txt', 'WriteVariableNames',0);
 
-%% Fuel Pump(0.75/0.25 Ethanol/Water)
+%% Fuel Pump (0.75/0.25 Ethanol/Water)
 density_pump = PropsSI('D','T',T_amb,'P',p_amb,['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']); % kg/m3 - ethanol at STP
 p_out = p_cool(1) + 10*6894.76; % Pa - regen inlet pressure plus 10 psi of margin for plumbing losses
 p_in = p_amb; % Pa - inlet pressure; assumes zero dp across inducer for conservatism

@@ -127,4 +127,5 @@ stress_FSu = rotor_strength/stress_radial;
 
 %% Other
 thrust_turbine = mdot_gg * v_spouting(2);
+scfm_gg = mdot_gg*30.42*60 % standard cubic feet per minute of nitrogen
 spin_time_ideal = 8.64/mdot_gg; % s - there are 8.64 kg of nitrogen in a k bottle. in reality flow will stop when pressure drops too low.

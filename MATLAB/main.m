@@ -5,32 +5,32 @@ PropsSI = @py.CoolProp.CoolProp.PropsSI;
 %% Inputs 
 
 % Constants
-g = 9.81;                   % m/s2
-p_amb = 13.62*6894.76;      % psi - ambient pressure at 2100 feet elevation
-T_amb = 317;                % K - Ambient Temperature - lowest temperature for which 75/25 ethanol is solvable by CoolProp
+g = 9.81;								 % m/s2
+p_amb = 13.62*6894.76;     % psi - ambient pressure at 2100 feet elevation
+T_amb = 317;						 % K - Ambient Temperature - lowest temperature for which 75/25 ethanol is solvable by CoolProp
 
 % Overall Engine Performance Targets
-thrust_target = 3000*4.44822;   % N - Thrust
-p_cc = 350*6894.76;             % Pa - Chamber (Stagnation) Pressure
-cc_stiffness = 0.25;            % Pa/Pa - guess
+thrust_target = 3000*4.44822;    % N - Thrust
+p_cc = 350*6894.76;					% Pa - Chamber (Stagnation) Pressure
+cc_stiffness = 0.25;						% Pa/Pa - guess
 
 
 % Combustion Chamber (CC)
-OF = 1.4;                   % Oxidizer/Fuel Ratio (by mass)
+OF = 1.4;                    % Oxidizer/Fuel Ratio (by mass)
 proof = 0.75;               % How much ethanol in fuel, remaining part is water (by mass)
-c_star_eff = 0.75;          % Characteristic Vel Efficiency, experimental
-c_tau_eff = 0.96;           % Thrust Coefficient Efficiency Factor
+c_star_eff = 0.75;        % Characteristic Vel Efficiency, experimental
+c_tau_eff = 0.96;         % Thrust Coefficient Efficiency Factor
 gamma_guess = 1.15;
 c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma_guess+1))^((gamma_guess+1)/(gamma_guess-1)) * (1-(p_amb/p_cc)^((gamma_guess-1)/gamma_guess) ) ) ); 
 A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 
 % Gas Generator (GG)
-p_gg = 350*6894.76;             % Pa - chamber pressure inside gas generator
-gg_stifness = 0.25;             % Pa/Pa - guess
-gg_fraction_guess = 0.01;       % unitless - Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014 DO NOT CHANGE FROM 0.01 NOW
-OF_gg = 0.2;                    % unitless - OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
-c_star_eff_gg = 0.75;           % m/s - characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
-c_tau_eff_gg = 0.96;            % unitless - Thrust Coefficient Efficiency Factor
+p_gg = 350*6894.76;          % Pa - chamber pressure inside gas generator
+gg_stifness = 0.25;				% Pa/Pa - guess
+gg_fraction_guess = 0.01;  % unitless - Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014 DO NOT CHANGE FROM 0.01 NOW
+OF_gg = 0.2;						% unitless - OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
+c_star_eff_gg = 0.75;          % m/s - characteristic velocity efficiency, experimental ANY PAPERS ON THIS?
+c_tau_eff_gg = 0.96;           % unitless - Thrust Coefficient Efficiency Factor
 
 % Pumps
 shaft_speed = 20000*pi/30;          % rad/s - angular velocity of the pump shaft, impeller, and inducers
@@ -48,7 +48,7 @@ clearance_radial_inducer = 0.010*0.0254;   % m - radial clearance between induce
 % Turbine
 r_pitchline_rotor = 3*0.0254;   % in
 gear_ratio = 75/50;             % unitless - higher makes for a smaller, faster turbine
-d_throat_nozzle = 0.1285*0.0254;  % m - diameter of each nozzle leading off the manifold - mdot_gg is a direct function of this and nozzle_number
+d_throat_nozzle = 0.127*0.0254;  % m - diameter of each nozzle leading off the manifold - mdot_gg is a direct function of this and nozzle_number
 diverge_angle_gg = 15*pi/180;   % rad - half-cone divergence angle of nozzle plate
 blade_width_rotor = 3/4*0.0254; % m - real turbines seems to be about 0.5 inches or so
 admission_fraction = 20/360;    % unitless - fraction of the nozzle plate circle that actually has nozzles
