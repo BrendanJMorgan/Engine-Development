@@ -3,9 +3,9 @@ Pitchline Radius (in),3
 Tip Radius (in),3.125
 Blade Width (in),0.75
 Blade Depth (in),0.25
-Blade Angle (deg),13.6850447895776
-Blade Opening (in),0.134877277274247
+Blade Angle (deg),12.7921431192655
+Blade Opening (in),0.127388656618006
 Blade Number,32
-Nozzle Angle (deg),25.9658238828024
+Nozzle Angle (deg),24.4228201325365
 Nozzle Diameter (in),0.127
-Nozzle Number,3.02589343745658
+Nozzle Number,1.93439308892482

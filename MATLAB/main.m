@@ -25,7 +25,7 @@ c_tau_guess = 0.983*c_tau_eff*sqrt( (2*gamma_guess^2/(gamma_guess-1) * (2/(gamma
 A_throat = thrust_target / (p_cc*c_tau_guess*c_star_eff); % m2 - Throat Area
 
 % Gas Generator (GG)
-p_gg = 350*6894.76;          % Pa - chamber pressure inside gas generator
+p_gg = 550*6894.76;          % Pa - chamber pressure inside gas generator
 gg_stifness = 0.25;				% Pa/Pa - guess
 gg_fraction_guess = 0.01;  % unitless - Fraction of total mass flow sent to the gas generator. Context: F1 = 0.030, J2 = 0.014 DO NOT CHANGE FROM 0.01 NOW
 OF_gg = 0.2;						% unitless - OF Ratio - "[Most] operate at mixture ratios from 0.2 to 1.0, with hydrocarbons falling in the lower end, about 0.3" (NASA 1972)
