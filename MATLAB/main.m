@@ -96,9 +96,6 @@ thrust_chamber_assembly
 powerhead
 
 %% Results
-mdot_gg
-gg_fraction
-spin_time_ideal
 
 % blade_width_rotor/0.0254
 % r_rotor_pitchline/0.0254
@@ -128,46 +125,45 @@ spin_time_ideal
 % ylabel("Temperature (K)");
 % title("Engine Steady-State Temperatures")
 
-% % Pump Impeller and Blades
-% figure(3); clf;
-% hold on
-% grid on
-% plot(-shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254, 'color', 'cyan')
-% plot(-impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254, 'color', 'cyan')
-% plot(shroud_curve_fuel(:,1)/0.0254, shroud_curve_fuel(:,2)/0.0254, 'color', 'red')
-% plot(impeller_curve_fuel(:,1)/0.0254, impeller_curve_fuel(:,2)/0.0254, 'color', 'red')
-% line([0 0], ylim, 'color', 'green');  % x-axis
-% line(xlim, [0 0], 'color', 'green');  % y-axis
-% axis equal
-% title("Impeller and Shroud Contours")
-% hold off
-% 
-% % Blades/Volute
-% figure(4); clf
-% hold on
-% grid on
-% % Ox Pump Contours
-% delta_angle = 2 * pi / blade_number_ox; % Calculate the angle to rotate each blade
-% for i = 0:(blade_number-1) 
-%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-%     rotated_curve = blade_curve_ox * rotation_matrix';
-%     plot(rotated_curve(:, 1)/0.0254-6, rotated_curve(:, 2)/0.0254, 'LineWidth', 2, 'color', 'cyan'); 
-%     plot(NaN, NaN); % Prevent connection between different blades
-% end
-% plot(volute_curve_ox(:,1)/0.0254-6, volute_curve_ox(:,2)/0.0254, 'color', 'cyan');
-% % Fuel Pump Contours
-% delta_angle = 2 * pi / blade_number_fuel; % Calculate the angle to rotate each blade
-% for i = 0:(blade_number-1)
-%     rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
-%     rotated_curve = blade_curve_fuel * rotation_matrix';
-%     plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2, 'color', 'red'); 
-%     plot(NaN, NaN); % Prevent connection between different blades
-% end
-% plot(volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, 'color', 'red');
-% % Turbine Contours
-% plot(r_rotor_pitchline/0.0254*cos(theta)+6, r_rotor_pitchline/0.0254*sin(theta), 'LineStyle', '--', 'color', 'yellow')
-% plot(r_rotor_tip/0.0254*cos(theta)+6, r_rotor_tip/0.0254*sin(theta), r_rotor_base/0.0254*cos(theta)+6, r_rotor_base/0.0254*sin(theta), 'color', 'yellow')
-% 
-% title('Impellers, Volutes, and Rotor');
-% axis equal;
-% grid on;
+% Pump Impeller and Blades
+figure(3); clf;
+hold on
+grid on
+plot(-shroud_curve_ox(:,1)/0.0254, shroud_curve_ox(:,2)/0.0254, 'color', 'blue')
+plot(-impeller_curve_ox(:,1)/0.0254, impeller_curve_ox(:,2)/0.0254, 'color', 'blue')
+plot(shroud_curve_fuel(:,1)/0.0254, shroud_curve_fuel(:,2)/0.0254, 'color', 'red')
+plot(impeller_curve_fuel(:,1)/0.0254, impeller_curve_fuel(:,2)/0.0254, 'color', 'red')
+line([0 0], ylim, 'color', 'green');  % x-axis
+line(xlim, [0 0], 'color', 'green');  % y-axis
+axis equal
+title("Impeller and Shroud Contours (inches)")
+hold off
+
+% Blades/Volute
+figure(4); clf
+hold on
+grid on
+% Ox Pump Contours
+delta_angle = 2 * pi / blade_number_ox; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1) 
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve_ox * rotation_matrix';
+    plot(rotated_curve(:, 1)/0.0254-6, rotated_curve(:, 2)/0.0254, 'LineWidth', 2, 'color', 'blue'); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+plot(volute_curve_ox(:,1)/0.0254-6, volute_curve_ox(:,2)/0.0254, 'color', 'blue');
+% Fuel Pump Contours
+delta_angle = 2 * pi / blade_number_fuel; % Calculate the angle to rotate each blade
+for i = 0:(blade_number-1)
+    rotation_matrix = [cos(i * delta_angle), -sin(i * delta_angle); sin(i * delta_angle), cos(i * delta_angle)];
+    rotated_curve = blade_curve_fuel * rotation_matrix';
+    plot(rotated_curve(:, 1)/0.0254, rotated_curve(:, 2)/0.0254, 'LineWidth', 2, 'color', 'red'); 
+    plot(NaN, NaN); % Prevent connection between different blades
+end
+plot(volute_curve_fuel(:,1)/0.0254, volute_curve_fuel(:,2)/0.0254, 'color', 'red');
+% Turbine Contours
+plot(r_pitchline_rotor/0.0254*cos(theta)+6, r_pitchline_rotor/0.0254*sin(theta), 'LineStyle', '--', 'color', '#ffA500')
+plot(r_rotor_tip/0.0254*cos(theta)+6, r_rotor_tip/0.0254*sin(theta), r_rotor_base/0.0254*cos(theta)+6, r_rotor_base/0.0254*sin(theta), 'color', '#ffA500')
+title('Impellers, Volutes, and Rotor (inches)');
+axis equal;
+grid on;

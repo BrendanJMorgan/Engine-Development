@@ -18,3 +18,10 @@ v_throat = vdot_pump./A_throat; % m/s - fluid exit velocity into plumbing
 
 volute_curve = r_volute.*[cos(clock*theta), sin(clock*theta)]; % [m, m]
 
+r_exit_impeller
+r_tongue
+t_tongue
+r_volute_outlet
+A_volute(end)
+h_volute
+

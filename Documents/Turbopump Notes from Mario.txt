@@ -1,0 +1,17 @@
+e pumps mostly
+gillic textbook (julic? yulic?)
+	roughness, specific speed
+diffuser angles, stalling, loss vs angles
+fuel inducer assuming impinging on leading edge
+shrouding inducers is not that big deal, nor are somewhat wide tip clearances
+
+ross (python library for rotordynamics)
+pressurize seal with gn2, but two separated packing seals
+zero leakage seal
+
+x or o bearing arrangement
+
+wave spring (soft preload better than hard preload)
+tight tolerance on radial part of impeller (sealing) - 1 mm or less maybe
+	other clearances can be wider
+20-30% efficiency on turbine, maybe higher if load/power coefficient is lower

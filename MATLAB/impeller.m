@@ -1,7 +1,6 @@
 %% Impeller Contours - pg 2.29-2.32 in pump handbook
 
 %% The eye
-
 % Eye radius initial guessing
 lower_bound = 1.001*r_eye_inner; % m - eye radius must be larger than its inner radius to have physical meaning
 upper_bound = 10*r_eye_inner; % m - if eye radius is somehow above this you have bigger problems

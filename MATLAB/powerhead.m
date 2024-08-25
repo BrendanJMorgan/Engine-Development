@@ -66,7 +66,7 @@ T_in = T_amb; % K
 mdot_pump = mdot_fuel_total; % kg/s - Fuel Mass Flow Rate
 vapor_pressure_pump = PropsSI("P", "T", T_in, "Q", 0, ['Ethanol[',num2str(proof),']&Water[',num2str(1-proof),']']);
 clock = -1;
-hub_tip_ratio_inducer = 0.39; % unitless - between 0.2 and 0.4 for rear drive and between 0.5 and 0.6 for front drive
+hub_tip_ratio_inducer = 0.4; % unitless - between 0.2 and 0.4 for rear drive and between 0.5 and 0.6 for front drive
 
 pump
 
@@ -115,7 +115,7 @@ gas_generator2
 %% Turbine
 shaft_power_turbine = shaft_power_pump/gear_efficiency; % unitless - the power through the turbine SHAFT - not the turbine itself, which will be subject to a stage inefficiency
 
-turbine2
+turbine
 
     % Write results to text file
     data_labels = {'Base Radius (in)'; 'Pitchline Radius (in)'; 'Tip Radius (in)'; 'Blade Width (in)'; 'Blade Depth (in)';

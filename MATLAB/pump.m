@@ -5,7 +5,7 @@ vdot_pump = mdot_pump/density_pump; % m3/s - Volumetric Flow Rate
 
 %% Sizing the Pump
 
-specific_speed = shaft_speed*sqrt(vdot_pump)/(head_pump*g)^0.75;
+specific_speed = shaft_speed*sqrt(vdot_pump)/(head_pump*g)^0.75
 outlet_flow_coeff = 0.175*sqrt(specific_speed); % phi_i in pump handbook
 head_coeff = 0.4 / specific_speed^0.25; % psi in pump handbook. Valid for specific speeds < 1 (which you should be anyways; centrifugal pumps should be between 0.1 and 0.6)
 blockage = 0.85; % 1 is completely open, pump handbook says 0.85 is typical?

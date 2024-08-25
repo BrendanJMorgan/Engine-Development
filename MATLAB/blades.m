@@ -1,13 +1,14 @@
 %% Impeller Blades
 
 %% Leading and Trailing Edges
-r_inlet = r_eye_impeller; % m - radial location of blade inlets - typically vertially aligned with eye radius - this assumption can be changed
+r_inlet = r_eye_impeller; % m - radial location of blade inlets - typically vertically aligned with eye radius - this assumption can be changed
 
 %% Surface of Revolution
 rms_curve = 0.5 * (shroud_curve + impeller_curve); % [m,m] - halfway between shroud and impeller
 
 %% Inlet Blade Angles
-inlet_gap = norm( shroud_curve(find(rms_curve > r_inlet)) -  impeller_curve(find(rms_curve > r_inlet)) );
+inlet_index = find(rms_curve(:,1) > r_inlet, 1);
+inlet_gap = norm( shroud_curve(inlet_index, :) -  impeller_curve(inlet_index, :) );
 u_inlet = shaft_speed*r_inlet;				    % m/s - rotational speed at the inlet (U_1 in pump handbook)
 v_inlet = vdot_pump/(2*pi*r_inlet*inlet_gap);   % m/s - fluid velocity at the inlet, assumed to be entirely radial. Can be found with CFD instead for more accuracy (V_1 in pump handbook)
 blade_angle_inlet = atan2(u_inlet,v_inlet);     % rad - inlet angle of blades relative to tangential azimuth  (beta_1,f in pump handbook)
@@ -46,7 +47,7 @@ blade_number = round(solidity * 2*pi*r_exit_impeller / blade_arc_length);	      
 %% Compute Blockage (pump handbook page 2.63)
 blade_thickness = 0.04*r_exit_impeller; % m
 boundary_layer_thickness = 0.002*blade_arc_length; % m
-meridional_length =   sum( vecnorm( diff([blade_curve(:,1), blade_z])' ) ); % m - arc length of blade projected onto the meridional plane
+meridional_length = sum( vecnorm( diff([blade_curve(:,1), blade_z])' ) ); % m - arc length of blade projected onto the meridional plane
 new_blockage = 1 - (2*boundary_layer_thickness+blade_thickness)/(0.0254*2*pi * meridional_length/blade_arc_length); 
 
 %% Helper Functions
